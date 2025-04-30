@@ -84,15 +84,21 @@ git commands::
 git commands::
 
 ---git clone <github repository url>
+
 >git clone https://github.com/srinfotech7358/AWSDevOps.git
+
 >git status
+
 >git add --all
+
 >git commit -m "added some text files to Readmefile"
+
 >git push
 
 if we get any Access denied issues during push the changes from local to remote repository,please be authenticate below commands
 
 >git config --global user.name "srinfotech7358"
+
 >git config --global user.email "srinfotechbatch1@gmail.com"
 
 
@@ -101,6 +107,7 @@ Generate SSHKeys:: to Integarte Git to Github
 ==============================================
 
 syntax::ssh-keygen -t ed25519 -C "your_email@example.com"
+
 
 >ssh-keygen -t ed25519 -C "srinfotechbatch1@gmail.com"
 
@@ -141,6 +148,7 @@ Lab Practice::
 ==============
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1
+
 $ git clone git@github.com:srinfotech7358/AWSDevOps.git
 Cloning into 'AWSDevOps'...
 The authenticity of host 'github.com (20.207.73.82)' can't be established.
@@ -154,9 +162,11 @@ remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
 Receiving objects: 100% (3/3), done.
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1
+
 $ cd AWSDevOps/
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git status
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -169,6 +179,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git add --all
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
@@ -177,6 +188,7 @@ $ git commit -m "added some text to Readme.md file"
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git push
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
@@ -186,14 +198,17 @@ To github.com:srinfotech7358/AWSDevOps.git
    e38e1b1..95d0d52  main -> main
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git add --all
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git commit -m "added some text to Readme.md file"
 [main 8ddd014] added some text to Readme.md file
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/AWSDevOps (main)
+
 $ git push
 Enumerating objects: 5, done.
 Counting objects: 100% (5/5), done.
