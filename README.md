@@ -8,7 +8,8 @@
 Introduction about the all tools 
 
 
-<img width="846" alt="CI-CD" src="https://github.com/user-attachments/assets/1789ebfa-2809-465e-8dbc-01ad575eeba6" />
+![Uploading CICD.png…]()
+
 
 
 
