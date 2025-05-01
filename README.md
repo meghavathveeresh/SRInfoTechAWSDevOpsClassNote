@@ -8,7 +8,9 @@
 
 Introduction about the all tools 
 
-<img width="846" alt="CI-CD" src="https://github.com/user-attachments/assets/1789ebfa-2809-465e-8dbc-01ad575eeba6" />
+
+![image](https://github.com/user-attachments/assets/142f944d-7d16-4c34-b8ee-d4da6e779449)
+
 
 
 
