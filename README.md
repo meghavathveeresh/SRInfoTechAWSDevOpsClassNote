@@ -353,6 +353,12 @@ Github branching strategy::
 
 <img width="846" alt="Untitled" src="https://github.com/user-attachments/assets/406f212d-86de-4283-99f7-f8f823c99baf" />
 
+
+
+![image](https://github.com/user-attachments/assets/d3e48811-53a0-4a2a-af7d-3044ecaefecc)
+
+
+
 A GitHub branching strategy is crucial for maintaining an organized workflow in version control. There are different strategies depending on the size of the project, the number of team members, and the desired workflow. Here are some common branching strategies used in GitHub:
 
 main or master branch:: This is default branch and whenever we created the empty Repository by defauly main or master branche is created automatically.
