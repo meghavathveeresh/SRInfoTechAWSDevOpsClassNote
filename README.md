@@ -340,3 +340,247 @@ To github.com:srinfotech7358/spring-petclinic.git
 
 HP@DESKTOP-E518Q66 MINGW64 ~/Downloads/SR Infotech Batch1/spring-petclinic (main)
 $
+
+
+
+01/05/2025::
+=============
+
+
+Github branching strategy::
+===========================
+
+
+<img width="846" alt="Untitled" src="https://github.com/user-attachments/assets/406f212d-86de-4283-99f7-f8f823c99baf" />
+
+A GitHub branching strategy is crucial for maintaining an organized workflow in version control. There are different strategies depending on the size of the project, the number of team members, and the desired workflow. Here are some common branching strategies used in GitHub:
+
+main or master branch:: This is default branch and whenever we created the empty Repository by defauly main or master branche is created automatically.
+main or master branch always stable and live code 
+
+feature branch:: It could be a new feature, an improvement of existing features, bug fixes, or any other changes. A feature branch is a type of branch in Git typically used to develop new features for the software.feature branch will created from main or master OR feature branch created from latest release branch always based on the release cycle
+
+formate:: feature/YYYY.MM.DD
+ feature/2025.03.17
+
+release branch:: Based on the release we have created release branch accourdingly and starts the next release cycle.
+always release branch created from master only and master have stable and live code and post release we shold merged code changes to master branch only
+
+release/2025.03.17
+
+hotfix branch:: always created from main or master branch only for production fixes.once production fix done we should merged directly to main or master branch only.
+
+always created this hotfix branch for production issues fixes
+
+bugfix:: this branch is created from release branch to fix the LLE(lower level environemnt)/Pre-Prod/UAT/Non-Prod issues and once LLE issues fixed ,we should pushed their changes to release branch only.
+
+cloning references::
+
+![image](https://github.com/user-attachments/assets/87f6ed4a-095b-4faa-854a-7fcdc019f31f)
+
+
+Generate SSHKeys::
+
+syntax::ssh-keygen -t ed25519 -C "your_email@example.com"
+
+Keys avaibale path and save the key (/c/Users/HP/.ssh/id_ed25519):
+![image](https://github.com/user-attachments/assets/c1031abb-57bf-4585-88a9-e1fbb9358621)
+
+![image](https://github.com/user-attachments/assets/ce78114d-1a3f-4adf-a677-c3f26736f6cc)
+
+
+Please follow below links for more understanding 
+
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+Once genearted the keys (public/private) and copy public key to Github Account
+
+Go to -->settings
+
+![image](https://github.com/user-attachments/assets/e6856f23-6d62-4e02-8fb2-05c720542ec3)
+
+Click SSH and GPG Keys
+
+![image](https://github.com/user-attachments/assets/906f1f68-79a8-4920-837f-38f165e5849e)
+
+click New SSH Key
+
+![image](https://github.com/user-attachments/assets/a461189f-f9e1-415c-b52e-c25f6cfaf1d2)
+
+Add new SSH Key and click Add SSH Key
+
+![image](https://github.com/user-attachments/assets/f62d4d90-f588-462b-bf04-54de51e566d8)
+
+Clone Project code using SSH URL::
+===============================
+
+>git clone git@github.com:ifocusbatch2/spring-petclinic.git
+
+![image](https://github.com/user-attachments/assets/1b704706-cfe5-4db1-8917-e7ca4c44e35f)
+
+![image](https://github.com/user-attachments/assets/12f6150b-e9e9-4615-9864-4e3424a594dd)
+
+![image](https://github.com/user-attachments/assets/03037e55-f77d-499e-b845-4e775b82afed)
+
+![image](https://github.com/user-attachments/assets/8c5653a0-1427-4b26-968b-cda90c04cc48)
+
+
+Lab Practice::
+==============
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17
+$ git clone git@github.com:ifocusbatch2/spring-petclinic.git
+Cloning into 'spring-petclinic'...
+The authenticity of host 'github.com (20.207.73.82)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+remote: Enumerating objects: 10430, done.
+remote: Total 10430 (delta 0), reused 0 (delta 0), pack-reused 10430 (from 1)
+Receiving objects: 100% (10430/10430), 7.67 MiB | 1.17 MiB/s, done.
+Resolving deltas: 100% (3935/3935), done.
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17
+$ cd spring-petclinic/
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   pom.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (main)
+$ git add --all
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (main)
+$ git commit -m "updated pom.xml file"
+[main b2e46bf] updated pom.xml file
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (main)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 340 bytes | 340.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:ifocusbatch2/spring-petclinic.git
+   2aa53f9..b2e46bf  main -> main
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (main)
+$ git checkout -b feature/2025.03.17
+Switched to a new branch 'feature/2025.03.17'
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git status
+On branch feature/2025.03.17
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   pom.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git add --all
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git status
+On branch feature/2025.03.17
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   pom.xml
+
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git commit -m "added branch"
+[feature/2025.03.17 f393310] added branch
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git push
+fatal: The current branch feature/2025.03.17 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin feature/2025.03.17
+
+To have this happen automatically for branches without a tracking
+upstream, see 'push.autoSetupRemote' in 'git help config'.
+
+
+HP@DESKTOP-E518Q66 MINGW64 ~/Desktop/Ifocus/batch2_17/spring-petclinic (feature/2025.03.17)
+$ git push origin feature/2025.03.17
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 302 bytes | 302.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote:
+remote: Create a pull request for 'feature/2025.03.17' on GitHub by visiting:
+remote:      https://github.com/ifocusbatch2/spring-petclinic/pull/new/feature/2025.03.17
+remote:
+To github.com:ifocusbatch2/spring-petclinic.git
+ * [new branch]      feature/2025.03.17 -> feature/2025.03.17
+
+
+
+
+
+Raise PR (Pull Request) :: 
+=================================
+
+Merge the code from one branch to another branch that is called pull request
+
+below are the steps to raise PR::
+
+Go to -->Pull requests and click
+
+![image](https://github.com/user-attachments/assets/5cfe4883-dd46-4643-a506-b54262c36202)
+
+Click New Pull Request::
+
+![image](https://github.com/user-attachments/assets/37020743-a2e9-4163-9afd-7680d58fc63a)
+
+![image](https://github.com/user-attachments/assets/dad8eec2-b480-460f-8715-9d9c5fc3c12d)
+
+please select base & compare branches so here base branch is release/2025.02.25 and compare branch is feature/2025.02.25
+
+i'm going to merge code changes from feature branch to release branch 
+
+![image](https://github.com/user-attachments/assets/185f0572-c51a-4ab2-884c-d2694522b268)
+
+click create pull request
+
+![image](https://github.com/user-attachments/assets/91068166-9d06-4b47-9d68-8c1251b0872f)
+
+![image](https://github.com/user-attachments/assets/08a98671-c810-46fc-9024-17bae7538a61)
+
+
+parasa7358 wants to merge 1 commit into release/2025.02.25 from feature/2025.02.25  
+
+click merge request
+
+![image](https://github.com/user-attachments/assets/44a4b84e-1aef-4b19-a93e-64e48b362b29)
+
+
+confirm merge
+
+![image](https://github.com/user-attachments/assets/cc12b687-b664-4497-bf91-0ab17f37bfa0)
+
+Merged
+
+![image](https://github.com/user-attachments/assets/9ee86d60-3e25-40a2-8d45-3bfe67668a2e)
+
