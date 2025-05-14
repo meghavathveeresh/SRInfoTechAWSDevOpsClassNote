@@ -593,7 +593,8 @@ Merged
 13/05/2025::
 =================
 
-  Jenkins Introductiion::
+Jenkins Introductiion::
+=============================
 
 Jenkins is a free and open source automation server/tool. It helps automate the parts of software development related to building, testing, and deploying, facilitating continuous integration and continuous delivery.
 
@@ -614,7 +615,10 @@ Jenkins is a crone job schedular
 
 ![image](https://github.com/user-attachments/assets/9ee86d60-3e25-40a2-8d45-3bfe67668a2e)
 
+
 LLE/Pre-prod/UAT/PROD  ---automatically ---contunutineus deployemt
+
+
 LLE/Pre-prod/UAT /PROD ---Manually ---contunutineus delivery
 
 Roles And Responsibilities::
@@ -627,6 +631,7 @@ Roles And Responsibilities::
 
 A) when your activity start from git and end with production environment(production servers)Continues deployment
 when your activity start from git to LLE(lower level environment,testing environment,pre-prod…et) environment(pre-production servers)Continues delivery non-production environment
+
 
 Tutorials::
 
