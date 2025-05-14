@@ -588,5 +588,47 @@ confirm merge
 
 Merged
 
+
+
+13/05/2025::
+=================
+
+  Jenkins Introductiion::
+
+Jenkins is a free and open source automation server/tool. It helps automate the parts of software development related to building, testing, and deploying, facilitating continuous integration and continuous delivery.
+
+
+Jenkins is a Orchestration tool
+
+Jenkins is a CI/CD tool
+
+Jenkins is a Schedular
+
+Jenkins is a crone job schedular 
+
+
+![image](https://github.com/user-attachments/assets/719a5280-bf45-435a-89b3-3675546185b1)
+
+![image](https://github.com/user-attachments/assets/83839275-2d96-4676-b149-2b7dfe664457)
+
+
 ![image](https://github.com/user-attachments/assets/9ee86d60-3e25-40a2-8d45-3bfe67668a2e)
 
+LLE/Pre-prod/UAT/PROD  ---automatically ---contunutineus deployemt
+LLE/Pre-prod/UAT /PROD ---Manually ---contunutineus delivery
+
+Roles And Responsibilities::
+===============================
+
+1)The devops engineer was responsibility to release the product to the market as soon as possible
+2)release the product speed to the market
+3)Devops engineer was give continues feedback to the developers
+4) Devops engineer responsibility start from git and end with production
+
+A) when your activity start from git and end with production environment(production servers)Continues deployment
+when your activity start from git to LLE(lower level environment,testing environment,pre-prod…et) environment(pre-production servers)Continues delivery non-production environment
+
+Tutorials::
+
+https://www.tutorialspoint.com/jenkins/jenkins_overview.htm
+https://www.geeksforgeeks.org/jenkins-tutorial/#prerequisites
