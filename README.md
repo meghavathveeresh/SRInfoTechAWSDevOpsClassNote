@@ -1,3 +1,5 @@
+
+
 # SRInfoTechAWSDevOpsClassNote
 
 
@@ -780,3 +782,345 @@ PASSWORD  -->admin  (any password as your wish but make sure you should remember
 
 
 
+
+15/05/2025::
+==============
+
+
+Steps::
+
+1.first we need to create New repository in Github
+
+2.please Clone the Empty Repositoy in your local system
+
+3.copy the Spring-petclinic project code to in your repository 
+
+4.once done we need to push project code to github repository 
+
+5. we need to integarte Github to Jenkins
+
+we need to create Sample demo Project in Jenkins
+
+Create sample Freestyle project::
+============================
+
+Click New Item
+
+![image](https://github.com/user-attachments/assets/d9e7f707-aa00-4c74-b9ca-30489ded6f55)
+
+
+Configuration stages::
+
+1.General
+
+2.Source code management (SCM)
+
+3.Triggres
+
+4.Environment
+
+5.Build Steps
+
+6.Post Build Actions
+
+
+![image](https://github.com/user-attachments/assets/b7b5caf1-3d81-4de0-aebc-c2dc5080f916)
+
+
+General Section provide the Project/job description 
+
+
+At SCM stage level select the Git and provide the github details
+
+![image](https://github.com/user-attachments/assets/827c5b34-8a6e-41ad-b6e1-4899348730d6)
+
+Branches to build
+
+![image](https://github.com/user-attachments/assets/51cf678c-afbd-40bc-bbb5-fae55e4c5537)
+
+
+![image](https://github.com/user-attachments/assets/7bab6e2d-7868-460e-bd42-b2697195f3fe)
+
+Build steps::select the Invoke top-level Maven targets
+Goals section
+>mvn clean install
+
+Maven goals::
+
+>mvn test
+
+>mvn install
+
+
+>mvn clean install
+
+
+>mvn clean
+
+
+>mvn package
+
+![image](https://github.com/user-attachments/assets/53d49170-9dfe-4cad-abc0-50bf268e96c7)
+
+
+Job will be created
+
+Click Build Now
+
+
+Buils is Inprogress
+
+![image](https://github.com/user-attachments/assets/c6e399ce-ac52-47de-94a3-b4d6d156dce5)
+
+
+LAB:::
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2
+$ git clone git@github.com:srinfotech7358/SR-Infotech-Demo.git
+Cloning into 'SR-Infotech-Demo'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (3/3), done.
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2
+$ cd SR-Infotech-Demo/
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (main)
+$ git checkout feature/2025.05.15
+branch 'feature/2025.05.15' set up to track 'origin/feature/2025.05.15'.
+Switched to a new branch 'feature/2025.05.15'
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git status
+On branch feature/2025.05.15
+Your branch is up to date with 'origin/feature/2025.05.15'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        spring-petclinic/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git add --all
+warning: adding embedded git repository: spring-petclinic
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint:   git submodule add <url> spring-petclinic
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint:   git rm --cached spring-petclinic
+hint:
+hint: See "git help submodule" for more information.
+hint: Disable this message with "git config set advice.addEmbeddedRepo false"
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git status
+On branch feature/2025.05.15
+Your branch is up to date with 'origin/feature/2025.05.15'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   spring-petclinic
+
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git commit -m "i have added new spring petclinic project"
+[feature/2025.05.15 30a148c] i have added new spring petclinic project
+ 1 file changed, 1 insertion(+)
+ create mode 160000 spring-petclinic
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git push
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 299 bytes | 9.00 KiB/s, done.
+Total 2 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To github.com:srinfotech7358/SR-Infotech-Demo.git
+   1a61c37..30a148c  feature/2025.05.15 -> feature/2025.05.15
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git status
+On branch feature/2025.05.15
+Your branch is up to date with 'origin/feature/2025.05.15'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    spring-petclinic
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git add --all
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git commit -m "i have added new spring petclinic project"
+[feature/2025.05.15 b7e6d86] i have added new spring petclinic project
+ 1 file changed, 1 deletion(-)
+ delete mode 160000 spring-petclinic
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git push
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (1/1), done.
+Writing objects: 100% (2/2), 255 bytes | 51.00 KiB/s, done.
+Total 2 (delta 0), reused 1 (delta 0), pack-reused 0 (from 0)
+To github.com:srinfotech7358/SR-Infotech-Demo.git
+   30a148c..b7e6d86  feature/2025.05.15 -> feature/2025.05.15
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git add --all
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git commit -m "i have added new spring petclinic project"
+[feature/2025.05.15 b53fcd4] i have added new spring petclinic project
+ 124 files changed, 26870 insertions(+), 1 deletion(-)
+ create mode 100644 .devcontainer/Dockerfile
+ create mode 100644 .devcontainer/devcontainer.json
+ create mode 100644 .editorconfig
+ create mode 100644 .gitattributes
+ create mode 100644 .github/dco.yml
+ create mode 100644 .github/workflows/deploy-and-test-cluster.yml
+ create mode 100644 .github/workflows/gradle-build.yml
+ create mode 100644 .github/workflows/maven-build.yml
+ create mode 100644 .gitignore
+ create mode 100644 .gitpod.yml
+ create mode 100644 .mvn/wrapper/maven-wrapper.properties
+ create mode 100644 LICENSE.txt
+ create mode 100644 build.gradle
+ create mode 100644 docker-compose.yml
+ create mode 100644 gradle/wrapper/gradle-wrapper.jar
+ create mode 100644 gradle/wrapper/gradle-wrapper.properties
+ create mode 100644 gradlew
+ create mode 100644 gradlew.bat
+ create mode 100644 k8s/db.yml
+ create mode 100644 k8s/petclinic.yml
+ create mode 100644 mvnw
+ create mode 100644 mvnw.cmd
+ create mode 100644 pom.xml
+ create mode 100644 settings.gradle
+ create mode 100644 src/checkstyle/nohttp-checkstyle-suppressions.xml
+ create mode 100644 src/checkstyle/nohttp-checkstyle.xml
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/PetClinicApplication.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/PetClinicRuntimeHints.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/model/BaseEntity.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/model/NamedEntity.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/model/Person.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/model/package-info.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/Owner.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/OwnerController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/OwnerRepository.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/Pet.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/PetController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/PetType.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/PetTypeFormatter.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/PetValidator.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/Visit.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/owner/VisitController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/system/CacheConfiguration.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/system/CrashController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/system/WebConfiguration.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/system/WelcomeController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/vet/Specialty.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/vet/Vet.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/vet/VetController.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/vet/VetRepository.java
+ create mode 100644 src/main/java/org/springframework/samples/petclinic/vet/Vets.java
+ create mode 100644 src/main/resources/application-mysql.properties
+ create mode 100644 src/main/resources/application-postgres.properties
+ create mode 100644 src/main/resources/application.properties
+ create mode 100644 src/main/resources/banner.txt
+ create mode 100644 src/main/resources/db/h2/data.sql
+ create mode 100644 src/main/resources/db/h2/schema.sql
+ create mode 100644 src/main/resources/db/hsqldb/data.sql
+ create mode 100644 src/main/resources/db/hsqldb/schema.sql
+ create mode 100644 src/main/resources/db/mysql/data.sql
+ create mode 100644 src/main/resources/db/mysql/petclinic_db_setup_mysql.txt
+ create mode 100644 src/main/resources/db/mysql/schema.sql
+ create mode 100644 src/main/resources/db/mysql/user.sql
+ create mode 100644 src/main/resources/db/postgres/data.sql
+ create mode 100644 src/main/resources/db/postgres/petclinic_db_setup_postgres.txt
+ create mode 100644 src/main/resources/db/postgres/schema.sql
+ create mode 100644 src/main/resources/messages/messages.properties
+ create mode 100644 src/main/resources/messages/messages_de.properties
+ create mode 100644 src/main/resources/messages/messages_en.properties
+ create mode 100644 src/main/resources/messages/messages_es.properties
+ create mode 100644 src/main/resources/messages/messages_fa.properties
+ create mode 100644 src/main/resources/messages/messages_ko.properties
+ create mode 100644 src/main/resources/messages/messages_pt.properties
+ create mode 100644 src/main/resources/messages/messages_ru.properties
+ create mode 100644 src/main/resources/messages/messages_tr.properties
+ create mode 100644 src/main/resources/static/resources/css/petclinic.css
+ create mode 100644 src/main/resources/static/resources/fonts/montserrat-webfont.eot
+ create mode 100644 src/main/resources/static/resources/fonts/montserrat-webfont.svg
+ create mode 100644 src/main/resources/static/resources/fonts/montserrat-webfont.ttf
+ create mode 100644 src/main/resources/static/resources/fonts/montserrat-webfont.woff
+ create mode 100644 src/main/resources/static/resources/fonts/varela_round-webfont.eot
+ create mode 100644 src/main/resources/static/resources/fonts/varela_round-webfont.svg
+ create mode 100644 src/main/resources/static/resources/fonts/varela_round-webfont.ttf
+ create mode 100644 src/main/resources/static/resources/fonts/varela_round-webfont.woff
+ create mode 100644 src/main/resources/static/resources/images/favicon.png
+ create mode 100644 src/main/resources/static/resources/images/pets.png
+ create mode 100644 src/main/resources/static/resources/images/spring-logo-dataflow-mobile.png
+ create mode 100644 src/main/resources/static/resources/images/spring-logo-dataflow.png
+ create mode 100644 src/main/resources/static/resources/images/spring-logo.svg
+ create mode 100644 src/main/resources/templates/error.html
+ create mode 100644 src/main/resources/templates/fragments/inputField.html
+ create mode 100644 src/main/resources/templates/fragments/layout.html
+ create mode 100644 src/main/resources/templates/fragments/selectField.html
+ create mode 100644 src/main/resources/templates/owners/createOrUpdateOwnerForm.html
+ create mode 100644 src/main/resources/templates/owners/findOwners.html
+ create mode 100644 src/main/resources/templates/owners/ownerDetails.html
+ create mode 100644 src/main/resources/templates/owners/ownersList.html
+ create mode 100644 src/main/resources/templates/pets/createOrUpdatePetForm.html
+ create mode 100644 src/main/resources/templates/pets/createOrUpdateVisitForm.html
+ create mode 100644 src/main/resources/templates/vets/vetList.html
+ create mode 100644 src/main/resources/templates/welcome.html
+ create mode 100644 src/main/scss/header.scss
+ create mode 100644 src/main/scss/petclinic.scss
+ create mode 100644 src/main/scss/responsive.scss
+ create mode 100644 src/main/scss/typography.scss
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/MySqlIntegrationTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/MysqlTestApplication.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/PetClinicIntegrationTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/PostgresIntegrationTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/model/ValidatorTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/owner/OwnerControllerTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/owner/PetControllerTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/owner/PetTypeFormatterTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/owner/PetValidatorTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/owner/VisitControllerTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/service/ClinicServiceTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/service/EntityUtils.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/system/CrashControllerIntegrationTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/system/CrashControllerTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/system/I18nPropertiesSyncTest.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/vet/VetControllerTests.java
+ create mode 100644 src/test/java/org/springframework/samples/petclinic/vet/VetTests.java
+ create mode 100644 src/test/jmeter/petclinic_test_plan.jmx
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$ git push
+Enumerating objects: 178, done.
+Counting objects: 100% (178/178), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (160/160), done.
+Writing objects: 100% (176/176), 455.71 KiB | 1.29 MiB/s, done.
+Total 176 (delta 30), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (30/30), done.
+To github.com:srinfotech7358/SR-Infotech-Demo.git
+   b7e6d86..b53fcd4  feature/2025.05.15 -> feature/2025.05.15
+
+HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
+$
