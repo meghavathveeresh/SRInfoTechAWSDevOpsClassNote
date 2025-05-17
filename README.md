@@ -1124,3 +1124,59 @@ To github.com:srinfotech7358/SR-Infotech-Demo.git
 
 HP@DESKTOP-E518Q66 MINGW64 ~/OneDrive/Documents/SR inoftech Batch2/SR-Infotech-Demo (feature/2025.05.15)
 $
+
+
+
+16/05/2025::
+==================
+
+
+
+![image](https://github.com/user-attachments/assets/61ab9296-334d-43f7-ae26-7ec251c37ba1)
+
+
+
+Poll SCM ::Jenkins server ask git if there is any changes in git server or not, if changes there Jenkins server build/package the changes , every change build happened like 5 mints ,means every 5 minutes verify the Jenkins server to git if there is any changes 
+
+
+![image](https://github.com/user-attachments/assets/2fde4c24-c07d-4b57-bdec-b75a402f1155)
+
+
+![image](https://github.com/user-attachments/assets/6f436ad6-e92a-40e3-831a-23219c288217)
+
+POLL SCM ----* * * * * --every minute when every commit 
+
+Create one sample POLL SCM jenkins job::
+===========================================
+Go to jenkins Dashboard
+click New Item
+
+![image](https://github.com/user-attachments/assets/1c62657f-935b-4eed-b032-08842fb09a57)
+
+Description
+
+![image](https://github.com/user-attachments/assets/3a54ba69-b2aa-4443-ad9b-d18ab5fbde02)
+
+
+Provide the Git URL
+
+![image](https://github.com/user-attachments/assets/1fb7b83f-3bba-411b-aad9-a725f25d3e1c)
+
+
+Branch buiild
+
+![image](https://github.com/user-attachments/assets/71aec8f1-4783-4e97-97cb-232dd18811ae)
+
+POLL SCM:: * * * * *
+
+every minute build was trigger when new commits happend in github repository
+
+![image](https://github.com/user-attachments/assets/d6ab7a34-156a-4430-9d40-31e362ad23b1)
+
+
+Build Steps::
+
+![image](https://github.com/user-attachments/assets/4aae78af-d217-41de-a1e6-16bfe2e34472)
+
+
+
