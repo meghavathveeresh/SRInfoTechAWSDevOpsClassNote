@@ -1180,3 +1180,118 @@ Build Steps::
 
 
 
+
+19/05/2025::
+=================
+
+
+Execute the Jobs in Parallel::
+==============================
+
+
+1.By Default execute the Jenkins build jobs are sequence way,one by one 
+
+2.Don’t do 2 projects build parallel  this is real time scenario but we can do parallel builds as well one job
+
+Jenkins build parallel setup
+
+Go job ---> configure ----> Generall ---> Execute concurrent builds if necessary
+
+Execute concurrent builds if necessary::
+===================================
+
+When this option is checked, multiple builds of this project may be executed in parallel.
+By default, only a single build of a project is executed at a time — any other requests to start building that project will remain in the build queue until the first build is complete.
+
+
+![image](https://github.com/user-attachments/assets/909edd87-548d-4ded-a862-29cf850fac05)
+
+
+Here 5 builds execute parallel ,I kept executor is 5 this is same machine 
+
+![image](https://github.com/user-attachments/assets/a840a224-5cbb-43cc-92c1-d135db4ce00f)
+
+
+Build Periodically:::	H/15 * * * *   ----this build happened every 5 minutes without commits ,if changes are commit or not but every 5 mints 
+
+build happened in Jenkins 
+
+Discard old builds::
+=============
+
+Jenkins offers two options for determining when builds should be discarded:
+
+Build age: discard builds when they reach a certain age; for example, seven days old.
+Build count: discard the oldest build when a certain number of builds already exist.
+These two options can be active at the same time, so you can keep builds for 14 days, but only up to a limit of 50 builds, for example. If either limit is exceeded, then any builds beyond that limit will be discarded.
+
+![image](https://github.com/user-attachments/assets/18264333-9ea0-41b9-9531-c90a38178e6a)
+
+
+
+Create Sample Build peridiocally jenkins job::
+=============================================
+
+Description
+
+![image](https://github.com/user-attachments/assets/5ad69478-039e-4ef7-a35f-cb18ed8364f1)
+
+Git url::
+
+![image](https://github.com/user-attachments/assets/b2cbdb7c-14ac-4fae-a240-90cc7a82c78d)
+
+Build the branch
+
+![image](https://github.com/user-attachments/assets/94230c57-b88f-4ab1-b894-151f30fa6d53)
+
+every 5 mints build will trigger
+
+Build Periodically:::	H/15 * * * *   ----this build happened every 5 minutes without commits ,if changes are commit or not but every 5 mints 
+
+build happened in Jenkins 
+
+![image](https://github.com/user-attachments/assets/a5321109-944b-4e79-9294-e28c2adfea0d)
+
+click save 
+
+
+Whenever you configure a build activities :::
+=======================================
+
+SCM::
+
+	Where is your project
+
+Build environment::
+
+---all about your workspace folders 
+
+Build Triggers::
+
+--whenever code changes 
+--periodic
+---script calls 
+
+Build steps::
+
+Dev team will tell ,
+
+Post build::
+
+That aim is giving continue feedback to dev team
+
+--send mails
+--build pass/fail
+--CI
+
+Manage Jenkins::
+=================
+
+1.configure system
+
+--number of executors
+--E-mail notifications
+--internall org SMTP
+
+We don’t change anything in system level configurations
+
