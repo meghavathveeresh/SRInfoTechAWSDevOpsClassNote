@@ -1295,3 +1295,123 @@ Manage Jenkins::
 
 We don’t change anything in system level configurations
 
+
+
+20/05/2025::
+==============
+
+
+Post build Action i want to published artifacts & test results
+
+![image](https://github.com/user-attachments/assets/fcd3ea28-a352-431f-8e1b-86758787fe7a)
+
+I'm going to created one free style job and configured Post-build Actions
+
+In post build Action select the option Archive the artifacts
+
+>target/*.war
+
+![image](https://github.com/user-attachments/assets/39dcf26d-74ee-4c7f-bc28-bb7f6116fedb)
+
+In post build Action select the option Publish JUnit test result report for to published the test results
+
+>target/surefire-reports/*.xml
+
+
+![image](https://github.com/user-attachments/assets/e04f371d-b684-406b-9210-50fb74b6ea79)
+
+![image](https://github.com/user-attachments/assets/985bffcc-5212-4670-a782-0aee21a1c1a1)
+
+
+I want to show test results ::
+=================================
+
+
+>ls target 
+
+Post build action stage
+
+Select archive the artifact
+--target/*.jar
+
+Junit test results::
+--target/surefire-reports/*.xml
+
+
+See test results & antifactory ::
+===================================
+
+![image](https://github.com/user-attachments/assets/2711b453-072e-40d2-9596-afce8f586310)
+
+
+3.For every company will do sequence build on one project this is recommended approach
+
+crone job formate link
+
+https://crontab.guru/examples.html
+
+Parameterized Jenkins Jobs ::
+=============================
+
+Run the same job with different inputs without modifying the configuration manually, we can go for Parameterized projects
+
+Go To New Item
+
+![image](https://github.com/user-attachments/assets/20b1237b-1681-4e77-ad8b-33ee8ac69b97)
+
+Enter Job Name, Free style project and click ok
+
+![image](https://github.com/user-attachments/assets/106bb57e-5466-4e1d-9ead-c977aaac60e7)
+
+
+Enter the description
+
+![image](https://github.com/user-attachments/assets/4944c35f-86db-42a4-8bb8-4b3d9987fd81)
+
+Select the option This project is parameterised
+
+![image](https://github.com/user-attachments/assets/4eeab439-3e45-4320-a7de-73360c28c3c3)
+
+Click Add Parameter
+
+![image](https://github.com/user-attachments/assets/3570dcc9-72a0-4034-8da3-1a70e0341fa7)
+
+Select optiions String parameter or choise parameter or boolean parameter you can select the ny options based on your requirement 
+
+![image](https://github.com/user-attachments/assets/210ae086-fecf-42b2-9322-966b85431d18)
+
+select string parameter
+
+![image](https://github.com/user-attachments/assets/aa0b6706-bda8-4de8-a094-d14e4955fc34)
+
+Select Choise Parameter
+
+![image](https://github.com/user-attachments/assets/48baed03-fe9c-482b-870b-ba4126eb2b4a)
+
+choise parameter
+
+![image](https://github.com/user-attachments/assets/a50a06a9-5063-4f12-8d10-0f44ee473f46)
+
+Click Save
+
+You Can observed this project is parameterized 
+
+![image](https://github.com/user-attachments/assets/05be584b-bd82-4f00-89c7-6358a4ca5ca4)
+
+Click Build with parameter
+
+![image](https://github.com/user-attachments/assets/a7317486-0b18-4e78-9a64-4113f712a757)
+
+select deployment environment
+
+![image](https://github.com/user-attachments/assets/b12a618f-a8da-4c8f-b19c-7b92af2431da)
+
+select which versioj you want to deployment like tis you can configured real time parameterized project in jenkins
+
+![image](https://github.com/user-attachments/assets/33a52ced-4fa7-4b69-a0f9-a82fe436cdfd)
+
+Click Build
+
+![image](https://github.com/user-attachments/assets/7acf8c06-b734-4512-acf7-86ed9fd9053a)
+
+![image](https://github.com/user-attachments/assets/1cec807a-76cc-4446-a589-4767563b90eb)
