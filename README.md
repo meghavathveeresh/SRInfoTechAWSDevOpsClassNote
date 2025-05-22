@@ -1477,3 +1477,168 @@ Project-C::
 Github URL:::https://github.com/srinfotech7358/shopping-cart
 
 
+22/05/2025::
+================
+
+
+Pipelines Introduction:::
+
+A Jenkins pipeline is a series of automated steps or stages that define the process of continuous integration/continuous delivery (CI/CD) for your code. Jenkins, being a popular open-source automation server, uses pipelines to automate tasks like building, testing, and deploying code.
+
+There are two types of Jenkins pipelines:
+
+1. Declarative Pipeline
+2. Scripted Pipeline
+
+1. Declarative Pipeline::
+The declarative pipeline syntax is simpler and more structured. It's the recommended style for most users because it's easy to read and maintain
+
+Create Pipeline Project::
+=======================
+
+Steps
+
+Click +New Item
+
+
+![image](https://github.com/user-attachments/assets/43694be8-ac77-41a1-9d90-30175a91443f)
+
+Enter the Project Name And Click OK
+
+![image](https://github.com/user-attachments/assets/b21659a3-ff70-46ff-86b0-7a965b48197a)
+
+At General Section Provide the Description
+
+![image](https://github.com/user-attachments/assets/e0c5db89-597c-439e-91e1-7722bd4d5467)
+
+
+At Definition, We need to select the Pipeline Script 
+
+![image](https://github.com/user-attachments/assets/f9b35819-0b40-4d71-9678-949d35a4cd3e)
+
+
+
+Here's an example of a simple declarative pipeline: Syntax
+
+pipeline{
+
+agent any
+
+stages{
+
+Stage ('Clone'){
+
+steps{
+
+// write code
+}
+}
+
+Stage ('Build'){
+steps{
+
+// write code
+}
+// write code
+
+}
+
+Stage ('Test'){
+
+steps{
+
+// write code
+}
+// write code
+
+}
+Stage ('Execute test casea and get the results'){
+
+steps{
+
+// write code
+}
+// write code
+
+}
+
+Stage ('Generated Artifact'){
+
+steps{
+
+// write code
+}
+// write code
+
+}
+
+Stage ('Deploy'){
+
+steps{
+
+// write code
+}
+// write code
+
+}
+
+// write code
+
+}
+
+}
+
+Please try to create one pipeline job in jenkinsfile and execute the below Declarative pipeline example:;
+
+
+pipeline {
+
+   agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/srinfotech7358/spring-petclinic.git'
+            }
+        }
+        
+          stage('Build') {
+            steps {
+               bat 'mvn clean install'
+            }
+        }
+          stage('Test') {
+            steps {
+               bat 'mvn test'
+            }
+        }
+        
+          stage('Generate Junit Test Results') {
+            steps {
+               junit 'target/surefire-reports/*.xml'
+            }
+        }
+        
+          stage('Generate Artifacts') {
+            steps {
+               archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+    }
+}
+
+
+Click the Build Now and we can triggered the pipeline
+
+![image](https://github.com/user-attachments/assets/4e211efb-fafe-4598-b29c-bb4bd5d488f2)
+
+![image](https://github.com/user-attachments/assets/04315f1c-44ff-4078-952b-38320fec68c8)
+
+
+Key elements in the declarative pipeline:::
+======================================
+pipeline: This is the top-level structure.
+agent: Specifies where the pipeline will run, such as on any available agent, a specific node, or a Docker container.
+stages: Defines the different steps or stages in the pipeline (e.g., Build, Test, Deploy).
+steps: Commands to be executed in each stage.
+
