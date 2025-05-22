@@ -1415,3 +1415,65 @@ Click Build
 ![image](https://github.com/user-attachments/assets/7acf8c06-b734-4512-acf7-86ed9fd9053a)
 
 ![image](https://github.com/user-attachments/assets/1cec807a-76cc-4446-a589-4767563b90eb)
+
+
+
+
+21/05/2025::
+===============
+
+
+I want Build a 3 projects ::
+===========================
+
+
+
+![image](https://github.com/user-attachments/assets/b2dfde9d-e397-46b8-a8cb-67ab3711b141)
+
+
+Project-A, Projec -B, Projec - C 
+
+Once Project-A build is done, then it will start Project-B build and once Project-B build SUccess then it will start Project-C build ---for this we need to select Add post-build action and select "Build other projects" in drop down and provide Project-B details.
+
+
+![image](https://github.com/user-attachments/assets/048a99bc-bcf6-47ca-9b27-ef23152eab97)
+
+
+Projec A is  (Downstream project is ---Projec B)
+
+Projec B is (UP Stream project is ----Projec A)
+
+Projec C is (downstream project of --Projec B)
+
+i created 3 free style project in jenkins 
+
+Project-A ::
+==============
+
+Github URL::: https://github.com/parasa7358/spring-petclinic.git
+
+![image](https://github.com/user-attachments/assets/e8073061-b815-4945-bd7f-c20b3a6576e2)
+
+Post Build Action , select the option Build Other Project  Project-B
+
+![image](https://github.com/user-attachments/assets/ef75f777-c273-4255-b063-f9853072dfcb)
+
+Project -B ::
+=============
+
+Github URL:::https://github.com/parasa7358/onlinebookstore.git
+
+![image](https://github.com/user-attachments/assets/2ee62e92-e677-4717-93be-77d6dd1ecbf9)
+
+Post Build Action , select the option Build Other Project Project-C
+
+![image](https://github.com/user-attachments/assets/ec7cfc18-002b-4dc3-8438-a75b12b9a438)
+
+
+Project-C::
+============
+
+
+Github URL:::https://github.com/srinfotech7358/shopping-cart
+
+
