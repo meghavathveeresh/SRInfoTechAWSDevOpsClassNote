@@ -1628,11 +1628,47 @@ pipeline {
 }
 
 
+Plugins::
+===============
+
+Plugins in Jenkins are essential components that extend its core functionality, allowing you to customize Jenkins to meet specific CI/CD needs. Jenkins has a vast plugin ecosystem that supports building, deploying, and automating software projects across various platforms and tools
+
+Install Plugins in Jenkins::
+==============================
+
+Step-by-Step:
+Log in to Jenkins as an administrator.
+
+Navigate to Manage Jenkins (usually on the left sidebar).
+
+Click on Manage Plugins.
+
+(Image reference from Jenkins documentation)
+
+Go to the Available tab.
+
+Use the search box to find the plugin you want.
+
+Check the box next to the plugin name.
+
+Click:
+
+Pipeline: Stage View::
+=================
+
+Pipeline: Stage View Plugin in Jenkins
+The Pipeline: Stage View plugin is a visualization tool in Jenkins that allows users to see a graphical view of each stage in a pipeline. It provides a real-time and historical overview of pipeline execution per stage, making it easier to debug, monitor, and analyze performance.
+
+
 Click the Build Now and we can triggered the pipeline
 
 ![image](https://github.com/user-attachments/assets/4e211efb-fafe-4598-b29c-bb4bd5d488f2)
 
 ![image](https://github.com/user-attachments/assets/04315f1c-44ff-4078-952b-38320fec68c8)
+
+Success all the stages & Steps
+
+![image](https://github.com/user-attachments/assets/318c9d53-56fc-4815-9205-74d4dac0bf28)
 
 
 Key elements in the declarative pipeline:::
