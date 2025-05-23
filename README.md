@@ -1674,7 +1674,10 @@ Success all the stages & Steps
 Key elements in the declarative pipeline:::
 ======================================
 pipeline: This is the top-level structure.
+
 agent: Specifies where the pipeline will run, such as on any available agent, a specific node, or a Docker container.
+
 stages: Defines the different steps or stages in the pipeline (e.g., Build, Test, Deploy).
+
 steps: Commands to be executed in each stage.
 
