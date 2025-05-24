@@ -1681,3 +1681,172 @@ stages: Defines the different steps or stages in the pipeline (e.g., Build, Test
 
 steps: Commands to be executed in each stage.
 
+
+
+23/05/2025::
+==============
+
+
+2. Scripted Pipeline::
+   ==============
+
+The scripted pipeline offers more flexibility, but it is less structured and can be harder to maintain. It uses Groovy syntax to define the pipeline.
+
+Here's an example of a scripted pipeline:
+
+node {
+    try {
+        stage('Build') {
+            echo 'Building the application...'
+            // Your build commands here
+        }
+        
+        stage('Test') {
+            echo 'Running tests...'
+            // Your test commands here
+        }
+
+        stage('Deploy') {
+            echo 'Deploying the application...'
+            // Your deploy commands here
+        }
+
+
+        Please try to create one new jenkins pipeline job and execute below script for Scripted pipeline examples
+
+        node {
+        stage('Clone') {
+                git branch: 'master', url: 'https://github.com/parasa7358/onlinebookstore.git'
+			}
+			
+			 stage('Build') {
+        
+                bat 'mvn package'
+        
+			}
+			stage('Test') {
+        
+                bat 'mvn test'
+        
+			}
+        }
+
+
+
+  Key differences in a scripted pipeline:::
+  ==================================
+node: Represents a Jenkins agent where the pipeline will run.
+
+Pipeline as Code::
+==================
+Both declarative and scripted pipelines are stored as Jenkinsfiles, which you place in your source code repository. This allows you to version control your pipeline and keep it aligned with your application code.
+
+Declarative pipeline with Jenkinsfile::
+===============================
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main', url: 'git@github.com:parasa7358/spring-petclinic.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'mvn package'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+        stage('Test Results Reports') {
+            steps {
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+        
+        stage('Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+
+This pipeline:::
+
+1 Checks out the source code from your Git repository.
+2. Builds the project using Maven.
+3.Runs unit tests.
+4.Deploys the application using a custom script.
+
+JOb creation::
+
+![image](https://github.com/user-attachments/assets/dacaf03a-5557-44ce-88ba-0b230ed061cb)
+
+Branches to build
+
+![image](https://github.com/user-attachments/assets/64065ba7-534e-4771-a667-00d5f64e5a4b)
+
+Script Path::: This path is Jenkinsfiles where we maintained in github source code level
+
+![image](https://github.com/user-attachments/assets/3b4783f0-c613-45d1-81a7-00712a79f5ad)
+
+
+Scripted pipeline with Jenkinsfile::
+===============================
+
+node {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main', url: 'git@github.com:parasa7358/spring-petclinic.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'mvn package'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+        stage('Test Results Reports') {
+            steps {
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+        
+        stage('Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+}
+
+github sourcecode jenkinsfile 
+
+![image](https://github.com/user-attachments/assets/44f93ca7-1d95-4efb-afad-cc262de61dbe)
+
