@@ -2084,3 +2084,255 @@ Spring-petclinic web application up & running
 ![image](https://github.com/user-attachments/assets/7a4eaebc-e149-4817-9bf9-70ad3a4e93c5)
 
 
+
+27/05/2025::
+=================
+
+
+Polling SCM (Source Code Management) and webhooks are two common methods used for integrating continuous integration (CI) systems or automating tasks based on changes in repositories.
+
+1. Polling SCM
+Polling SCM is a method where a system (like Jenkins, GitLab CI, etc.) periodically checks the source code repository for changes. If it detects changes, it triggers the build process or some other automated task.
+
+How it works:
+
+A job is set up to check the SCM (like GitHub, GitLab, Bitbucket, etc.) at regular intervals (e.g., every minute or hour).
+
+The CI server pulls the repository to see if there are any new commits since the last poll.
+
+If changes are detected, it triggers the CI/CD pipeline to build, test, or deploy the application.
+
+2. Webhooks
+Webhooks provide a more efficient method for triggering actions based on changes in the repository. Rather than the CI system polling for changes, the source control platform sends an HTTP POST request (webhook) to the CI system when an event (like a commit or pull request) occurs.
+
+![image](https://github.com/user-attachments/assets/59e3f392-4da9-4fe3-8238-d2bd2fee5fc3)
+
+
+Deploy Onlinebookstore/spring-petclinic applications to target server (Tomcat)::
+=====================================================================================================================
+
+please create one new pipeline job
+
+Provide the Description
+
+![image](https://github.com/user-attachments/assets/458b8076-ebce-4ac0-932e-64ee5a6e460b)
+
+Enabled POLL SCM
+
+![image](https://github.com/user-attachments/assets/5b5ae6d9-987a-4c54-9450-c3a89497be29)
+
+In Pipeline Section write groovy script using Declarative style 
+
+
+![image](https://github.com/user-attachments/assets/5d624b7b-9224-4d20-863f-0f3e4671916e)
+
+
+Generate Deploy pipeline script::
+====================================
+
+
+
+
+Script::
+=======
+
+pipeline
+{
+    agent any
+
+    tools{
+
+        maven 'maven'
+    }
+
+stages{
+stage('Git checkout'){
+
+    steps{
+
+        git branch: 'main' url: 'https://github.com/parasa7358/Petclinic.git'
+
+    }
+}
+
+stage('clean and install'){
+
+    steps{
+
+      sh 'mvn clean install'
+
+    }
+}
+
+stage('Package'){
+
+    steps{
+
+      sh 'mvn package'
+
+    }
+}
+
+stage('Archive the Artifacts'){
+
+    steps{
+
+      sh 'mvn clean install'
+    }
+    post{
+        success{
+
+            archiveArtifacts artifacts: '**target/*.war'
+        }
+    }
+
+    }
+
+
+stage('Test Cases'){
+
+    steps{
+
+      sh 'mvn test'
+
+    }
+}
+
+
+stage('Deploy to tomcat server'){
+
+    steps{
+
+      deploy adapters: [tomcat9(credentialsId: 'tomcat9credentials', path: '', url: 'http://localhost:8080/')], contextPath: 'SRINFOTECH', war: '**/*.war'
+
+    }
+}
+
+}
+}
+
+
+Run the job
+
+
+![image](https://github.com/user-attachments/assets/f240a720-41dd-4bc0-955d-a247b1cf8918)
+
+![image](https://github.com/user-attachments/assets/369955cf-0f1c-4ae1-bae3-3870edc0e282)
+
+Integrate Jenkins with Tomcat using Declarative Approach::
+============================================
+
+To integrate Jenkins with Tomcat using the Declarative Pipeline approach, you'll be using Jenkins Pipeline syntax to automate the deployment process to a Tomcat server. This process typically involves building the application, packaging it, and then deploying it to Tomcat.
+
+1. Jenkinsfile Configuration (Declarative Pipeline)
+
+In your Jenkins project, you'll create a Jenkinsfile, which contains the Declarative Pipeline syntax. This file defines the steps involved in the CI/CD pipeline.
+
+Please execute below script in jenkins pipeline job using Declarative style
+
+pipeline
+{
+    agent any
+
+    tools{
+
+        maven 'maven'
+    }
+
+stages{
+stage('Git checkout'){
+
+    steps{
+
+        git branch: 'feature/2025.03.12', url: 'https://github.com/parasa7358/Petclinic.git'
+
+    }
+}
+
+stage('clean and install'){
+
+    steps{
+
+      sh 'mvn clean install'
+
+    }
+}
+
+stage('Package'){
+
+    steps{
+
+      sh 'mvn package'
+
+    }
+}
+
+stage('Archive the Artifacts'){
+
+    steps{
+
+      sh 'mvn clean install'
+    }
+    post{
+        success{
+
+            archiveArtifacts artifacts: '**target/*.war'
+        }
+    }
+
+    }
+
+
+stage('Test Cases'){
+
+    steps{
+
+      sh 'mvn test'
+
+    }
+}
+
+
+stage('Deploy to tomcat server'){
+
+    steps{
+
+      deploy adapters: [tomcat9(credentialsId: 'tomcat9credentials', path: '', url: 'http://localhost:8080/')], contextPath: 'SRINFOTECH', war: '**/*.war'
+
+    }
+}
+
+}
+}
+
+
+Onlinebookstore::
+
+ pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'master', url: 'https://github.com/srinfotech7358/onlinebookstore.git'
+            }
+        }
+        
+          stage('Build') {
+            steps {
+               bat 'mvn clean install'
+            }
+        }
+         stage('Generate Artifacts') {
+            steps {
+               archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+
+          stage('Deploy to Tomcat Server') {
+            steps {
+               deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat', path: '', url: 'http://localhost:8080')], contextPath: 'SR INFOTECH SOLUTIONS PVT LIMITED', war: 'target/*.war'
+            }
+        }
+    }
+}
