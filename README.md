@@ -2483,7 +2483,7 @@ stage('clean and install'){
 
     steps{
 
-      sh 'mvn clean install'
+      bat 'mvn clean install'
 
     }
 }
@@ -2492,7 +2492,7 @@ stage('Package'){
 
     steps{
 
-      sh 'mvn package'
+      bat 'mvn package'
 
     }
 }
@@ -2501,7 +2501,7 @@ stage('Archive the Artifacts'){
 
     steps{
 
-      sh 'mvn clean install'
+      bat 'mvn clean install'
     }
     post{
         success{
@@ -2517,7 +2517,7 @@ stage('Test Cases'){
 
     steps{
 
-      sh 'mvn test'
+      bat 'mvn test'
 
     }
 }
@@ -2526,12 +2526,12 @@ stage('Sonarqube Analysis'){
 
     steps{
 
-      sh 'mvn clean package'
+      bat 'mvn clean package'
 
-    sh '''mvn sonar:sonar \
-  -Dsonar.projectKey='spring-petclinic' \
+    bat '''mvn sonar:sonar \
+  -Dsonar.projectKey=spring-petclinic \
   -Dsonar.projectName='spring-petclinic' \
-  -Dsonar.host.url='http://localhost:9000' \
+  -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.token=sqp_8d74d659dbf3d3bf2924a0d24104f5ddba914fac'''
 
     }
