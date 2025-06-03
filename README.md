@@ -2791,3 +2791,9 @@ Now we are successfully onboarded spring-petclininc project to Sonarqube server
 
 ![image](https://github.com/user-attachments/assets/45b7263c-0e82-45ff-b06f-915a2af9b464)
 
+
+Running the Pipeline Once the pipeline is configured, Jenkins will execute the SonarQube analysis during the build process. After the build completes, you can view the analysis results in your SonarQube dashboard.
+
+
+
+Code coverage Code smells Bugs Vulnerabilities Duplications These reports will be available in the SonarQube dashboard for your project.
