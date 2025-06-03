@@ -2549,4 +2549,245 @@ stage('Deploy to tomcat server'){
 
 }
 }
-  
+
+
+
+  02/06/2025::
+  ==================
+
+1. please start Jenkins on your machine & make sure Jenkins server is UP & Running state
+2. please start Tomcat on your machine & make sure Tomcat server is UP & Running state
+3. please start Sonarqube on your machine & make sure Sonarqube server is UP & Running state
+
+once above steps done then we can execute below script
+
+Working Scripts CI/CD::
+===========================
+
+pipeline{
+
+    tools{
+
+        maven 'Maven'
+    }
+agent any
+
+stages{
+
+    stage('Clone'){
+
+        steps{
+
+            git branch: 'main', url: 'https://github.com/srinfotech7358/Petclinic.git'
+        }
+    }
+
+     stage('Build') {
+            steps {
+               bat 'mvn clean install'
+            }
+        }
+
+         stage('Test Cases') {
+            steps {
+               bat 'mvn test'
+            }
+        }
+
+         stage('Archive the Artifacts') {
+            steps {
+               archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+ stage('Sonarqube Analysis') {
+            steps {
+               
+               bat 'mvn package'
+              bat '''mvn sonar:sonar \
+             -Dsonar.projectKey=spring-petclinic \
+             -Dsonar.projectName='spring-petclinic' \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.token=sqp_96cf5222ab632b69c14baa5590210a7125185d5a'''
+            }
+        }
+
+
+ stage('Deploy Application into Tomcat Server') {
+            steps {
+               deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'NewTomcat', path: '', url: 'http://localhost:8080/')], contextPath: 'Test', war: 'target/*.war'
+            }
+        }
+
+}
+
+}
+
+
+Once sonarqube scanner done, please verify the sonarqube dashboard for reports & results
+
+![image](https://github.com/user-attachments/assets/acc53857-78ca-4e07-becc-6aba969c61b4)
+
+Go to Administration
+
+![image](https://github.com/user-attachments/assets/e94cc57e-d8fe-4d4a-8110-6a0afa2164af)
+
+
+Click Projects & Select Background Tasks
+
+
+![image](https://github.com/user-attachments/assets/53d35e0d-abe2-462e-a608-4736b3cd06c4)
+
+You can able to see all scanned projects status
+
+![image](https://github.com/user-attachments/assets/7075a240-88a1-4c2b-b68d-c963e8f666aa)
+
+Click on any Project, see the PASSED the quality gates
+
+![image](https://github.com/user-attachments/assets/0d329366-3a10-4131-b5a4-e2fb7063647d)
+
+Click on Overall Code option
+
+![image](https://github.com/user-attachments/assets/8435ef6f-8152-42fc-85c4-ab3940473379)
+
+![image](https://github.com/user-attachments/assets/3b454b9a-6c88-435f-b543-962f710b3f86)
+
+see the results
+
+![image](https://github.com/user-attachments/assets/adb4c7f2-70d5-4a85-903a-2d64e0ef5cbb)
+
+here Code coverage is 
+
+Coverage
+82.7%
+
+![image](https://github.com/user-attachments/assets/f5954fe3-2c85-4283-a736-0bc58308687d)
+
+NOTE:: Coverage is greater than or equal to 80.0%, this should be maintained minimum % every project
+
+NOTE:::Duplicated Lines (%) is less than or equal to 3.0%
+
+
+
+Create My own Quality Gates::
+=======================
+
+Go to Dashboard click on Quality Gates
+
+![image](https://github.com/user-attachments/assets/b7e1b1c1-e25e-4bf4-acb2-7d3f386df80c)
+
+at left side we can see create & just click on it
+
+![image](https://github.com/user-attachments/assets/b203f151-0ab2-4de3-84f8-a262f462a9c5)
+
+
+Provide the Name & Click Create
+
+
+![image](https://github.com/user-attachments/assets/a008a297-54ef-49b3-b5bf-a7df05d19c96)
+
+
+Your own quality gates are created
+
+![image](https://github.com/user-attachments/assets/f46d3c2a-dfa7-408b-a30d-5d1688de1891)
+
+this is your own quality gates
+
+![image](https://github.com/user-attachments/assets/dab980c2-3767-4d6b-867a-03b423593323)
+
+nditions on New Code
+Metric
+Operator
+Value
+Issues
+is greater than
+0
+Security Hotspots Reviewed
+is less than
+100%
+Coverage
+is less than
+80.0%
+
+
+Duplicated Lines (%)
+is greater than
+
+
+select your project
+
+![image](https://github.com/user-attachments/assets/3f0aed8a-ebd7-4a27-8e13-4b7bbac978e1)
+
+apply the Grant permissions to a user or a group
+
+![image](https://github.com/user-attachments/assets/a098832f-e4eb-476d-9cbf-e9bbd0a356c5)
+
+
+Apply all the permissions & click Add
+
+![image](https://github.com/user-attachments/assets/77ce722c-f751-4a9f-844f-edeb677ccb01)
+
+![image](https://github.com/user-attachments/assets/48485193-39d4-4e32-a7cb-c943d0d00ed6)
+
+![image](https://github.com/user-attachments/assets/0b988e9d-df3a-4118-98b8-f4b0cd6e3262)
+
+
+Create my own Quality Profile::
+================================
+
+go to Quality Profiles
+
+
+![image](https://github.com/user-attachments/assets/9f3c55e8-566a-4f48-8dff-1e473ab0aee0)
+
+select Language
+
+![image](https://github.com/user-attachments/assets/44cc17f2-03f4-4ea0-83ff-8d97a36e1f2b)
+
+total java Rules 527
+
+![image](https://github.com/user-attachments/assets/40ff10ed-e1cf-4ccf-bd80-f9ff509a6ae4)
+
+
+at right saide top click create
+
+![image](https://github.com/user-attachments/assets/e786de8b-915f-466c-904f-7453eab9efab)
+
+provide the Language & Name and click Create
+
+![image](https://github.com/user-attachments/assets/1a2aaba8-1855-4f13-859e-3cc0b5f0367f)
+
+
+your own profile
+
+![image](https://github.com/user-attachments/assets/12c55b42-aa02-46c9-a31d-60b46d682e7e)
+
+click Active More rules
+
+![image](https://github.com/user-attachments/assets/d9f3dde5-92cd-466f-9d68-b4bbaae336d5)
+
+Bulk Change
+
+![image](https://github.com/user-attachments/assets/8e927220-c993-4b8f-8ca7-6d9884aa41c4)
+
+Activate In Spring-pipeline project
+
+![image](https://github.com/user-attachments/assets/55e0b2e6-7c53-4b98-b2ce-87f75f935246)
+
+Sure Apply
+
+![image](https://github.com/user-attachments/assets/637731b5-bcbe-4798-b87b-ca808f39f2c1)
+
+Succcessfully Applied my own quality profile rules
+
+Activate In Quality Profile (683 rules)
+
+![image](https://github.com/user-attachments/assets/b530b33a-c75f-470e-9118-e0d49bcbfb96)
+
+Now we are successfully onboarded spring-petclininc project to Sonarqube server
+
+![image](https://github.com/user-attachments/assets/1d8bbf77-c70d-479a-8057-ff62984f23f7)
+
+![image](https://github.com/user-attachments/assets/0c1ea5e5-fd03-46b3-aa51-0f283095ffa8)
+
+![image](https://github.com/user-attachments/assets/45b7263c-0e82-45ff-b06f-915a2af9b464)
+
