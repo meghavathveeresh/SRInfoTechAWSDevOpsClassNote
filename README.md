@@ -2862,3 +2862,317 @@ All zip version and search 6.12.1 OSS version
 https://releases.jfrog.io/artifactory/bintray-artifactory/
 
 
+Go to download folder and extract all files 
+
+![image](https://github.com/user-attachments/assets/e7069703-10de-4da6-a435-eb485731d1ca)
+
+go to bin folder
+
+![image](https://github.com/user-attachments/assets/3603144a-46e0-4f5d-96c4-9ddeecafb3f8)
+
+you can found artifactory and go to cmd and run the artifactory.bat from command line
+
+![image](https://github.com/user-attachments/assets/ba5dbde3-6d69-427d-bb06-0aa49038c340)
+
+
+![image](https://github.com/user-attachments/assets/60310e5b-bdd2-49da-a0ba-e7998f786dd1)
+
+run the artifactory.bat
+
+![image](https://github.com/user-attachments/assets/25f7283b-ebda-40e2-a66f-3b0549994367)
+
+![image](https://github.com/user-attachments/assets/8057d055-c9d5-482d-86d0-d2dca89f6cf8)
+
+once artifactory jfrog up & running navigate to below url default port number is 8081
+
+http://localhost:8081/artifactory
+
+![image](https://github.com/user-attachments/assets/562b1d72-0f16-45c5-9f5f-74fa5ebf4285)
+
+
+default username & password for jfrog is 
+
+username::: admin
+
+password::: password
+
+
+04/06/2025::
+==============
+
+Jfrog Script::
+===============
+
+
+stage ('Artifactory Server'){
+
+    steps {
+    
+       rtServer (
+       
+         id: "Artifactory",
+	 
+         url: 'http://localhost:8081/artifactory',
+	 
+         username: 'admin',
+	 
+          password: 'password',
+	  
+          bypassProxy: true,
+	  
+           timeout: 300
+                )
+    }
+}
+
+stage('Upload'){
+
+    steps{
+    
+        rtUpload (
+	
+         serverId:"Artifactory" ,
+	 
+          spec: '''{
+	  
+           "files": [
+	   
+              {
+	      
+              "pattern": "*.war",
+	      
+              "target": "srinfotech-solutions-private-limited"
+	      
+              }
+                    ]
+		    
+                   }''',
+                )
+    }
+}
+
+stage ('Publish build info') {
+
+    steps {
+    
+        rtPublishBuildInfo (
+	
+            serverId: "Artifactory"
+	    
+        )
+    }
+}
+
+
+installed plugin for artifactory (Jfrog) in Jenkins::
+====================================================
+
+
+
+![image](https://github.com/user-attachments/assets/542a6be0-9059-4935-9658-81ce27634337)
+
+After installed Artifactory plugin 
+
+Go to Manage Jenkins--System configuration find JFROG
+
+ ![image](https://github.com/user-attachments/assets/5ddbd986-aaee-478b-8a03-e117f53a7b3a)
+
+Click JFrog Platform Instances
+
+![image](https://github.com/user-attachments/assets/c176ad14-5982-4ea3-b960-468d00f851c7)
+
+For user name and password
+Go to Jfrogadmin-Securityusers
+Default Jfrog U/P----admin/password
+
+![image](https://github.com/user-attachments/assets/83204f3d-bf7b-4bd5-b616-61eaf03ae216)
+
+![image](https://github.com/user-attachments/assets/2af4f08d-5778-4517-8b90-43037eb6ecce)
+
+![image](https://github.com/user-attachments/assets/c104f1c1-6cd0-4911-8eef-b9243a2dd41f)
+
+
+I need to setup target repository in Jfrog
+
+srinfotech-solutions-private-limited
+
+click Local repository
+
+![image](https://github.com/user-attachments/assets/accda4b3-8ff1-412b-9dfb-c790ff8d9757)
+
+
+Select maven
+
+![image](https://github.com/user-attachments/assets/a711233f-8298-4fb9-84f7-3acd19d4e73c)
+
+Repository key  :::: srinfotech-solutions-private-limited
+
+![image](https://github.com/user-attachments/assets/a482139b-b0cb-43d6-b5af-17a64a9ea1ef)
+
+
+Click save and finish
+
+![image](https://github.com/user-attachments/assets/a17b2e49-1e1a-408a-ad16-64cb6bd734b4)
+
+Go to artifacts and check repository is created with name -srinfotech-solutions-private-limited
+
+
+![image](https://github.com/user-attachments/assets/22ad047d-cf61-4015-bc12-27591d2faf96)
+
+
+
+CI/CD all tools ans stages script:: create new job in jenkins and execute below script
+======================================================================================
+
+
+
+pipeline{
+
+    tools{
+
+        maven 'Maven'
+    }
+agent any
+
+stages{
+
+    stage('Clone'){
+
+        steps{
+
+            git branch: 'feature/2025.05.27', url: 'https://github.com/srinfotech7358/Petclinic.git'
+        }
+    }
+
+     stage('Build') {
+            steps {
+               bat 'mvn clean install'
+            }
+        }
+
+         stage('Test Cases') {
+            steps {
+               bat 'mvn test'
+            }
+        }
+ stage('package') {
+            steps {
+               bat 'mvn package'
+            }
+        }
+
+         stage('Archive the Artifacts') {
+            steps {
+               archiveArtifacts artifacts: 'target/*.war', followSymlinks: false
+            }
+        }
+ stage('Sonarqube Analysis') {
+            steps {
+               
+               bat 'mvn package'
+              bat '''mvn sonar:sonar \
+             -Dsonar.projectKey=spring-petclinic \
+             -Dsonar.projectName='spring-petclinic' \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.token=sqp_96cf5222ab632b69c14baa5590210a7125185d5a'''
+            }
+        }
+
+
+stage ('Artifactory Server'){
+    steps {
+       rtServer (
+         id: "Artifactory",
+         url: 'http://localhost:8081/artifactory',
+         username: 'admin',
+          password: 'password',
+          bypassProxy: true,
+           timeout: 300
+                )
+    }
+}
+
+stage('Upload'){
+    steps{
+        rtUpload (
+         serverId:"Artifactory" ,
+          spec: '''{
+           "files": [
+              {
+              "pattern": "*.war",
+              "target": "srinfotech-solutions-private-limited"
+              }
+                    ]
+                   }''',
+                )
+    }
+}
+
+stage ('Publish build info') {
+    steps {
+        rtPublishBuildInfo (
+            serverId: "Artifactory"
+        )
+    }
+}
+ stage('Deploy Application into Tomcat Server') {
+            steps {
+               deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'NewTomcat', path: '', url: 'http://localhost:8080/')], contextPath: 'SRIN solutions PVT LTD', war: '**/*.war'
+            }
+        }
+
+}
+
+}
+
+
+
+CI/CD::
+==========
+
+Continuous Integration & Continutes Deployment & COntinuoues Delivery::
+=======================================================================
+
+Continuous Integration(CI)::the practice of automating the integration of code changes from multiple Developers into a single software project. It's a primary DevOps best practice, allowing developers to frequently merge code changes into a central repository,after which automated builds and tests are run automatically.
+
+developers frequently commit to a shared repository using a version control system such as Git,A continuous integration automatically builds and runs unit tests on the new code changes to immediately using jenkins Orchestration.
+
+
+![image](https://github.com/user-attachments/assets/2713a0f0-ab19-4228-bb6c-2380259ebe7e)
+
+
+Continuous Deployment(CD) :: Continuous Deployment is an extension of continuous delivery. With continuous deployment, every change that passes through the automated tests and builds is automatically deployed to production without any human intervention. The deployment process is fully automated.
+
+Continuous Delivery (CD)::Continuous Delivery is a software development practice in which code changes are automatically built, tested, and prepared for release to production in a consistent and reliable manner. The key distinction of continuous delivery is that the process of deploying the code to production is done manually by a human decision-maker.
+
+
+please try to deploy all 3 projects in Tomcat Server 
+
+Project1::
+
+https://github.com/srinfotech7358/devOpsWeb.git
+
+Project2::
+
+https://github.com/srinfotech7358/Petclinic.git
+
+
+Project3::
+
+https://github.com/srinfotech7358/onlinebookstore.git
+
+Post Deployment 
+
+Spring-petclinic::
+
+![image](https://github.com/user-attachments/assets/811fe50a-25ea-464f-bdaa-ed8a8c7eae52)
+
+onlinebookstore::
+
+![image](https://github.com/user-attachments/assets/21bcb3f2-b95d-4ee7-9f23-b95e479d8b15)
+
+
+SRInfotech DevOps Project::
+
+![image](https://github.com/user-attachments/assets/f28aa0eb-6be0-485f-8210-4a0557df0df5)
+
