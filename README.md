@@ -3395,3 +3395,190 @@ http://35.86.160.156:8080/
 
 bydefault Jenkins runs on port 8080
 Jenkins home path/var/lib/Jenkins
+
+
+
+10/06/2025::
+===============
+
+
+![image](https://github.com/user-attachments/assets/a9ba4129-9506-4c2a-9486-0e9905f61253)
+
+
+AWS any machines default password authentication is disabled , 
+we need to enabled in any linux machines
+>sudo vi /etc/ssh/sshd_config
+>sudo service sshd restart
+In EC2 – by default password based authentication is disabled so we need to enabled
+>vi /etc/ssh/sshd_config
+passwordauthentication :yes
+
+![image](https://github.com/user-attachments/assets/99decb00-3ef0-4528-8e58-0d69bf14ce36)
+
+In ubuntu machine default user is not sudo user,
+>visudo
+Jenkins ALL=(ALL:ALL) NOPASSWD:ALL
+>su Jenkins
+Switching to new user
+
+![image](https://github.com/user-attachments/assets/86bc74b0-e31f-44aa-bcab-875ed9a3a016)
+
+![image](https://github.com/user-attachments/assets/98b96a48-2ee3-466c-b917-26c1919b15f6)
+
+Once installed Jenkins successfully
+>we need to enabled the Inbounds and outbounds rules in AWS security groups
+
+Inbounds rules
+
+![image](https://github.com/user-attachments/assets/b7075d75-dd60-42d4-a282-7be861252685)
+
+Copy public IP address and go to browser
+Access Jenkins using Public IP address
+http://35.86.160.156:8080/
+
+bydefault Jenkins runs on port 8080
+Jenkins home path/var/lib/Jenkins
+
+Now Go to Node Machine::
+==============
+Please insatll JDK & Maven in node machine and setup environemnt varibles
+
+>sudo apt-get install maven
+>java -version
+>mvn -v
+Set java home environment 
+
+>sudo vi /etc/environment
+JAVA_HOME=”/usr/lib/jvm/java-8-openjdk-amd64/jre”
+MAVEN_HOME=”/usr/share/maven”
+
+Reload your system environment
+>source /etc/environment
+
+Veriy the variables was set correctly
+>echo $JAVA_HOME
+>echo $MAVEN_HOME
+
+comminicate master & node via SSH keys
+>ssh-keygen -t ed25519
+after generated the keys, we need to  copy public key to node machine
+
+option-1 to copy keys from master to node
+>ssh-copy-id user@ipaddressofnodemachine
+>ssh-copy-id node@172.31.44.169
+
+2nd option --copy keys manually from master to node
+
+3rd options --i have created authorized_keys  file in node machine and copy public key from master to node
+
+NODE::
+-------
+
+1. we need to create .ssh directory
+>mkdir .ssh/
+>cd .ssh/
+>touch authorized_keys
+>ls
+
+here i want copy public key from master to node machine into the authorized_keys file
+
+please restsrt all the machines
+
+i want call node1 machine fomr jenkins master
+
+>ssh usernameofnode@ipaddressofnodemachine
+
+>jenkins@ip-172-31-36-36:~/.ssh$ ssh node1@ip-172-31-41-243
+
+
+Master Node Configuration::
+>got to manage Jenkins
+>manage Nodes
+
+>click new node
+Remote root directory
+
+![image](https://github.com/user-attachments/assets/774c7270-0607-4332-8679-ebad4a459979)
+
+![image](https://github.com/user-attachments/assets/55da9a7b-3178-47cf-be6d-72b452a59b2d)
+
+Launch methods via ssh
+
+![image](https://github.com/user-attachments/assets/aa7e51ac-278f-473c-9512-bfb35422fea8)
+
+
+Add credentials
+
+![image](https://github.com/user-attachments/assets/2a3ae243-9a58-4666-bacd-317298d68f33)
+
+>Host Key Verification Strategy
+![image](https://github.com/user-attachments/assets/a926aed1-85d6-42e1-804f-da5df9792eed)
+
+Master Node Configuration::
+>got to manage Jenkins
+>manage Nodes
+>click new node
+Remote root directory
+
+![image](https://github.com/user-attachments/assets/190f9e24-2842-4462-9773-6c98c7980d77)
+
+![image](https://github.com/user-attachments/assets/10dcf0c4-7088-4071-a6e0-8f4729603029)
+ 
+ 
+
+Launch methods via ssh
+
+ ![image](https://github.com/user-attachments/assets/f25a3610-8d32-43ca-bde3-644426d37cb1)
+
+
+Add credentials ::
+
+option-1::
+=========
+
+this time please use credentials option SSH key with private key from node machine
+
+option::2 
+===========
+please use credentials with Username & password and let's try if you copy properly ,agent machine will conenct Successfully
+
+ ![image](https://github.com/user-attachments/assets/d54e7393-a5b9-4194-8f50-c206b02c39d1)
+
+ ![image](https://github.com/user-attachments/assets/2113f8d7-18d1-4e66-84ec-267c05fde9b5)
+
+>Host Key Verification Strategy
+
+ ![image](https://github.com/user-attachments/assets/58a7b48d-eab5-45a7-9661-1a72578ceda5)
+
+
+Agent successfully connected
+
+![image](https://github.com/user-attachments/assets/823523dc-fe3e-432c-b3d8-9c645483d30a)
+
+ 
+
+Execute Jenkins job using slave 
+Create one test slave job in Jenkins
+
+>select Restrict where this project can be run
+
+![image](https://github.com/user-attachments/assets/d6c206ac-06a1-4564-9351-7b35e4f4c521)
+
+
+>select Label Expression
+
+![image](https://github.com/user-attachments/assets/85b8897c-f6ec-4bd2-8bb9-3821251c20da)
+
+please create 2 job in jenkins master and setup 1 job in Node machine and 2nd job master machine, just trigger Build Now 
+
+Please observe below screenshot 2 job running different machines 
+
+![image](https://github.com/user-attachments/assets/94005ac8-cb37-4c97-ba0e-14adf7c71566)
+
+advantage of master & Node Integartion
+
+![image](https://github.com/user-attachments/assets/5551bbab-46b7-49ae-b6c2-093299d2ecb2)
+
+![image](https://github.com/user-attachments/assets/ac59dbc9-c012-44a0-ae98-0fbcc2d4e5d8)
+
+
