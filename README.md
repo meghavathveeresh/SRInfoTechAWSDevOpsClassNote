@@ -3230,3 +3230,168 @@ Developer Tools::
 AWS CodeCommit: Source control service for managing your code repositories.
 AWS CodeDeploy: Automates code deployments to EC2 instances and Lambda.
 AWS CodePipeline: Continuous integration and continuous delivery (CI/CD) service for automating the release pipeline.
+
+
+
+
+09/06/2025
+==========================
+
+AWS EC2 ::
+===========
+Amazon Elastic Compute Cloud (Amazon EC2) is one of the core services provided by Amazon Web Services (AWS)
+
+Wide Variety of Instance Types:
+
+EC2 instances are grouped into families based on the type of workload they are optimized for. Some common instance families include:
+General Purpose: e.g., t3, m5 instances (balanced CPU, memory, and networking).
+Compute Optimized: e.g., c5 instances (great for high-performance computing tasks).
+Memory Optimized: e.g., r5, x1e instances (designed for high-memory workloads like databases).
+
+create EC2 Ubuntu Linux Machine in AWS::
+==================================
+
+Go to AWS ans Search EC2
+
+![image](https://github.com/user-attachments/assets/32cf433a-97b3-444f-9231-1c4aa1da6f79)
+
+Click EC2
+
+![image](https://github.com/user-attachments/assets/f54992d2-7d2b-4a1c-8395-ba5aee7d5899)
+
+Go to instances at left side bar
+
+![image](https://github.com/user-attachments/assets/fcaee5fc-c31a-40cd-a7da-0255afef4373)
+
+Click Launch Instances, EC2  ---> Instances  -----> Launch an instance
+
+![image](https://github.com/user-attachments/assets/9b6128c5-cf0e-48ee-bc11-93852cc3e166)
+
+Select Ubuntu
+
+![image](https://github.com/user-attachments/assets/f610aae5-e7a9-43f6-af7e-e16b6ce9becb)
+
+Select Amazon Machine Image (AMI)
+
+![image](https://github.com/user-attachments/assets/2e5e91a6-cd80-445b-9932-b9d760475be7)
+
+
+select Instance type,t2 medium
+
+![image](https://github.com/user-attachments/assets/47d6a619-cbe2-41d4-b2ca-40ae44988efb)
+
+
+Create Create new key pair and provide key pair name
+
+![image](https://github.com/user-attachments/assets/1526a72d-ba98-45be-8998-2d67788c73ef)
+
+click create pair
+
+![image](https://github.com/user-attachments/assets/66a6f77c-36b3-49d3-87a5-abe0358a3c3b)
+
+click launch instance
+
+![image](https://github.com/user-attachments/assets/dca82f59-824d-4cf2-9bf2-ffe81948993c)
+
+instance will be created
+
+![image](https://github.com/user-attachments/assets/ed110a9c-d118-4a08-b678-a3cf945ef5c7)
+
+
+
+![image](https://github.com/user-attachments/assets/38ccd3b2-71ce-4102-a047-db937ab13080)
+
+Master & Node communication Via SSH keys::
+================================
+
+i have to create 2 EC2 ubuntu machines in AWS
+1. Jenkinsmaster
+2. Node
+
+![image](https://github.com/user-attachments/assets/9fb55c6b-b0b5-4308-8061-91a23184b6db)
+
+
+we have already .pem file dowloaded in you local machin
+
+right click from .pem and click Open git bash here option
+Now Go to AWS Ubuntu machine which is already created in AWS insatnces and select master machine
+
+![image](https://github.com/user-attachments/assets/ae110666-3e1d-4a48-bfb4-ecb3790187f8)
+
+Click Connect
+
+![image](https://github.com/user-attachments/assets/4130c330-b01d-4a7c-b820-7b836db556b9)
+
+Click SSH Client
+
+![image](https://github.com/user-attachments/assets/fb0dfc0d-abbe-427c-a79b-a10df2f2410c)
+
+Copy URL
+
+>ssh -i "Newkeysmasternode.pem" ubuntu@ec2-18-237-178-192.us-west-2.compute.amazonaws.com
+
+![image](https://github.com/user-attachments/assets/a0bf53d1-3b1a-42a0-8c40-8cb39f85cd09)
+
+Now past that url in Gitbash
+
+![image](https://github.com/user-attachments/assets/e52355e5-73b3-4d7b-9e04-3ce8cd72ffe5)
+
+switch to root user below command run
+>Sudo -i
+
+![image](https://github.com/user-attachments/assets/98086ebc-bbd6-4757-ac12-923a2a6eb896)
+
+update the all packages ,please run below command
+
+>sudo apt-get update
+
+![image](https://github.com/user-attachments/assets/3b291e76-4a2a-4d5a-bbd2-58231282e4b7)
+
+Install JDK & Maven:;
+============
+
+JDK link
+
+https://bluevps.com/blog/how-to-install-java-on-ubuntu
+
+MAven link
+
+https://phoenixnap.com/kb/install-maven-on-ubuntu
+
+
+
+>sudo apt-get install maven
+>java -version
+>mvn -v
+
+Set java home environment 
+
+>sudo vi /etc/environment
+JAVA_HOME=”/usr/lib/jvm/java-8-openjdk-amd64/jre”
+MAVEN_HOME=”/usr/share/maven”
+
+Reload your system environment
+>source /etc/environment
+
+Veriy the variables was set correctly
+>echo $JAVA_HOME
+>echo $MAVEN_HOME
+
+Insatll Jenkins on master machine::
+====================================
+
+https://phoenixnap.com/kb/install-jenkins-ubuntu
+
+Once installed Jenkins successfully
+>we need to enabled the Inbounds and outbounds rules in AWS security groups
+
+Inbounds rules
+
+![image](https://github.com/user-attachments/assets/b7075d75-dd60-42d4-a282-7be861252685)
+
+Copy public IP address and go to browser
+Access Jenkins using Public IP address
+http://35.86.160.156:8080/
+
+bydefault Jenkins runs on port 8080
+Jenkins home path/var/lib/Jenkins
