@@ -3582,3 +3582,188 @@ advantage of master & Node Integartion
 ![image](https://github.com/user-attachments/assets/ac59dbc9-c012-44a0-ae98-0fbcc2d4e5d8)
 
 
+
+11/06/2025::
+==============
+
+Ansible Playbooks Introduction::
+==========================
+
+Ansible playbooks are the heart of automation with Ansible. They are simple YAML (Yet Another Markup Language) files that define automation tasks in a structured, human-readable format. Playbooks allow you to automate configurations, deployments, and orchestration tasks in a clear and organized way.
+
+
+![image](https://github.com/user-attachments/assets/9b2fada9-16f9-49b1-b3bf-d85bd0795e57)
+
+
+
+Key Concepts::
+==============
+
+Playbook: A playbook is a file that contains one or more "plays." Each play defines a set of tasks to be executed on a group of hosts. The playbook can be used for things like installing packages, managing users, configuring services, etc.
+
+Task: A task is an individual unit of work. Tasks define specific actions, such as installing a package, starting a service, or copying a file. Tasks are executed sequentially, in the order in which they are written in the playbook.
+
+Inventory: An inventory is a list of hosts that Ansible will manage. The inventory file defines which machines to target. An inventory can group hosts together (e.g., web servers, db servers) for easy management.
+
+Modules: Ansible provides numerous modules that are responsible for performing specific tasks like managing packages, services, files, etc. Common modules include apt, yum, service, copy, and file.
+
+
+
+Create 3 AWS ubuntu machines::
+=================================
+
+1. ACS --ansible control server
+2.node1
+3.node2
+
+
+Steps to configure ACS::
+===========================
+
+1. passwordauthentication enabled
+
+>sudo vi /etc/ssh/sshd_config
+
+2. Create New user-->ansible and user should be provide the sudo permissions
+   
+>visudo
+
+ansible ALL=(ALL:ALL) NOPASSWD:ALL
+
+>su ansible
+Switching to new user
+
+3.install ansible in Ansible control server
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-22-04
+
+> ansible --version
+
+4. keybased authentication via SSH keys
+
+   >ssh-keygen -t ed25519
+
+   Generated private and public keys
+
+   5. copy publickey from ansible control server to node machines
+
+   if above steps are configured properly ,it will communications happend via sshkeys
+
+![image](https://github.com/user-attachments/assets/b1b67c08-47b0-4dc3-be5f-d9d5c41d3573)
+
+
+Steps to configure Node1::
+===========================
+
+1. passwordauthentication enabled
+
+>sudo vi /etc/ssh/sshd_config
+
+2. Create New user-->node1 and user should be provide the sudo permissions
+   
+>visudo
+
+node1 ALL=(ALL:ALL) NOPASSWD:ALL
+
+>su node1
+Switching to new user node1
+
+3.install python in node1 machine
+
+https://docs.vultr.com/how-to-install-python-and-pip-on-ubuntu-24-04
+
+
+> python3 --version
+
+4. keybased authentication via SSH keys
+
+
+
+12/06/2025::
+==============
+
+
+Steps to configure Node1::
+===========================
+
+1. passwordauthentication enabled
+
+>sudo vi /etc/ssh/sshd_config
+
+2. Create New user-->node2 and user should be provide the sudo permissions
+   
+>visudo
+
+node2 ALL=(ALL:ALL) NOPASSWD:ALL
+
+>su node1
+Switching to new user node2
+
+3.install python in node1 machine
+
+https://docs.vultr.com/how-to-install-python-and-pip-on-ubuntu-24-04
+
+
+> python3 --version
+
+4. keybased authentication via SSH keys
+
+  if above steps are configured properly ,it will communications happend via sshkeys
+
+
+all these 3 machine ping to each other and see beow screenshots all 3 machines pings each other
+
+Steps::
+======
+ubuntu@ip-172-31-28-207:~$ sudo -i
+root@ip-172-31-28-207:~# su ansible
+ansible@ip-172-31-28-207:/root$ cd ~
+ansible@ip-172-31-28-207:~$ cd /etc/ansible/
+ansible@ip-172-31-28-207:/etc/ansible$ ansible -m ping all
+
+**node2@ip-172-31-42-167.us-west-2.compute.internal | SUCCESS** => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[WARNING]: Platform linux on host node1@ip-172-31-39-93.us-west-2.compute.internal is using the
+discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+**node1@ip-172-31-39-93.us-west-2.compute.internal | SUCCESS** => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[WARNING]: Platform linux on host ansible@localhost is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+**ansible@localhost | SUCCESS** => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[WARNING]: Platform linux on host ansible@ip-172-31-42-190.us-west-2.compute.internal is using the
+discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python
+interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+**ansible@ip-172-31-42-190.us-west-2.compute.internal** | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+
+all these 3 machine ping to each other and see beow screenshots all 3 machines pings each other
+
+![image](https://github.com/user-attachments/assets/ca010d9c-5746-4421-ac5f-37c88dabe369)
+
