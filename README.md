@@ -3716,9 +3716,13 @@ all these 3 machine ping to each other and see beow screenshots all 3 machines p
 Steps::
 ======
 ubuntu@ip-172-31-28-207:~$ sudo -i
+
 root@ip-172-31-28-207:~# su ansible
+
 ansible@ip-172-31-28-207:/root$ cd ~
+
 ansible@ip-172-31-28-207:~$ cd /etc/ansible/
+
 ansible@ip-172-31-28-207:/etc/ansible$ ansible -m ping all
 
 **node2@ip-172-31-42-167.us-west-2.compute.internal | SUCCESS** => {
