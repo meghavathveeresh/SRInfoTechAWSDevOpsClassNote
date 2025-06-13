@@ -3417,8 +3417,14 @@ passwordauthentication :yes
 
 In ubuntu machine default user is not sudo user,
 >visudo
+
 Jenkins ALL=(ALL:ALL) NOPASSWD:ALL
+
+![image](https://github.com/user-attachments/assets/319918d1-2f7c-4878-adcf-d67473e38f36)
+
+
 >su Jenkins
+
 Switching to new user
 
 ![image](https://github.com/user-attachments/assets/86bc74b0-e31f-44aa-bcab-875ed9a3a016)
@@ -3470,6 +3476,17 @@ option-1 to copy keys from master to node
 2nd option --copy keys manually from master to node
 
 3rd options --i have created authorized_keys  file in node machine and copy public key from master to node
+
+keys copied correcctly try below command to run,
+
+Syntax::
+=============
+
+>ssh username@ipaddressofNodeMachine
+
+>ssh node1@ip-172-31-11-212.us-west-2.compute.internal
+
+
 
 NODE::
 -------
