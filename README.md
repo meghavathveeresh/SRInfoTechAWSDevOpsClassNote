@@ -3730,6 +3730,19 @@ https://docs.vultr.com/how-to-install-python-and-pip-on-ubuntu-24-04
 
 all these 3 machine ping to each other and see beow screenshots all 3 machines pings each other
 
+NOTE::
+1.please create authorized_keys file in ansible master and copy public key to authorized kesy fiile
+2.ssh-copy-id ansible@localhost
+Restart machine
+>cd /etc/ansible
+>ansible -m ping all
+It working 
+>sudo nano hosts
+Add all host names or ipaddress or private DNS names
+
+![image](https://github.com/user-attachments/assets/2c501a8f-240a-4874-aef7-498f549dacd5)
+
+
 Steps::
 ======
 ubuntu@ip-172-31-28-207:~$ sudo -i
