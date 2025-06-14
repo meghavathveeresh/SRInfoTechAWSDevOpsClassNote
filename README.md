@@ -4041,22 +4041,33 @@ created playbook for this requirement
        apt:
 
        name: git
+     
        state: present
+     
        update_cache: yes
 
    -  name: install JDK17 in ubuntu machines
+     
      apt:
+  
        name: openjdk-17-jdk
+  
        state: absent
 
    -  name: install tree in ubuntu machines
-     apt:
+
+      apt:
+      
        name: tree
+      
        state: present
 
   -  name: install apache2 in ubuntu machines
+ 
      apt:
+ 
        name: apache2
+     
        state: absent
      
 
@@ -4146,11 +4157,24 @@ Allow HTTP/HTTPS: Allow outbound traffic on ports 80 (HTTP) and 443 (HTTPS) to a
 
 
 
-![image](https://github.com/user-attachments/assets/0e51f799-d746-45a5-94cb-f358ade65ba2)
+![image](https://github.com/user-attachments/assets/76772963-84d4-4515-99f6-7fc74fd05e5b)
 
 
-![image](https://github.com/user-attachments/assets/8fa024b7-0999-40f7-94cb-3eaa018fbd41)
+After execute the playbook see the Apache2 in browser
+
+http://publicIPaddress
+
+http://44.247.80.104/
+
+ACS----Ansible control server
+
+![image](https://github.com/user-attachments/assets/9f8a2ebb-fd45-4d59-a187-4c91a9e72367)
 
 
-![image](https://github.com/user-attachments/assets/2ca3de47-8bea-4f5a-a35e-0238788cb7c7)
+NODE1::
 
+![image](https://github.com/user-attachments/assets/df4b3dd4-ee4a-48f6-85b2-8a1b541e46de)
+
+NODE2::
+
+![image](https://github.com/user-attachments/assets/60e75d37-a96c-4fb4-b8c1-aa1ca52f8867)
