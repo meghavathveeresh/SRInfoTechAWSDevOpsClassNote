@@ -3801,3 +3801,356 @@ all these 3 machine ping to each other and see beow screenshots all 3 machines p
 
 ![image](https://github.com/user-attachments/assets/ca010d9c-5746-4421-ac5f-37c88dabe369)
 
+
+
+13/06/2025::
+===============
+
+Ansible Playbooks Introduction::
+==========================
+
+Ansible playbooks are the heart of automation with Ansible. They are simple YAML (Yet Another Markup Language) files that define automation tasks in a structured, human-readable format. Playbooks allow you to automate configurations, deployments, and orchestration tasks in a clear and organized way.
+
+Key Concepts::
+==============
+
+Playbook: A playbook is a file that contains one or more "plays." Each play defines a set of tasks to be executed on a group of hosts. The playbook can be used for things like installing packages, managing users, configuring services, etc.
+
+Task: A task is an individual unit of work. Tasks define specific actions, such as installing a package, starting a service, or copying a file. Tasks are executed sequentially, in the order in which they are written in the playbook.
+
+Inventory: An inventory is a list of hosts that Ansible will manage. The inventory file defines which machines to target. An inventory can group hosts together (e.g., web servers, db servers) for easy management.
+
+Modules: Ansible provides numerous modules that are responsible for performing specific tasks like managing packages, services, files, etc. Common modules include apt, yum, service, copy, and file.
+
+
+Structure of a Basic Playbook:
+===============================
+A basic playbook has the following components:
+
+YAML Header: The file begins with a --- to indicate it’s a YAML file.
+
+ the hosts (target machines)
+ become: yes   ----->Sudo user 
+
+Tasks: Tasks define the actions to be executed on the target systems.
+
+![image](https://github.com/user-attachments/assets/71982463-6b41-4481-af94-29c76690b0b6)
+
+I want to see where the Ansible is installed on ACS
+>cd /etc/ansible
+
+NOTE::
+==========
+Playbook is written in YAML format
+Inside the playbook tasks
+Each task is a module
+Playbook is a one of yaml file
+Yaml file is a collection of key-value pairsset of all tasks
+Playbook is tell to the ansible what are the tasks can be performed
+Each task  one module
+Module is a smallest item of ansible
+Module can be used to individual or smallest task can be performed
+Any configuration management tool should maintain ‘state’
+
+
+hosts: all (apply all we can be mentioned in inventory )
+become: yes  (become user as a sudo user)
+tasks:
+
+we can search in google ansible playbook
+https://docs.ansible.com/ansible/latest/user_guide/playbooks.html
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#basics
+
+
+install git example playbook::
+============================== 
+
+installgit.yml
+---
+- hosts: all
+
+  become: yes
+  
+  tasks:
+  
+  -  name: install git
+    
+     apt:
+     
+       name: git
+     
+       state: present
+     
+       update_cache: yes
+
+     
+note:::default state is present 
+update_cache: yes tells Ansible to run the apt-get update command on the remote machine before performing any further package operations (like installing or upgrading packages).
+become: yes  # Elevate privileges to execute tasks as root
+
+
+
+ansible@ip-172-31-19-120:/etc/ansible$ ansible-playbook installgit.yml
+
+PLAY [all] **********************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************
+[WARNING]: Platform linux on host localhost is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [localhost]
+[WARNING]: Platform linux on host node2@172.31.30.90 is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [node2@172.31.30.90]
+[WARNING]: Platform linux on host node1@172.31.30.121 is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [node1@172.31.30.121]
+
+TASK [install git] **************************************************************************************
+ok: [node2@172.31.30.90]
+ok: [node1@172.31.30.121]
+ok: [localhost]
+
+PLAY RECAP **********************************************************************************************
+localhost                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node1@172.31.30.121        : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node2@172.31.30.90         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+ansible@ip-172-31-19-120:/etc/ansible$ git --version
+git version 2.43.0
+ansible@ip-172-31-19-120:/etc/ansible$ Read from remote host ec2-34-226-192-28.compute-1.amazonaws.com: Connection reset by peer
+Connection to ec2-34-226-192-28.compute-1.amazonaws.com closed.
+client_loop: send disconnect: Connection reset by peer
+
+java and git install playbook::
+================================
+
+>sudo vi installgit.yml
+
+copy git & JDK playbook code to installgit.yml
+
+
+---
+
+- hosts: all
+  
+  
+  become: yes
+  
+  tasks:
+  
+  -  name: install git
+    
+     apt:
+     
+       name: git
+     
+       state: present
+     
+       update_cache: yes
+
+  -  name: Install Java
+    
+     apt:
+     
+       name: openjdk-17-jdk
+     
+       state: present
+
+Run the playbook::
+===============
+>ansible-planbook <playbookname>
+>ansible-playbook installgit.yml
+
+ansible@ip-172-31-42-190:/etc/ansible$ ansible-playbook installgit.yml
+
+PLAY [all] ***********************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************
+[WARNING]: Platform linux on host ansible@localhost is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [ansible@localhost]
+[WARNING]: Platform linux on host node2@ip-172-31-42-167.us-west-2.compute.internal is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+[WARNING]: Platform linux on host node1@ip-172-31-39-93.us-west-2.compute.internal is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+
+TASK [install git in ubuntu machines] ********************************************************************************
+ok: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+ok: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+ok: [ansible@localhost]
+
+TASK [install JDK17 in ubuntu machines] ******************************************************************************
+changed: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+changed: [ansible@localhost]
+changed: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+
+PLAY RECAP ***********************************************************************************************************
+ansible@localhost          : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node1@ip-172-31-39-93.us-west-2.compute.internal : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node2@ip-172-31-42-167.us-west-2.compute.internal : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+ansible@ip-172-31-42-190:/etc/ansible$ java --version
+openjdk 17.0.15 2025-04-15
+OpenJDK Runtime Environment (build 17.0.15+6-Ubuntu-0ubuntu124.04)
+OpenJDK 64-Bit Server VM (build 17.0.15+6-Ubuntu-0ubuntu124.04, mixed mode, sharing)
+
+Usefull Google links::
+===========
+
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+https://docs.ansible.com/ansible/2.9/modules/apt_module.html#parameters
+https://www.geeksforgeeks.org/how-to-install-java-using-ansible-playbook/
+https://www.yamllint.com/
+https://www.geeksforgeeks.org/how-to-install-tomcat-using-ansible-playbook/
+
+Ansible all modules links::
+=========================
+
+https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html
+https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
+i want to insatll 4 spfwares(git,jdk17,tree & apache2) :: below playbook name -----> softwaresinstallition.yml
+====================================================================================================
+
+created playbook for this requirement
+
+---
+- hosts: all
+
+  become: yes
+
+  tasks:
+
+  -  name: install git in ubuntu machines
+
+       apt:
+
+       name: git
+       state: present
+       update_cache: yes
+
+   -  name: install JDK17 in ubuntu machines
+     apt:
+       name: openjdk-17-jdk
+       state: absent
+
+   -  name: install tree in ubuntu machines
+     apt:
+       name: tree
+       state: present
+
+  -  name: install apache2 in ubuntu machines
+     apt:
+       name: apache2
+       state: absent
+     
+
+>ansible-playbook softwaresinstallition.yml
+
+
+LAB Practice::
+===============
+
+ansible@ip-172-31-42-190:/etc/ansible$ sudo vi softwaresinstallition.yml
+ansible@ip-172-31-42-190:/etc/ansible$ ansible-playbook softwaresinstallition.yml
+
+PLAY [all] ***********************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************
+[WARNING]: Platform linux on host ansible@localhost is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [ansible@localhost]
+[WARNING]: Platform linux on host node1@ip-172-31-39-93.us-west-2.compute.internal is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+[WARNING]: Platform linux on host node2@ip-172-31-42-167.us-west-2.compute.internal is using the discovered Python
+interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of
+that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+
+TASK [install git in ubuntu machines] ********************************************************************************
+ok: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+ok: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+ok: [ansible@localhost]
+
+TASK [install JDK17 in ubuntu machines] ******************************************************************************
+ok: [ansible@localhost]
+changed: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+changed: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+
+TASK [install tree in ubuntu machines] *******************************************************************************
+ok: [ansible@localhost]
+changed: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+changed: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+
+TASK [install apache2 in ubuntu machines] ****************************************************************************
+changed: [node1@ip-172-31-39-93.us-west-2.compute.internal]
+changed: [node2@ip-172-31-42-167.us-west-2.compute.internal]
+changed: [ansible@localhost]
+
+PLAY RECAP ***********************************************************************************************************
+ansible@localhost          : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node1@ip-172-31-39-93.us-west-2.compute.internal : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+node2@ip-172-31-42-167.us-west-2.compute.internal : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+Please enabled Inbound and Outbound rules::
+=======================================
+
+Inbound and outbound rules refer to the types of network traffic that are allowed or denied to and from a system, such as a server, virtual machine, or network device. These rules are typically defined in firewalls or security groups (such as in cloud environments like AWS, Azure, or Google Cloud). The primary goal is to control which data can enter or leave a network, ensuring security and proper access control.
+
+Here’s a detailed explanation of inbound and outbound rules:
+
+ Inbound Rules::
+Inbound rules control traffic entering a system or network. These rules define which types of external traffic are allowed to reach a server, instance, or device.
+
+Common Uses:
+Allowing specific users or services to access the system.
+
+Restricting access to the system from unauthorized users.
+
+Opening ports for services like web servers (HTTP, HTTPS), SSH, database connections, etc
+
+Allowing incoming traffic on port 80 (HTTP) so that users can access a web server.
+
+Outbound Rules::
+Outbound rules control traffic leaving a system or network. These rules define which traffic is allowed to exit a server or device and reach external destinations.
+
+Common Uses:
+Allowing a server to access external services like APIs, databases, or external servers.
+
+Restricting unwanted traffic from the system to external destinations.
+
+Controlling the flow of outgoing traffic to ensure compliance with security policies.
+
+Allow HTTP/HTTPS: Allow outbound traffic on ports 80 (HTTP) and 443 (HTTPS) to any IP:
+
+
+
+![image](https://github.com/user-attachments/assets/0e51f799-d746-45a5-94cb-f358ade65ba2)
+
+
+![image](https://github.com/user-attachments/assets/8fa024b7-0999-40f7-94cb-3eaa018fbd41)
+
+
+![image](https://github.com/user-attachments/assets/2ca3de47-8bea-4f5a-a35e-0238788cb7c7)
+
