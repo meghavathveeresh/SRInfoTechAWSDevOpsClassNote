@@ -4178,3 +4178,469 @@ NODE1::
 NODE2::
 
 ![image](https://github.com/user-attachments/assets/60e75d37-a96c-4fb4-b8c1-aa1ca52f8867)
+
+
+
+
+
+17/06/2025::
+=================
+
+
+Executing ansible in 2 ways
+1.	Adhoc command  ---> yearly base
+2.	Playbook (YAML/YML) format --> use for repetitive work
+
+Inventory::
+==========
+where hosts/ipaddress are stored
+
+I want to create my own inventory
+
+>Cd /etc/ansible
+
+![image](https://github.com/user-attachments/assets/e03cd989-34e8-46f5-88d0-9af56f11b6d9)
+
+![image](https://github.com/user-attachments/assets/7a4d1993-1c1e-4da6-94b0-eeb105cb0d36)
+
+![image](https://github.com/user-attachments/assets/79f8fb33-19d1-47a9-b26e-aff30d75d408)
+
+>cat /etc/ansible/hosts
+
+Sudo vi hosts
+
+Copy all hosts
+
+![image](https://github.com/user-attachments/assets/bcda07ba-ab66-4b86-bf67-f7ad9c556230)
+
+I want categories into Inventory groups::
+===================================
+
+In Ansible, inventory groups are used to organize and categorize hosts (machines or servers) into logical groups. This allows you to apply tasks to specific sets of servers, simplifying playbook management and execution. An inventory is a list of managed hosts and their associated metadata, and groups are one of the key components of that structure.
+
+Here’s a detailed explanation of Ansible inventory groups
+
+1. What Are Inventory Groups?
+An inventory group in Ansible is a way to group hosts based on a shared characteristic. For example, you might have groups for different environments (e.g., dev, prod), different types of servers (e.g., web_servers, db_servers), or other logical categories that fit your needs.
+
+static inventory groups defined in the standard INI or YAML format.
+
+# Define groups of hosts:: >sudo vi hosts
+
+[web_servers]
+
+ ansiblenode1@172.31.20.135
+ 
+ ansiblenode2@172.31.30.200
+ 
+ localhost
+ 
+[db_servers]
+
+ansiblenode1@172.31.20.135
+
+ansiblenode2@172.31.30.200
+
+[app_servers]
+
+ localhost
+ 
+i want to insatll 3 spfwares :: below playbook name -----> installsoftware.yml
+==============================
+
+---
+- hosts: web_server
+  
+  become: yes
+  
+  tasks:
+  
+  -  name: install git
+    
+     apt:
+     
+       name: git
+     
+       state: present
+     
+       update_cache: yes
+
+  -  name: install tree
+    
+     apt:
+     
+       name: tree
+     
+       state: present  
+
+  -  name: install apache
+  
+     apt:
+     
+       name: apache2
+     
+       state: present
+
+once above two files created run the below command
+
+>ansible-playbook -i hosts installsoftware.yml
+     
+![image](https://github.com/user-attachments/assets/36d33a9a-b113-402c-80f7-1e9c404a245b)
+
+>ansible -i hosts -m ping Webserver
+
+Best practice is you need to create our own inventories
+
+>sudo vi hosts
+
+after ran the above yaml, please try to access all machines with IPaddresss
+
+![image](https://github.com/user-attachments/assets/4a7778cd-6b97-4822-ad5e-11bbdde82231)
+
+![image](https://github.com/user-attachments/assets/96a67d2a-993a-47ff-aa79-3dc8cd7aa06a)
+
+![image](https://github.com/user-attachments/assets/01ee5e45-446e-42f2-a47f-c8b3e2fbe2f5)
+
+Please enabled Inbound and Outbound rules::
+=======================================
+
+Inbound and outbound rules refer to the types of network traffic that are allowed or denied to and from a system, such as a server, virtual machine, or network device. These rules are typically defined in firewalls or security groups (such as in cloud environments like AWS, Azure, or Google Cloud). The primary goal is to control which data can enter or leave a network, ensuring security and proper access control.
+
+Here’s a detailed explanation of inbound and outbound rules:
+
+ Inbound Rules::
+Inbound rules control traffic entering a system or network. These rules define which types of external traffic are allowed to reach a server, instance, or device.
+
+Common Uses:
+Allowing specific users or services to access the system.
+
+Restricting access to the system from unauthorized users.
+
+Opening ports for services like web servers (HTTP, HTTPS), SSH, database connections, etc
+
+Allowing incoming traffic on port 80 (HTTP) so that users can access a web server.
+
+Outbound Rules::
+Outbound rules control traffic leaving a system or network. These rules define which traffic is allowed to exit a server or device and reach external destinations.
+
+Common Uses:
+Allowing a server to access external services like APIs, databases, or external servers.
+
+Restricting unwanted traffic from the system to external destinations.
+
+Controlling the flow of outgoing traffic to ensure compliance with security policies.
+
+Allow HTTP/HTTPS: Allow outbound traffic on ports 80 (HTTP) and 443 (HTTPS) to any IP:
+
+
+
+![image](https://github.com/user-attachments/assets/0e51f799-d746-45a5-94cb-f358ade65ba2)
+
+![image](https://github.com/user-attachments/assets/8fa024b7-0999-40f7-94cb-3eaa018fbd41)
+
+![image](https://github.com/user-attachments/assets/2ca3de47-8bea-4f5a-a35e-0238788cb7c7)
+
+
+Install LAMP on ubuntu 24.04::
+==================================
+
+A LAMP stack stands for Linux, Apache, MySQL, and PHP, which is a popular open-source software stack used for web development. It provides everything you need to set up a dynamic website or web application.
+
+Here’s a quick overview of each component:
+
+Linux: The operating system (in this case, Ubuntu).
+
+Apache: The web server that serves your website’s files.
+
+MySQL: The database management system for storing and retrieving data.
+
+PHP: The programming language used for dynamic web page generation.
+
+
+
+Manual Steps::
+====================
+
+https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu
+
+>sudo apt update
+
+>sudo apt install apache2
+
+>sudo apt install mysql-server
+
+>sudo apt install php
+
+>sudo apt install libapache2-mod-php
+
+>sudo apt install php-mysql
+
+>sudo systemctl restart apache2
+
+>sudo apt install php-cli
+
+>sudo nano /var/www/html/info.php
+
+above steps are manually installed all required softwares in LAMP project but my requirement is to write a Playbook for those manuall steps
+
+Playbook for LAMP::  phppackage.yml
+=====================
+
+
+
+---
+- hosts: all
+
+  become: yes
+
+  tasks:
+  
+  -  name: install apache2
+
+     apt:
+
+     name: apache2
+
+     state: present
+
+     update_cache: yes
+
+  -  name: install php
+
+      apt:
+
+      name: php
+
+      state: present  
+
+  -  name: install mysql-server
+
+     apt:
+
+      name: mysql-server
+
+      state: present
+     
+  -  name: install libapache2-mod-php
+
+     apt:
+
+     name: libapache2-mod-php
+
+     state: present
+                   
+  -  name: install  php-mysql
+
+     apt:
+
+     name: php-mysql
+
+     state: present
+     
+  -  name: restart apache
+
+     service:
+
+     name: apache2
+
+      enabled: true
+
+     state: restarted
+
+  -  name: install php-cli
+
+     apt:
+
+     name: php-cli
+
+      state: present 
+
+  -  name: copy module info.php
+
+     copy:
+
+     src: info.php
+
+     dest: /var/www/html/info.php     
+
+
+Copy Module::
+=========
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+
+Service Module::
+==================
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html
+
+info.php ::
+==========
+
+https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu
+
+
+
+hosts grouping:
+================
+
+![image](https://github.com/user-attachments/assets/2eb4e4d2-bda2-44fa-8e86-d4b5bd51ed9e)
+
+
+[Webservers]
+ansiblenode1@172.31.20.135
+ansiblenode2@172.31.30.200
+localhost
+
+[Appservers]
+ansiblenode1@172.31.20.135
+
+[DBservers]
+
+localhost
+
+
+Reference flow::
+==============
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ ls
+hosts  info.php  installsoftwares.yml  phppackage.yml
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ sudo vi phppackage.yml
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ sudo vi hosts
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ sudo vi phppackage.yml
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ ansible-playbook -i hosts phppackage.yml
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ sudo vi info.php
+ansible@ip-172-31-28-207:/etc/ansible/playbook$ ansible-playbook -i hosts phppackage.yml
+
+PLAY [Webservers] *********************************************************************************************
+
+TASK [Gathering Facts] ****************************************************************************************
+[WARNING]: Platform linux on host localhost is using the discovered Python interpreter at /usr/bin/python3.12,
+but future installation of another Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [localhost]
+[WARNING]: Platform linux on host ansiblenode2@172.31.30.200 is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that
+path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [ansiblenode2@172.31.30.200]
+[WARNING]: Platform linux on host ansiblenode1@172.31.20.135 is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that
+path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [ansiblenode1@172.31.20.135]
+
+TASK [install apache2] ****************************************************************************************
+ok: [ansiblenode2@172.31.30.200]
+ok: [ansiblenode1@172.31.20.135]
+ok: [localhost]
+
+TASK [install php] ********************************************************************************************
+ok: [ansiblenode1@172.31.20.135]
+ok: [ansiblenode2@172.31.30.200]
+ok: [localhost]
+
+TASK [install mysql-server] ***********************************************************************************
+ok: [ansiblenode1@172.31.20.135]
+ok: [ansiblenode2@172.31.30.200]
+ok: [localhost]
+
+TASK [install libapache2-mod-php] *****************************************************************************
+ok: [ansiblenode1@172.31.20.135]
+ok: [ansiblenode2@172.31.30.200]
+ok: [localhost]
+
+TASK [install  php-mysql] *************************************************************************************
+ok: [ansiblenode1@172.31.20.135]
+ok: [ansiblenode2@172.31.30.200]
+ok: [localhost]
+
+TASK [restart apache] *****************************************************************************************
+changed: [ansiblenode2@172.31.30.200]
+changed: [localhost]
+changed: [ansiblenode1@172.31.20.135]
+
+TASK [install php-cli] ****************************************************************************************
+ok: [ansiblenode1@172.31.20.135]
+ok: [localhost]
+ok: [ansiblenode2@172.31.30.200]
+
+TASK [copy module info.php] ***********************************************************************************
+changed: [localhost]
+changed: [ansiblenode2@172.31.30.200]
+changed: [ansiblenode1@172.31.20.135]
+
+PLAY RECAP ****************************************************************************************************
+ansiblenode1@172.31.20.135 : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+ansiblenode2@172.31.30.200 : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+localhost                  : ok=9    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+
+Please execute above steps we will see the php insatlled on all 3 machines
+
+![image](https://github.com/user-attachments/assets/d49aa2d0-69ad-4c40-8408-2ccf3edbf838)
+
+![image](https://github.com/user-attachments/assets/74b9e6dd-8fb1-452f-85f1-faffd48d7dae)
+
+![image](https://github.com/user-attachments/assets/6d58255a-e6ea-44b7-a4e2-39f8598358b3)
+
+
+info.php::
+===========
+
+<?php
+phpinfo();
+?>
+
+
+
+
+Working Script::
+====================
+
+---
+- hosts: Webservers
+  become: yes
+  tasks:
+  -  name: install Apache2 in ubuntu machines
+     apt:
+       name: apache2
+       state: present
+  -  name: apache2 started in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: started
+  -  name: apache2 enabled in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: enabled
+  -  name: install php php-fpm in ubuntu machines
+     apt:
+       name: php php-fpm
+       state: present
+  -  name: install php-mysql in ubuntu machines
+     apt:
+       name: php-mysql
+       state: present
+  -  name: install php-opcache in ubuntu machines
+     apt:
+       name: php-opcache
+       state: present          
+  -  name: install php-cli in ubuntu machines
+     apt:
+       name: php-cli
+       state: present
+  -  name: install libapache2-mod-php in ubuntu machines
+     apt:
+       name: libapache2-mod-php
+       state: present
+  -  name: Copy info.php file to Destination folder
+     copy:
+       src: info.php
+       dest: /var/www/html/info.php
+
+
+
