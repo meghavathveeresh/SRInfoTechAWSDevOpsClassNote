@@ -4644,3 +4644,67 @@ Working Script::
 
 
 
+18/06/2025::
+=================
+
+How do i write a loops In Ansible::
+=======================================
+
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html
+
+Repeated tasks can be written as standard loops over a simple list of strings. You can define the list directly in the task.
+
+Using loops Examples::
+
+- name: Add several users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    state: present
+    groups: "wheel"
+  loop:
+     - testuser1
+     - testuser2
+
+
+ansible loops
+===================
+
+Working Script and Please try to execute below scripts using Ansible Loops::
+
+---
+- hosts: Websevers
+  become: yes
+  tasks:
+
+  -  name: install all php packages in ubuntu machines
+     apt:
+       name: "{{ item }}"
+       state: present
+     loop:
+       - php-fpm
+       - php-mysql
+       - php-opcache
+       - php-cli
+       - libapache2-mod-php
+       - apache2
+  -  name: apache2 started in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: started
+  -  name: apache2 enabled in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: reloaded     
+  -  name: apache2 restarted in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: restarted
+  -  name: Copy info.php file to Destination folder
+     copy:
+       src: info.php
+       dest: /var/www/html/info.php
+
+
