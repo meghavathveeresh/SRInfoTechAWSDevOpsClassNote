@@ -4708,3 +4708,181 @@ Working Script and Please try to execute below scripts using Ansible Loops::
        dest: /var/www/html/info.php
 
 
+
+
+     19/06/2025::
+     ==================
+
+
+Setup module in ansible::
+==========================
+
+Setup module is used to collect the facts
+
+Facts-----> information gather from nodes called facts
+
+>ansible -I hosts -m setup Webserver
+
+![image](https://github.com/user-attachments/assets/c6325665-4a15-400a-8240-bff439426f43)
+
+Using filter command::
+=========================
+
+If you're asking about the "filter" parameter in Ansible's command-line modules like below
+
+
+>ansible -i hosts -m setup -a "filter=*os*" Webserver
+
+ansible_os_family": "Debian"
+
+Ansible when statements
+
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#the-when-statement
+
+
+ansible_os_family": "Debian"
+
+When condition is always used bottom of the script and using scrips we can able to run a playbook on a different platforms 
+
+1.Debian
+2.Redhat
+---
+- hosts: Webserver
+
+  become: yes
+
+  tasks:
+  - name: install apache
+
+    apt:
+      name: apache2
+
+    state: present
+
+    update_cache: yes
+
+    when: ansible_os_family == "Debian"  
+  - name: install apache
+
+    yum:
+
+    name: httpd
+
+     state: present
+
+    when: ansible_os_family == "Redhat"
+
+
+In Ansible, variables are used to store values that can be referenced and used throughout your playbooks, roles, and tasks. This allows for dynamic, reusable, and flexible automation. Here’s a basic breakdown of how Ansible variables work and the different ways you can define and use them:
+
+
+define variables in 3 places
+1.	Inventory level  lowest priority
+2.	Playbook level 
+3.	Command line level –highest level priority
+
+
+defined variable in Ansible::
+ 
+ 1.commandline level  ---highest priorty 
+ 2.playbook level    ----2nd highest priority
+ 3.inventory level -- low priorty
+   a.host level variabel
+   b. group level
+
+Inventory variables: These are defined in the inventory file (or dynamic inventory) for specific hosts or groups.
+
+[webservers]
+ansiblenode1@172.31.20.135  package_name=git
+ansiblenode2@172.31.30.200 package_name=apache2
+localhost 
+
+[webservers:vars]
+ansiblenode2@172.31.30.200 
+localhost 
+
+package_name=httpd
+
+Playbook variables: You can define variables directly within your playbooks using the vars section.
+
+---
+- hosts: Webservers
+
+  become: yes
+
+  vars:
+
+  pacakge_name: git
+
+  tasks:
+    
+    - name: Install all packages
+
+      apt:
+
+      name: "{{ pacakge_name }}"
+
+      state: present
+
+      Command-line variables: You can pass variables to your playbooks at runtime using the -e or --extra-vars option.
+      
+
+      >ansible-playbook -i hosts -e "package_name=apache2" variables2.yml
+
+
+
+Ansible resolves variable values based on a specific precedence order. The order from highest to lowest precedence is:
+====================================================================================================================
+
+Extra-vars (-e on the command line): Command-line variables take the highest precedence.
+
+Playbook variables: Variables defined within the playbook.
+
+Inventory variables: Variables set in the inventory.
+
+Working Script::
+===================
+
+
+---
+- hosts: Websevers
+- 
+  become: yes
+  
+  vars:
+  
+    package_name: apache2
+  
+    package_httpd: httpd
+  
+    git_variable: git
+  
+  tasks:
+  
+  -  name: installed apache
+  -  
+     apt:
+       name: "{{ package_name }}"
+     
+       state: present
+     
+       update_cache: yes
+     
+     when: ansible_os_family=="Debian"
+     
+  -  name: installed git
+  
+     apt:
+       name: "{{ git_variable }}"
+     
+       state: present
+     
+     when: ansible_os_family=="Debian"
+     
+  -  name: installed httpd
+     yum:
+       name: "{{ package_httpd }}"
+     
+       state: present
+     
+     when: ansible_os_family=="Redhat"
