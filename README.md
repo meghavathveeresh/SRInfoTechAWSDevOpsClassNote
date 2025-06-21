@@ -4886,3 +4886,213 @@ Working Script::
        state: present
      
      when: ansible_os_family=="Redhat"
+
+
+
+20/06/2025::
+================
+
+
+Debug & vars & register in Ansible module::
+==========================================
+
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+
+---
+- name: Echo message on localhost
+
+  hosts: localhost
+
+   connection: local
+
+   gather_facts: no
+
+   vars:
+
+   message: "Hello from Ansible playbook on localhost!"
+
+  tasks:
+    
+    - name: Echo message and connection type
+
+      ansible.builtin.shell: "echo '{{ message }}' ; echo 'Connection type: {{ ansible_connection }}'"
+
+      register: echo_output
+
+    
+    - name: Display output
+
+      debug:
+
+      msg: "{{ echo_output.stdout_lines }}"
+
+
+>ansible-playbook -i hosts -vvv variable.yaml  --------> verbose logs purpose ,please run this command
+
+
+![image](https://github.com/user-attachments/assets/7d18a6e5-a53b-436b-bf26-dbe1db0e89af)
+
+
+Registry Module::
+-----------------
+Registry is a module used to results can be stored in a variable
+Stored ouptput of a task or script
+I want execute a command and results can be stored in a variable is called registry
+
+Handlers::
+===========
+Sometimes you want a task to run only when a change is made on a machine. For example, you may want to restart a service if a task updates the configuration of that service, but not if the configuration is unchanged. Ansible uses handlers to address this use case. Handlers are tasks that only run when notified
+
+---
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure apache is at the latest version
+      ansible.builtin.yum:
+        name: httpd
+        state: latest
+  handlers:
+    - name: Restart apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+
+
+Working Playbook, please try to execute and understand::
+========================================================
+
+
+- hosts: DBservers
+  become: yes
+  tasks:
+  - name: install apache2
+    apt:
+      name: apache2
+      state: present
+      update_cache: yes
+  - debug:
+      msg: "install apache2 successfully in ubuntu machines"
+  - name: install my sql software
+    apt:
+      name: mysql-server
+      state: present
+  - debug:
+      msg: "install mysql-server successfully in ubuntu machines"
+
+  - name: install php
+    apt:
+      name: php
+      state: present
+  - debug:
+      msg: "install php successfully in ubuntu machines"
+
+  - name: install libapache2-mod-php
+    apt:
+      name: libapache2-mod-php
+      state: present
+  - debug:
+      msg: "install mod php successfully in ubuntu machines"
+
+  - name: install php-mcrypt
+    apt:
+      name: php-mcrypt
+      state: present
+  - debug:
+      msg: "install mcrypt successfully in ubuntu machines"
+
+  - name: install php-mysql
+    apt:
+      name: php-mysql
+      state: present
+  - debug:
+      msg: "install mysql successfully in ubuntu machines"
+  handlers:
+  - name: restart apache2
+    service:
+      name: apache2
+      enabled : yes
+      state: stopped
+  handlers:
+  - name: start apache2
+    service:
+      name: apache2
+      enabled : yes
+      state: started
+
+  - name: install php-cli
+    apt:
+      name: php-cli
+      state: present
+  - debug:
+      msg: "install php-cli successfully in ubuntu machines"
+
+  - name: restart apache2
+    service:
+      name: apache2
+      enabled : yes
+      state: restarted
+
+  - name: Copy file with src and destination
+    copy:
+      src: info.php
+      dest: /var/www/html/info.php
+
+
+
+=========================
+
+Working Script::
+
+
+---
+- hosts: Websevers
+  become: yes
+  tasks:     
+  -  name: install all php packages in ubuntu machines
+     apt:
+       name: "{{ item }}"
+       state: present     
+     loop:
+       - php-fpm
+       - php-mysql
+       - php-opcache
+       - php-cli
+       - libapache2-mod-php
+  -  debug:
+       msg: "installed all the PHP packages"      
+  handlers:
+  -  name: install Apache2 in ubuntu machines
+     apt:
+       name: apache2
+       state: present
+  -  debug:
+       msg: "installed apache2 successfully"     
+  -  name: apache2 started in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: started 
+  -  debug:
+       msg: "aapche2 started successfully"          
+  -  name: apache2 enabled in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: reloaded
+  -  debug:
+       msg: "apache2 reloaded successfully"      
+  -  name: apache2 restarted in ubuntu machines
+     service:
+       name: apache2
+       enabled: yes
+       state: restarted
+  -  debug:
+       msg: "apache2 restaretd successfully"      
+  -  name: Copy info.php file to Destination folder
+     copy:
+       src: info.php
+       dest: /var/www/html/info.php
+  -  debug:
+       msg: "copied php file successfully"
+
+     
