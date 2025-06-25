@@ -5095,4 +5095,569 @@ Working Script::
   -  debug:
        msg: "copied php file successfully"
 
-     
+
+
+
+23/06/2025:: And 24/06/2025::
+============================
+
+Ansible Roles::
+===================
+
+
+![image](https://github.com/user-attachments/assets/99525357-1651-471a-b737-df79823dc24f)
+
+
+Ansible roles are a way of organizing playbooks and tasks in a modular, reusable, and maintainable structure. They allow you to break down complex playbooks into smaller, focused units of functionality that can be easily shared and reused across different projects. Here's a more detailed look at Ansible roles:
+
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+
+1.Written ansible in a reusable fashion
+2.How do I use someone else’s work
+3.Ansible galaxy is a place where we can find reusable roles
+
+https://galaxy.ansible.com/
+
+4.Which we can use in your script
+
+
+
+install roles
+
+ > Ansible-galaxy install <rolename>
+
+ >ansible-galaxy install my_role
+
+create my own role::
+
+> ansible-galaxy init <rolename>
+
+>ansible-galaxy init my_role
+
+
+
+Structure of Ansible Roles::
+===================
+
+my_role/
+├── defaults/
+│   └── main.yml            # Default variables
+├── files/
+│   └── somefile            # Files to be copied to the target
+├── handlers/
+│   └── main.yml            # Handlers (usually for service restarts)
+├── meta/
+│   └── main.yml            # Metadata about the role
+├── tasks/
+│   └── main.yml            # The main tasks (this file includes other task files if needed)
+├── templates/
+│   └── config.j2           # Jinja2 templates for dynamic file creation
+├── tests/
+│   └── test.yml            # Test playbooks to verify the role works
+├── vars/
+│   └── main.yml            # Custom variables
+
+
+Using Roles in Playbooks
+Once you've defined a role, you can use it in your playbook like this:
+
+---
+- name: Example Playbook using roles
+  hosts: all
+  become: yes
+  roles:
+    - my_role
+
+Benefits of Using Roles
+Reusability: Roles can be reused across different playbooks and projects.
+
+Modularity: Roles allow you to organize your playbook into smaller, manageable parts.
+
+Clarity: Each role focuses on a specific task or function, making your playbooks more understandable.
+
+Example Role: Installing Tomcat
+
+https://galaxy.ansible.com/ui/standalone/roles/robertdebock/tomcat/install/
+
+
+Create my own role
+
+> Ansible-galaxy init rolename
+
+![image](https://github.com/user-attachments/assets/af275783-63b6-40ab-a319-645db283a40f)
+
+![image](https://github.com/user-attachments/assets/34cfe34b-b8bc-4026-9014-0c07c952c3af)
+
+Install tomcat
+
+If you're looking to install or use an Ansible role for Tomcat from Ansible Galaxy, you can search for available roles and collections related to Tomcat. Here's how you can find and use a role related to Tomcat from Galaxy.
+1.	Search for a Tomcat Role
+
+https://galaxy.ansible.com/
+
+To search for a role related to Tomcat on Ansible Galaxy, you can use the following command:
+bash
+Copy
+ansible-galaxy search tomcat
+This will return a list of roles related to Tomcat that you can install and use.
+2. Install a Tomcat Role
+Once you’ve found a suitable role for Tomcat, you can install it using the ansible-galaxy install command.
+For example, if you find a role called geerlingguy.tomcat, you can install it by running:
+bash
+Copy
+> ansible-galaxy install geerlingguy.tomcat
+This will download and install the role into your ~/.ansible/roles/ directory (or the path defined in your ansible.cfg file).
+3. Use the Installed Tomcat Role in Your Playbook
+After installing the role, you can use it in your playbook. Here’s an example of a simple playbook that installs and configures Tomcat:
+yaml
+Copy
+
+Deploywar.yml::
+=============
+
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - robertdebock.java
+  - robertdebock.tomcat
+ 
+  > ansible-playbook -i hosts Deploywar.yml
+  
+
+![image](https://github.com/user-attachments/assets/306fd1fc-8c51-40f7-81b6-41a44e6ee915)
+
+  
+This will use the geerlingguy.tomcat role to set up Tomcat on your webservers hosts.
+
+https://galaxy.ansible.com/robertdebock/tomcat
+
+![image](https://github.com/user-attachments/assets/29cfc5e4-b8e6-494b-a462-d8a11699df12)
+
+Deploywar.yml
+
+![image](https://github.com/user-attachments/assets/d7f4d510-bee2-4d32-ad56-7906a8574e93)
+
+![image](https://github.com/user-attachments/assets/adad9ea6-ed52-457e-a9eb-adb2d19ad026)
+
+![image](https://github.com/user-attachments/assets/a4c880aa-f378-4085-9122-3ef93a25e09a)
+
+
+By default  tomcat run port 8080
+http://18.236.181.244:8080/
+http://34.216.173.44:8080/manager/html
+
+![image](https://github.com/user-attachments/assets/fa5faaeb-ec9e-43f2-9184-7bf46f1433c4)
+
+
+Most of the work is done 
+Where is my war file
+
+
+Deploy Onlinebook store war to tomcat server using roles::
+==============================================================
+
+>If war file is available in local machine use copy module
+>if war file is available other machine(internet) use get_url module
+Tomcat by default install
+
+>/opt/tomcat
+
+![image](https://github.com/user-attachments/assets/45a19e09-7641-4dec-b730-d2b01a3ea63b)
+
+![image](https://github.com/user-attachments/assets/721d2e75-0368-4d87-bdf1-d54331ef8afb)
+
+---
+- hosts: Webservers
+  become: yes
+  roles:
+  - robertdebock.java
+  - robertdebock.tomcat
+  tasks:
+  - name: copy war
+    get_url:
+      url: https://srinfotech.s3.us-west-2.amazonaws.com/jobs/AnsibleIntegartedWith+Jenkins/5/onlinebookstore.war
+      dest: /opt/tomcat/webapps/onlinebookstore.war
+
+
+![image](https://github.com/user-attachments/assets/d43d4d4a-ee8d-4dd8-af09-b71dfdf2da6f)
+
+Create S3 Bucket in AWS account::
+===============================
+
+Go to AWS account and search S3 bucket 
+
+S3=SSS=simple storage services
+
+![image](https://github.com/user-attachments/assets/8c1b5637-9392-414d-ab0b-21bf9d882609)
+
+Select S3
+
+![image](https://github.com/user-attachments/assets/c62a298f-185d-43ec-9d62-8b874e7627ec)
+
+Click Create bucket
+
+![image](https://github.com/user-attachments/assets/097eedf8-8e2f-48f5-876f-2c3debfccda8)
+
+Bucket name provide
+
+![image](https://github.com/user-attachments/assets/669f5b5a-d4e4-43ee-add1-e6be36171ec4)
+
+Object Ownership  ---- ACLs enabled selected
+
+
+Unchecked Block all public access
+
+
+![image](https://github.com/user-attachments/assets/61cac919-cbbd-4b39-9121-d1ed20e33bcd)
+
+Ackened 
+
+![image](https://github.com/user-attachments/assets/9edcd3b0-c71a-4e78-8132-0469a192cd82)
+
+Click crete bucket
+
+![image](https://github.com/user-attachments/assets/c0b39afe-325c-4d82-9ea6-2204896c1f55)
+
+S3 bucket is created in AWS
+
+![image](https://github.com/user-attachments/assets/702e2185-29cd-43d2-9176-ad9788907bc8)
+
+S3 bucket Created successfully
+
+
+![image](https://github.com/user-attachments/assets/3c2855d7-ae2c-4f18-8ce7-3b766211b811)
+
+Click Bucket
+
+![image](https://github.com/user-attachments/assets/3000b5bc-8691-40cc-b5ee-e378fe813bf6)
+
+
+Click Upload 
+
+
+![image](https://github.com/user-attachments/assets/71efca18-9c4a-4bad-97ff-6e6baf6b559c)
+
+Click Add Files
+
+
+![image](https://github.com/user-attachments/assets/e74175f3-ca04-47bb-977b-9f9df1cf7139)
+
+Select Onlinebookstore.war file
+
+![image](https://github.com/user-attachments/assets/89cac099-5c85-4a29-91e9-8868f2e2f020)
+
+Select check box to upload the onlinebookstore.war file
+
+![image](https://github.com/user-attachments/assets/30c81ce3-4605-45e9-90bd-b719dac4d875)
+
+Click Upload
+
+![image](https://github.com/user-attachments/assets/85a5204d-b660-4d0c-8983-fc24b05427e4)
+
+Upload Succeeded
+
+![image](https://github.com/user-attachments/assets/11d79c2d-c353-404c-be41-130608b34dcb)
+
+Copy URL
+
+![image](https://github.com/user-attachments/assets/147864ff-fc89-4ae1-b104-b383cccba33b)
+
+![image](https://github.com/user-attachments/assets/37ad0996-d054-4a3b-aa57-c0480254c1c1)
+
+Copy url to below script:: onlinebookstore.yml
+===================
+
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - robertdebock.java
+  - robertdebock.tomcat
+  tasks:
+  - name: copy war
+    get_url:
+      url: https://srinfotech.s3.us-west-2.amazonaws.com/jobs/AnsibleIntegartedWith+Jenkins/5/onlinebookstore.war
+      dest: /opt/tomcat/webapps/onlinebookstore.war
+
+![image](https://github.com/user-attachments/assets/402272bc-6604-4840-a406-c1cc8e95dcc6)
+
+run the playbook
+
+>ansible-playbook -i hosts onlinebookstore.yml
+
+![image](https://github.com/user-attachments/assets/4ed55d65-f16e-4314-8dba-c3a34c3ee5c2)
+
+Success
+
+![image](https://github.com/user-attachments/assets/592b947e-d422-4430-9729-98724403ce0d)
+
+Verify deployment in Tomcat server
+
+![image](https://github.com/user-attachments/assets/c50103d8-21ba-484e-8562-34a1b5b2c0d0)
+
+http://54.218.133.244:8080/onlinebookstore/
+
+![image](https://github.com/user-attachments/assets/e79ac48a-f76e-42ff-b5a5-28094402c20a)
+
+
+Integrated Ansible & Tomcat & S3 With Jenkins::
+===============================================
+
+
+
+
+
+S3 bucket creation and integrate S3 with Jenkins::
+=====================================================
+
+Go to AWS account and search S3 bucket 
+
+S3=SSS=simple storage services
+
+
+![image](https://github.com/user-attachments/assets/24bc6c86-9063-4d41-9f91-165cdb6238dc)
+
+ 
+
+Select S3
+
+![image](https://github.com/user-attachments/assets/91b082dc-65f2-46be-8800-997cd38e117b)
+
+ 
+
+Click Create bucket
+
+ ![image](https://github.com/user-attachments/assets/147baac9-7372-4b3e-9586-77687b9722c6)
+
+
+AWS region  --virgenia
+
+![image](https://github.com/user-attachments/assets/fd820852-8d1b-49eb-b8a4-9b33c18e70b7)
+
+
+Bucket name provide
+
+
+ 
+
+Object Ownership  ---- ACLs enabled selected
+
+
+ ![image](https://github.com/user-attachments/assets/d1928ba2-8b6e-4df9-b68d-d94cc15326b8)
+
+
+Unchecked Block all public access
+
+
+ ![image](https://github.com/user-attachments/assets/813ea825-a67f-4b77-af97-338992d19d6e)
+
+
+Ackened 
+
+ ![image](https://github.com/user-attachments/assets/7b2a5776-e82e-4e4a-921f-1fb75aa02edc)
+
+
+Click crete bucket
+
+
+
+![image](https://github.com/user-attachments/assets/acfc10ae-76e4-4bb0-bb3e-caaa4c4f429d)
+
+ 
+
+S3 bucket is created in AWS
+
+
+![image](https://github.com/user-attachments/assets/23c158bb-207d-4a00-8b20-eed9881438e9)
+
+ 
+
+First installed Jenkins in AWS ubuntu machine
+
+Installed S3 publisher plugin
+
+Found S3 profile at system configuration
+
+
+![image](https://github.com/user-attachments/assets/cff577be-a2db-4ee0-b5f3-bfda98ae7384)
+
+ 
+
+Second step::
+Create IAM role in AWS account
+
+ IAM----> Indentity Access Management
+
+![image](https://github.com/user-attachments/assets/4cbba43f-c06d-43b6-8a27-3dc5c76e4ec2)
+
+
+![image](https://github.com/user-attachments/assets/56b9485f-2538-4558-9963-a0253328a2f8)
+
+ 
+
+Click Users
+
+![image](https://github.com/user-attachments/assets/5178b83a-f01a-43c5-901b-82aa693ff52d)
+
+ 
+
+Click create user
+
+
+ ![image](https://github.com/user-attachments/assets/f9c443d3-4172-475c-92fd-d55f8bac2363)
+
+
+Provide the user name
+
+
+![image](https://github.com/user-attachments/assets/03fa6ef0-f565-47eb-a288-e9db884cb3dd)
+
+ 
+![image](https://github.com/user-attachments/assets/63632b00-66bf-494e-8d25-dfd4b7a8fe46)
+
+ 
+Click next
+ 
+![image](https://github.com/user-attachments/assets/5ccb8d94-9dd7-4823-b336-64e1f40185e0)
+
+![image](https://github.com/user-attachments/assets/0ebcab66-285f-4498-97b9-eac4c1f1d116)
+ 
+
+![image](https://github.com/user-attachments/assets/61351716-26ce-4f59-abcc-95423a19bb83)
+
+ 
+ 
+select S3 policies
+
+
+ ![image](https://github.com/user-attachments/assets/4108108b-fd6b-4b41-98af-f75c846ade4d)
+
+
+
+User created successfully
+
+
+![image](https://github.com/user-attachments/assets/9c932e66-b49a-4c79-9acd-e475ce79e89e)
+
+ 
+User name::
+
+SRInfotech
+
+Console password::
+
+wv9PC8%3
+
+
+![image](https://github.com/user-attachments/assets/7e60afc9-f167-458d-bbd1-dbee13f0668a)
+
+  
+
+
+Create access & secret keys:;
+
+Open new user test
+
+
+ ![image](https://github.com/user-attachments/assets/0c2db911-ee73-49fa-8521-65b54ec681b9)
+
+
+Click create access key
+
+ ![image](https://github.com/user-attachments/assets/6a165b7e-fbcd-4c02-bae8-7b0d725a45c1)
+
+
+
+Select Application running on an AWS compute service
+
+
+![image](https://github.com/user-attachments/assets/ef231f9a-1511-430f-a4f9-d5555e903d84)
+
+ 
+
+Click next
+
+
+ ![image](https://github.com/user-attachments/assets/b17aa07c-f4e6-4657-a0c8-a8144a2bee0c)
+
+
+Access keys created
+
+
+![image](https://github.com/user-attachments/assets/4a5d2768-8666-4c15-96b1-fe050ee523f3)
+
+ 
+ ![image](https://github.com/user-attachments/assets/07429f2c-a808-4fc6-9908-296c3513ed42)
+
+
+
+Integaretd S3 with Jenkins
+
+
+![image](https://github.com/user-attachments/assets/e665dc0a-43b6-41dd-8ce7-90bc7cdd1e0a)
+
+ 
+
+Provided access and secret key
+
+Click test connection
+
+
+![image](https://github.com/user-attachments/assets/9290abf9-a675-4a0a-ab68-9c46678b83e2)
+
+ 
+
+Check passed
+
+
+ ![image](https://github.com/user-attachments/assets/56db73d5-9d8d-4f6b-9df9-4c76e746de5f)
+
+
+Bucket region us-east-1
+
+ 
+
+ ![image](https://github.com/user-attachments/assets/5179600c-c962-4000-92c9-f78e34ccd596)
+
+ 
+
+ 
+
+Destination bucket:: should be give AWS bucket name
+
+ 
+![image](https://github.com/user-attachments/assets/8273aff6-f175-41fa-a0c2-7c0ba697f74d)
+
+ 
+![image](https://github.com/user-attachments/assets/9d35ced8-7e52-4ef3-973d-9fbfdb354f24)
+
+
+ ![image](https://github.com/user-attachments/assets/6f78f94c-c349-4c21-ab45-bb14f5c44400)
+
+![image](https://github.com/user-attachments/assets/04ef0eef-31ff-4cb4-a152-74b97dbc3b37)
+
+
+![image](https://github.com/user-attachments/assets/560d116a-206a-4688-9711-620198f6cfad)
+
+
+![image](https://github.com/user-attachments/assets/2d1d7dd4-f351-4752-928f-28377c2d9ad8)
+
+
+![image](https://github.com/user-attachments/assets/6819247b-1cf8-4265-b04b-e79adf3d4051)
+
+![image](https://github.com/user-attachments/assets/db23a9d6-5725-41d8-9083-55173325b240)
+
+
+ ![image](https://github.com/user-attachments/assets/77a787c6-07bb-4c22-93fc-07939f1eb36c)
+
+![image](https://github.com/user-attachments/assets/2cfade4f-e8c7-4254-bbcf-e103d84c13c2)
+
+
+
+![image](https://github.com/user-attachments/assets/5eaccb62-252d-4a3e-9d53-4768cf153b69)
+Should be enabled Manage artifacts options
+ 
+ 
+  
+
