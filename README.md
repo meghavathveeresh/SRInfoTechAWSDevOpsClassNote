@@ -5673,7 +5673,7 @@ Docker is an open-source platform that automates the deployment, scaling, and ma
 
 ![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
 
-
+Docker is a platform and that make it easier to create, deploy, and run applications using containers. Containers are lightweight, standalone, and executable units that include everything needed to run a piece of software, including the code, runtime, libraries, and system tools.
 
 container ::
 ==============
@@ -5713,12 +5713,12 @@ Physical & Virtual & Hypervisors/VMwares::
 3.application level virtulization docker is the best choice and OS level virtulization VMwares are best choice
 4.individually scale the your application very easy in docker
 
-![image](https://github.com/user-attachments/assets/94a53226-77d3-402d-8a89-2e5fc7879099)
+![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
 
 
 Example:: For festival season In your organization leave management application multiple employees are applied leaves at the same time in that scenario docker is very easy to scale the one more application but physically it’s very difficult so docker is the best choice
 
 
-![image](https://github.com/user-attachments/assets/da4f8434-7dac-460a-ae43-37c3053d18c4)
+![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
 
 
