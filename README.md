@@ -5722,3 +5722,606 @@ Example:: For festival season In your organization leave management application 
 ![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
 
 
+
+
+
+27/06/2025::
+=============
+
+Install Docker in Ubuntu machine::
+=====================================
+
+Please follow below link steps to install the docker in ubuntu and please read all the content in that link
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
+
+once installed docker please verify below commands::
+
+>docker --version
+
+root@ip-172-31-20-86:~# docker --version
+Docker version 28.0.4, build b8034c0
+
+root@ip-172-31-20-86:~# docker info
+Client: Docker Engine - Community
+ Version:    28.0.4
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.22.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.34.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 0
+ Server Version: 28.0.4
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Cgroup Version: 2
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da
+ runc version: v1.2.5-0-g59923ef
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+  cgroupns
+ Kernel Version: 6.8.0-1024-aws
+ Operating System: Ubuntu 24.04.2 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 3.82GiB
+ Name: ip-172-31-20-86
+ ID: 201c6f4b-75d3-4326-adf5-00b9a82a8d4d
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Experimental: false
+ Insecure Registries:
+  ::1/128
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+if above page is came without any erros, it means docker is installed in your machine
+
+
+Docker High Level Client -Server Architecture::
+==================================
+
+
+![image](https://github.com/user-attachments/assets/78e4ca62-008e-425a-909a-bab59e3030ed)
+
+
+Docker's high-level architecture revolves around several components that work together to provide containerization and isolation for applications
+
+
+Docker Client (CLI)::
+=================
+
+The Docker Client is the primary interface for interacting with Docker. It can be a command-line interface (CLI), like the docker command, or a graphical interface (GUI) in some tools.
+
+It allows users to interact with Docker's features, such as building containers, running containers, and managing containers and images.
+
+It sends requests to the Docker Daemon to execute commands.
+
+Docker Daemon (Dockerd)::
+====================
+
+The Docker Daemon (also known as dockerd) is the core component of Docker. It runs in the background on the host system.
+
+The daemon is responsible for managing Docker containers, images, networks, and volumes. It listens for Docker API requests and handles container lifecycle operations such as starting, stopping, and building containers.
+
+The Docker Daemon can communicate with multiple Docker clients, allowing for distributed management of containers.
+
+Flow:
+============
+1.The Docker Client sends a command to the Docker Daemon.
+
+2.The Docker Daemon interacts with containers, images, and storage volumes.
+
+3.The Docker Daemon can pull images from a Docker Registry.
+
+4.The Docker Daemon runs containers based on the images and handles networking and storage.
+
+Docker commands::
+====================
+
+ >docker pull <imagename>
+
+ >docker pull hello-world
+
+ >docker images   ----used to display the all images
+
+ > docker image ls ----used to display the all images
+ 
+ >docker run ---used to build the images and create the container
+
+Create the Jenkins container::
+=================================
+
+>docker run -d -p 8080:8080 -p 5000:5000 jenkins/jenkins:jdk21
+
+
+http://35.155.150.89:8080/
+
+
+![image](https://github.com/user-attachments/assets/30576b75-b3ee-47e1-97f0-f535c46ff015)
+
+
+>docker ps
+
+above command is used to verify the how many containers are running
+
+
+Create the Nginx web based application container::
+=======================================================
+
+>docker run -d -p 80:80 nginx:latest
+
+http://35.155.150.89/
+
+![image](https://github.com/user-attachments/assets/003a7ca7-5a81-4ea6-8b60-3c1dd0b7a74d)
+
+
+>docker ps
+
+above command is used to verify the how many containers are running, you can seee nginx container is running state
+
+
+
+detached mode::
+=================
+
+Docker detached mode refers to running a container in the background
+
+>docker run -d <image_name>
+
+example::
+> docker run -d nginx
+
+Where:
+
+-d is the flag for detached mode.
+
+<image_name> is the name of the Docker image you want to run.
+
+> docker run -d nginx
+
+This command will:
+
+Run the nginx container in detached mode.
+
+Start the container in the background.
+
+To view the containers running in detached mode, you can use the docker ps command:
+======================================
+
+>docker ps
+
+Stopping a Container::
+=================
+
+>docker stop <containerID>
+
+Start a Container::
+=================
+
+>docker start <containerID>
+
+To run a command inside a running container:
+======================
+
+>docker exec -it <container_id_or_name> <command>
+>docker exec -it 5336d949f33b /bin/bash
+
+>root@5336d949f33b:/# hostname
+5336d949f33b
+>root@5336d949f33b:/# hostname -i
+172.17.0.3
+
+
+![image](https://github.com/user-attachments/assets/c7114894-3fcd-46b0-b393-6f296d23b845)
+
+NOTE:::
+=========
+
+>docker exec -it 5178eb58223a /bin/bash
+Use this command inside the container
+
+>ctrl pq
+Outside the containers
+
+Lab practice::
+===============
+
+take one nginx web server
+
+>docker pull nginx
+
+root@ip-172-31-20-86:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+6e909acdb790: Pull complete
+5eaa34f5b9c2: Pull complete
+417c4bccf534: Pull complete
+e7e0ca015e55: Pull complete
+373fe654e984: Pull complete
+97f5c0f51d43: Pull complete
+c22eb46e871a: Pull complete
+Digest: sha256:124b44bfc9ccd1f3cedf4b592d4d1e8bddb78b51ec2ed5056c52d3692baebc19
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+
+>docker images
+
+root@ip-172-31-20-86:~# docker images
+REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins   latest    be95e0848c42   7 days ago     466MB
+nginx             latest    53a18edff809   7 weeks ago    192MB
+
+>docker run -d -p 80:80 nginx
+
+root@ip-172-31-20-86:~# docker run -d -p 80:80 nginx
+3d1a52d091b05878e079b89002aa57b460c5263a585a8add0ecc671608d1f999
+
+>docker ps
+
+root@ip-172-31-20-86:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                 NAMES
+3d1a52d091b0   nginx     "/docker-entrypoint.…"   3 seconds ago   Up 3 seconds   0.0.0.0:80->80/tcp, [::]:80->80/tcp   thirsty_shaw
+
+>docker exec -it 3d1a52d091b0
+
+root@ip-172-31-20-86:~# docker exec -it 3d1a52d091b0  /bin/bash
+docker: 'docker exec' requires at least 2 arguments
+
+root@ip-172-31-20-86:~# docker exec -it 3d1a52d091b0 /bin/bash
+root@3d1a52d091b0:/# hostname
+3d1a52d091b0
+root@3d1a52d091b0:/# hostname -i
+172.17.0.3
+
+root@5336d949f33b:/# ls
+bin  boot  dev  docker-entrypoint.d  docker-entrypoint.sh  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@5336d949f33b:/# cd opt/
+root@5336d949f33b:/opt# ls
+root@5336d949f33b:/opt# cd ..
+root@5336d949f33b:/# ls
+bin  boot  dev  docker-entrypoint.d  docker-entrypoint.sh  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@5336d949f33b:/# cd usr/
+root@5336d949f33b:/usr# ls
+bin  games  include  lib  lib64  libexec  local  sbin  share  src
+root@5336d949f33b:/usr# cd lib
+root@5336d949f33b:/usr/lib# ls
+apt  dpkg  init  locale  lsb  mime  nginx  os-release  sasl2  ssl  systemd  terminfo  tmpfiles.d  udev  x86_64-linux-gnu
+root@5336d949f33b:/usr/lib#
+root@5336d949f33b:/usr/lib# docker images
+bash: docker: command not found
+root@5336d949f33b:/usr/lib# docker imagesexit
+bash: docker: command not found
+root@5336d949f33b:/usr/lib# read escape sequence
+root@ip-172-31-20-86:~# docker images
+REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins   latest    be95e0848c42   7 days ago     466MB
+nginx             latest    53a18edff809   7 weeks ago    192MB
+ubuntu            latest    a04dc4851cbc   2 months ago   78.1MB
+hello-world       latest    74cc54e27dc4   2 months ago   10.1kB
+root@ip-172-31-20-86:~# docekr runRead from remote host ec2-34-204-17-141.compute-1.amazonaws.com: Connection reset by peer
+Connection to ec2-34-204-17-141.compute-1.amazonaws.com closed.
+client_loop: send disconnect: Connection reset by peer
+
+we can see below nginx web page and nginx is running on containers
+
+![image](https://github.com/user-attachments/assets/878995bc-58b1-4f20-982e-2d60f105891d)
+
+
+
+Lab Practice::
+====================
+
+
+root@ip-172-31-39-182:~# docker images
+REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins   jdk21     52e1941f479f   21 hours ago   471MB
+root@ip-172-31-39-182:~# docker run -d -p 8080:8080 -p 5000:5000 jenkins/jenkins:jdk21
+aca7ec14bfc5f057f73dc4cf294e920a63712bbd5f838b5205e5e00faa542318
+root@ip-172-31-39-182:~# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                                                                                 NAMES
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   7 seconds ago   Up 6 seconds   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp   festive_tharp
+root@ip-172-31-39-182:~# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                 NAMES
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   43 seconds ago   Up 43 seconds   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp   festive_tharp
+root@ip-172-31-39-182:~# java --version
+Command 'java' not found, but can be installed with:
+apt install default-jre              # version 2:1.17-75, or
+apt install openjdk-17-jre-headless  # version 17.0.14+7-1~24.04
+apt install openjdk-21-jre-headless  # version 21.0.6+7-1~24.04.1
+apt install openjdk-19-jre-headless  # version 19.0.2+7-4
+apt install openjdk-20-jre-headless  # version 20.0.2+9-1
+apt install openjdk-22-jre-headless  # version 22~22ea-1
+apt install openjdk-11-jre-headless  # version 11.0.26+4-1ubuntu1~24.04
+apt install openjdk-8-jre-headless   # version 8u442-b06~us1-0ubuntu1~24.04
+root@ip-172-31-39-182:~# docker exec -it aca7ec14bfc5 /bin/bash
+jenkins@aca7ec14bfc5:/$ java --version
+openjdk 21.0.7 2025-04-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.7+6 (build 21.0.7+6-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.7+6 (build 21.0.7+6-LTS, mixed mode)
+jenkins@aca7ec14bfc5:/$ sudo apt update
+bash: sudo: command not found
+jenkins@aca7ec14bfc5:/$ hostname
+aca7ec14bfc5
+jenkins@aca7ec14bfc5:/$ java --version
+openjdk 21.0.7 2025-04-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.7+6 (build 21.0.7+6-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.7+6 (build 21.0.7+6-LTS, mixed mode)
+jenkins@aca7ec14bfc5:/$ cd /var/lib/
+jenkins@aca7ec14bfc5:/var/lib$ ls
+apt  dpkg  git  misc  pam  shells.state  systemd
+jenkins@aca7ec14bfc5:/var/lib$ exit
+exit
+root@ip-172-31-39-182:~# cd /var/lib/
+root@ip-172-31-39-182:/var/lib# ls
+PackageKit  command-not-found  grub           os-prober     shim-signed              ucf
+amazon      containerd         hibinit-agent  pam           snapd                    udisks2
+app-info    dbus               ieee-data      plymouth      sudo                     unattended-upgrades
+apport      dhcpcd             landscape      polkit-1      swcatalog                update-manager
+apt         docker             libuuid        private       systemd                  update-notifier
+boltd       dpkg               logrotate      python        tpm                      usb_modeswitch
+chrony      fwupd              man-db         sgml-base     ubuntu-advantage         vim
+cloud       git                misc           shells.state  ubuntu-release-upgrader  xml-core
+root@ip-172-31-39-182:/var/lib# cd ..
+root@ip-172-31-39-182:/var# cd ..
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                                                                                 NAMES
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   7 minutes ago   Up 7 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp   festive_tharp
+root@ip-172-31-39-182:/# docker exec -it aca7ec14bfc5 /bin/bash
+jenkins@aca7ec14bfc5:/$ cd /var/jenkins_home/secret
+bash: cd: /var/jenkins_home/secret: No such file or directory
+jenkins@aca7ec14bfc5:/$ ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+jenkins@aca7ec14bfc5:/$ cd secrets
+bash: cd: secrets: No such file or directory
+jenkins@aca7ec14bfc5:/$ cd ..
+jenkins@aca7ec14bfc5:/$ ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+jenkins@aca7ec14bfc5:/$ pwd
+/
+jenkins@aca7ec14bfc5:/$ cd /var/jenkins_home/
+jenkins@aca7ec14bfc5:~$ ls
+config.xml                     jenkins.telemetry.Correlator.xml  plugins                   secrets      users
+copy_reference_file.log        jobs                              secret.key                updates      war
+hudson.model.UpdateCenter.xml  nodeMonitors.xml                  secret.key.not-so-secret  userContent
+jenkins@aca7ec14bfc5:~$ cd secrets
+jenkins@aca7ec14bfc5:~/secrets$ ls
+initialAdminPassword  jenkins.model.Jenkins.crumbSalt  master.key
+jenkins@aca7ec14bfc5:~/secrets$ cat initialAdminPassword
+3268b754fc93442e9ea3cf22c40fcc8e
+jenkins@aca7ec14bfc5:~/secrets$ read escape sequence
+root@ip-172-31-39-182:/# docker run -d -p 8080:8080 -p 5000:5000 jenkins/jenkins:jdk21
+1b6159a409c358d5a2db6ecc34b13cf29e8f1d94ca249722a47424d02a8d6bc1
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint unruffled_pare (f76e7f84de1872354f3caf9f2c4d2ee9bf83c468178a614d407f1c5d35df00f3): Bind for 0.0.0.0:5000 failed: port is already allocated
+
+Run 'docker run --help' for more information
+root@ip-172-31-39-182:/# docker run -d -p 8081:8081 -p 5001:5001 jenkins/jenkins:jdk21
+601ef30a9a97b2ef1ab13a6956d603edbc23cd2d2717cb4d2db41f4b88e148ae
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   8 seconds ago    Up 8 seconds    0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   12 minutes ago   Up 12 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS              PORTS                                                                                                           NAMES
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   2 minutes ago    Up About a minute   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   14 minutes ago   Up 14 minutes       0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   3 minutes ago    Up 3 minutes    0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   16 minutes ago   Up 16 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker exec -it 601ef30a9a97 /bin/bash
+jenkins@601ef30a9a97:/$ java --version
+openjdk 21.0.7 2025-04-15 LTS
+OpenJDK Runtime Environment Temurin-21.0.7+6 (build 21.0.7+6-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.7+6 (build 21.0.7+6-LTS, mixed mode)
+jenkins@601ef30a9a97:/$ cd /var/jenkins_home/
+jenkins@601ef30a9a97:~$ ls
+config.xml                     jenkins.telemetry.Correlator.xml  plugins                   secrets      users
+copy_reference_file.log        jobs                              secret.key                updates      war
+hudson.model.UpdateCenter.xml  nodeMonitors.xml                  secret.key.not-so-secret  userContent
+jenkins@601ef30a9a97:~$
+jenkins@601ef30a9a97:~$ exit
+exit
+root@ip-172-31-39-182:/# docker run -d -p 8585:8585 jenkins/jenkins:jdk21
+bc684af40e16b2c7eb91de87e952ec7a1ae0bab608bc9d0e17bad723ce853d69
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   7 seconds ago    Up 7 seconds    8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   7 minutes ago    Up 7 minutes    0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   19 minutes ago   Up 19 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker run -d -p 80:80 jenkins/jenkins:jdk21
+a800fb0e6d7cd81cefdb33b1ded7019c478fbd8ebd232498c99316a092b92660
+root@ip-172-31-39-182:/# docker psdock
+docker: unknown command: docker psdock
+
+Run 'docker --help' for more information
+root@ip-172-31-39-182:/#
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED              STATUS              PORTS                                                                                                           NAMES
+a800fb0e6d7c   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   About a minute ago   Up About a minute   8080/tcp, 0.0.0.0:80->80/tcp, [::]:80->80/tcp, 50000/tcp                                                        romantic_lewin
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   2 minutes ago        Up 2 minutes        8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   9 minutes ago        Up 9 minutes        0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   22 minutes ago       Up 22 minutes       0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker pull srinfotech
+Using default tag: latest
+Error response from daemon: pull access denied for srinfotech, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+root@ip-172-31-39-182:/# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+dad67da3f26b: Pull complete
+4eb3a9835b30: Pull complete
+021db26e13de: Pull complete
+397cc88dcd41: Pull complete
+5f4a88bd8474: Pull complete
+66467f827546: Pull complete
+f05e87039331: Pull complete
+Digest: sha256:dc53c8f25a10f9109190ed5b59bda2d707a3bde0e45857ce9e1efaa32ff9cbc1
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@ip-172-31-39-182:/# docker images
+REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins   jdk21     52e1941f479f   21 hours ago   471MB
+nginx             latest    9a9a9fd723f1   2 days ago     192MB
+root@ip-172-31-39-182:/# docker run -d -p 80:80 nginx:latest
+78f28d3d450fa094d496e22de149de21141ffd1e884772251922121a7b40422d
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint interesting_mclaren (f76b2b0d8ace4755840ce6f55c5da9f57bfed6e0f29dd8a41991b31217fc3f6a): Bind for 0.0.0.0:80 failed: port is already allocated
+
+Run 'docker run --help' for more information
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+a800fb0e6d7c   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   10 minutes ago   Up 10 minutes   8080/tcp, 0.0.0.0:80->80/tcp, [::]:80->80/tcp, 50000/tcp                                                        romantic_lewin
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   11 minutes ago   Up 11 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   18 minutes ago   Up 18 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   31 minutes ago   Up 31 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker stop a800fb0e6d7c
+a800fb0e6d7c
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   12 minutes ago   Up 12 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   19 minutes ago   Up 19 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   31 minutes ago   Up 31 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker run -d -p 80:80 nginx:latest
+585b90814ed4871098000ddaf38376502a490bc2f38bfe625d47a3ddd7f0c85f
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+585b90814ed4   nginx:latest            "/docker-entrypoint.…"   9 seconds ago    Up 9 seconds    0.0.0.0:80->80/tcp, [::]:80->80/tcp                                                                             festive_euler
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   12 minutes ago   Up 12 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   19 minutes ago   Up 19 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   32 minutes ago   Up 32 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker images
+REPOSITORY        TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins   jdk21     52e1941f479f   21 hours ago   471MB
+nginx             latest    9a9a9fd723f1   2 days ago     192MB
+root@ip-172-31-39-182:/# docker image tag nginx srinfotech7358/SrInfotechnginx:latest
+Error parsing reference: "srinfotech7358/SrInfotechnginx:latest" is not a valid repository/tag: invalid reference format: repository name (srinfotech7358/SrInfotechnginx) must be lowercase
+root@ip-172-31-39-182:/# docker image tag nginx srinfotech7358/srinfotechnginx:latest
+root@ip-172-31-39-182:/# docker images
+REPOSITORY                       TAG       IMAGE ID       CREATED        SIZE
+jenkins/jenkins                  jdk21     52e1941f479f   21 hours ago   471MB
+nginx                            latest    9a9a9fd723f1   2 days ago     192MB
+srinfotech7358/srinfotechnginx   latest    9a9a9fd723f1   2 days ago     192MB
+root@ip-172-31-39-182:/# docker login -u srinfotech7358
+
+i Info → A Personal Access Token (PAT) can be used instead.
+         To create a PAT, visit https://app.docker.com/settings
+
+
+Password:
+
+WARNING! Your credentials are stored unencrypted in '/root/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+root@ip-172-31-39-182:/# docker push srinfotech7358/srinfotechnginx
+Using default tag: latest
+The push refers to repository [docker.io/srinfotech7358/srinfotechnginx]
+cd38dca3d982: Mounted from library/nginx
+d35594dd7e6d: Mounted from library/nginx
+126eaee18409: Mounted from library/nginx
+6380429cac56: Mounted from library/nginx
+13fcb2d303e8: Mounted from library/nginx
+151f9feea563: Mounted from library/nginx
+7fb72a7d1a8e: Mounted from library/nginx
+latest: digest: sha256:3004321c732af3becb9dc247f5e8926faba9186aa67960e15767996abcec588b size: 1778
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+585b90814ed4   nginx:latest            "/docker-entrypoint.…"   10 minutes ago   Up 10 minutes   0.0.0.0:80->80/tcp, [::]:80->80/tcp                                                                             festive_euler
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   22 minutes ago   Up 22 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   29 minutes ago   Up 29 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   42 minutes ago   Up 42 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker stop 585b90814ed4
+585b90814ed4
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   23 minutes ago   Up 23 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   30 minutes ago   Up 30 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   42 minutes ago   Up 42 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker run -d -p 80:80 srinfotech7358/srinfotechnginx:latest
+9f5173c50d14631bd31c8270f79a45db441e8c66db5b730dbb7197de65594c20
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+9f5173c50d14   srinfotech7358/srinfotechnginx:latest   "/docker-entrypoint.…"   9 seconds ago    Up 8 seconds    0.0.0.0:80->80/tcp, [::]:80->80/tcp                                                                             vibrant_dewdney
+bc684af40e16   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   24 minutes ago   Up 24 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   31 minutes ago   Up 31 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   43 minutes ago   Up 43 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker stop 9f5173c50d14
+9f5173c50d14
+root@ip-172-31-39-182:/# docker ps
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                                                                                           NAMES
+bc684af40e16   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   25 minutes ago   Up 25 minutes   8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   32 minutes ago   Up 32 minutes   0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21   "/usr/bin/tini -- /u…"   44 minutes ago   Up 44 minutes   0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker ps -a
+CONTAINER ID   IMAGE                                   COMMAND                  CREATED              STATUS                        PORTS                                                                                                           NAMES
+9f5173c50d14   srinfotech7358/srinfotechnginx:latest   "/docker-entrypoint.…"   About a minute ago   Exited (137) 27 seconds ago                                                                                                                   vibrant_dewdney
+585b90814ed4   nginx:latest                            "/docker-entrypoint.…"   12 minutes ago       Exited (0) 2 minutes ago                                                                                                                      festive_euler
+78f28d3d450f   nginx:latest                            "/docker-entrypoint.…"   13 minutes ago       Created                                                                                                                                       interesting_mclaren
+a800fb0e6d7c   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   23 minutes ago       Exited (143) 13 minutes ago                                                                                                                   romantic_lewin
+bc684af40e16   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   25 minutes ago       Up 25 minutes                 8080/tcp, 50000/tcp, 0.0.0.0:8585->8585/tcp, [::]:8585->8585/tcp                                                romantic_buck
+601ef30a9a97   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   32 minutes ago       Up 32 minutes                 0.0.0.0:5001->5001/tcp, [::]:5001->5001/tcp, 8080/tcp, 0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp, 50000/tcp   frosty_pare
+1b6159a409c3   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   33 minutes ago       Created                                                                                                                                       unruffled_pare
+aca7ec14bfc5   jenkins/jenkins:jdk21                   "/usr/bin/tini -- /u…"   44 minutes ago       Up 44 minutes                 0.0.0.0:5000->5000/tcp, [::]:5000->5000/tcp, 0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp, 50000/tcp             festive_tharp
+root@ip-172-31-39-182:/# docker start 9f5173c50d14
+9f5173c50d14
+root@ip-172-31-39-182:/# Read from remote host ec2-35-155-150-89.us-west-2.compute.amazonaws.com: Connection reset by peer
+Connection to ec2-35-155-150-89.us-west-2.compute.amazonaws.com closed.
+client_loop: send disconnect: Connection reset by peer
+
+
+Usefull commands:
+===============
+
+>docker --version
+
+>docker info
+
+>docker pull <imagename>
+
+>docker pull ubuntu =docker pull ubuntu:latest
+
+>docker images
+
+>docker run -d ubuntu
+
+>docker ps -aq
+
+>docker rmi <imagenname>
+
+>docker run -d -p 8080:8080 -p 5000:5000 jenkins/jenkins:jdk21
+
+>docker exec -it aca7ec14bfc5 /bin/bash     --->inside the container comamnd
+
+>docker run -d -p 8080:8080 -p 5000:5000 jenkins/jenkins:jdk21
+
+>ctrl+pq or exit
+
+>docker image tag nginx srinfotech7358/srinfotechnginx:latest
