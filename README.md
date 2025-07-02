@@ -6325,3 +6325,205 @@ Usefull commands:
 >ctrl+pq or exit
 
 >docker image tag nginx srinfotech7358/srinfotechnginx:latest
+
+
+
+
+30/06/2025::
+===============
+
+
+Dockerfile Introduction::
+=================
+
+A Dockerfile is a script containing a series of instructions on how to build a Docker image. It defines the environment and application setup, including dependencies, configurations, and the necessary steps to get your application running in a container.
+
+dockerfile is a text file, and it have set up of all instructiuons
+
+https://docs.docker.com/get-started/docker-concepts/building-images/writing-a-dockerfile/
+
+
+Dockerfile::dockerfile is text file, and it have set up of all instructiuons
+
+FROM nginx or ubuntu or 
+
+LABEL "AUthor =nagaraju@gamil.com"
+
+RUN apt update && apt-get install jenkins -y
+
+COPY . .  ----src destnations
+
+ADD  . . -----src destinatuion
+
+CMD ["echo",".jar"]
+
+ENTRYPOINT ["echo", "war"]
+
+EXPOSE 8080,8085
+
+ENV APP_HOME ="Ifocus SOlutions pvt ltd"
+
+WORKDIR $APP_HOME /app
+
+VOLUME 
+
+Key Components of a Dockerfile:
+==========================
+
+FROM: Specifies the base image for the Docker image you're creating.
+
+FROM ubuntu:20.04
+
+RUN: Executes commands inside the container, often used to install dependencies.
+
+RUN apt-get update && apt-get install -y python3
+
+COPY or ADD: Copies files from your local machine into the container.
+
+COPY . /app
+
+WORKDIR: Sets the working directory for any subsequent commands in the Dockerfile.
+
+
+WORKDIR /app
+
+CMD: Specifies the command to run when a container is started from the image.
+
+CMD ["python3", "app.py"]
+
+EXPOSE: Defines the network ports the container will listen on at runtime.
+
+EXPOSE 8080
+
+ENV: Sets environment variables inside the container.
+ENV APP_ENV=production
+CMD & ENTRPOINT can be executed starting of the container
+
+CMD & ENTRYPOINT Different::
+===========================
+--use CMD you can change the value but ENTRYPOINT not possible to change the value at the starting of the container
+--CMD you can change the argument value 
+--ENTRYPOINT can’t change the argument value
+
+CMD ["echo",".jar"]
+ENTRYPOINT ["echo", "war"]
+
+CMD/ENTRYPOINT ====should have something which runs till your app is alive
+
+Note::
+=======
+life time of your container -->time which your cmd/entrypont is alive
+
+Example Dockerfile:::
+==========
+Here’s a simple Dockerfile example that builds a Python web app:
+
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container
+COPY . /app
+
+# Install the required dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Define the command to run the application
+CMD ["python", "app.py"]
+
+Building and Running a Docker Image:
+Once you’ve written your Dockerfile, you can build and run it using Docker commands:
+
+Build the Docker image:
+
+>docker build -t my-python-app .
+
+Run the container:
+>docker run -d -p 8080:8080 my-python-app
+
+A **Dockerfile** is a script containing a series of instructions on how to build a Docker image. It defines the environment and application setup, including dependencies, configurations, and the necessary steps to get your application running in a container. Essentially, it's the blueprint for creating Docker images.
+
+### Key Components of a Dockerfile:
+1. **FROM**: Specifies the base image for the Docker image you're creating.
+   ```dockerfile
+   FROM ubuntu:20.04
+   ```
+
+2. **RUN**: Executes commands inside the container, often used to install dependencies.
+   ```dockerfile
+   RUN apt-get update && apt-get install -y python3
+   ```
+
+3. **COPY** or **ADD**: Copies files from your local machine into the container.
+   ```dockerfile
+   COPY . /app
+   ```
+
+4. **WORKDIR**: Sets the working directory for any subsequent commands in the Dockerfile.
+   ```dockerfile
+   WORKDIR /app
+   ```
+
+5. **CMD**: Specifies the command to run when a container is started from the image.
+   ```dockerfile
+   CMD ["python3", "app.py"]
+   ```
+
+6. **EXPOSE**: Defines the network ports the container will listen on at runtime.
+   ```dockerfile
+   EXPOSE 8080
+   ```
+
+7. **ENV**: Sets environment variables inside the container.
+   ```dockerfile
+   ENV APP_ENV=production
+   ```
+
+### Example Dockerfile
+Here’s a simple Dockerfile example that builds a Python web app:
+
+```dockerfile
+# Use an official Python runtime as the base image
+FROM python:3.9-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container
+COPY . /app
+
+# Install the required dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port the app runs on
+EXPOSE 5000
+
+# Define the command to run the application
+CMD ["python", "app.py"]
+```
+
+### Building and Running a Docker Image:
+Once you’ve written your Dockerfile, you can build and run it using Docker commands:
+
+1. **Build the Docker image**:
+   ```bash
+   docker build -t my-python-app .
+   ```
+
+2. **Run the container**:
+   ```bash
+   docker run -p 5000:5000 my-python-app
+   ```
+
+The Dockerfile streamlines the process of creating consistent and reproducible environments, making it easier to deploy applications across different systems.
+
+
+Please try Below Example on Docker file:
+============================================
+
+https://docs.docker.com/get-started/workshop/02_our_app/
