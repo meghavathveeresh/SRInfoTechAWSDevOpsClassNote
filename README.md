@@ -7086,3 +7086,75 @@ o The Worker Nodes are responsible for running the actual application workloads.
 
 A pod is the smallest unit of execution in Kubernetes and can contain one or more containers that share resources such as networking and storage. Pods are always deployed in a Kubernetes cluster and are managed by the control plane.
 
+
+
+08/07/2025::
+===============
+
+Services:
+===============
+A service in Kubernetes is a way to expose an application running in a pod to other pods or external users. It ensures that network communication between pods is reliable, even as pods are dynamically created or destroyed.
+
+1.Pod is a smallest component in kubernetes 
+
+2.In docker smallest component --  > container
+
+3.in kuberneties we will create pods and inside the pods containers are running.
+
+4.one pod speak with other pod using id address(kube-proxy)
+
+5.every pod has ip address
+
+
+![image](https://github.com/user-attachments/assets/2706e391-c562-4c6c-81b3-0405872de65d)
+
+
+Above picture directly using pods without using services and if ipaddress no longer available our application is not worked. pods communication throw ip address right so it has a problem to resolved the this problem services is come to the picture.
+
+With Services::
+==================
+
+![image](https://github.com/user-attachments/assets/697aa9c5-fad7-4683-9281-f8adba328d89)
+
+
+Services –logical entity and maintain ip address
+
+
+Basically kubernetes is used for maintain containers
+
+
+Kubeadm::
+============
+bootstraps a cluster. It’s designed to be a simple way for new users to build clusters (more detail on this is in a later chapter).
+
+Kubectl::
+===========
+is a tool for interacting with your existing cluster.
+
+Kubelet: 
+============
+An agent that ensures the containers in the pods are running and check healthy.
+
+
+How to Install Kubernetes Cluster on Ubuntu 22.04::
+=====================================================
+
+Please follow the below link steps to configured the Kubernetes Master and Workers 
+
+https://www.linuxtechi.com/install-kubernetes-on-ubuntu-22-04/
+
+
+>kubectl get nodes
+
+
+root@k8smaster:~# kubectl get nodes
+NAME         STATUS   ROLES           AGE   VERSION
+k8smaster    Ready    control-plane   11h   v1.28.15
+k8sworker1   Ready    <none>          11h   v1.28.15
+k8sworker2   Ready    <none>          11h   v1.28.15
+
+
+![image](https://github.com/user-attachments/assets/bdbf060a-bdf4-41d3-81c3-b4ac9931fc18)
+
+
+
