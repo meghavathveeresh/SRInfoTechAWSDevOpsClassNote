@@ -7158,3 +7158,642 @@ k8sworker2   Ready    <none>          11h   v1.28.15
 
 
 
+
+
+12/07/2025::
+=============
+
+Docker Install link::
+=======================
+
+Make sure we should install the Docker in all the machines 
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04
+
+root@k8smaster:~# docker --version
+Docker version 28.3.2, build 578ccf6
+root@k8smaster:~#
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9ca614f3-f4cf-4339-bbd1-aac6a45b0efc" />
+
+
+Clone the Project (docker-Java-kubernetes-project) :::
+====================================================
+
+>git clone https://github.com/ifocus7358/docker-Java-kubernetes-project.git
+
+root@ip-172-31-36-154:~# git clone https://github.com/ifocus7358/docker-Java-kubernetes-project.git
+Cloning into 'docker-Java-kubernetes-project'...
+remote: Enumerating objects: 156, done.
+remote: Counting objects: 100% (42/42), done.
+remote: Compressing objects: 100% (32/32), done.
+remote: Total 156 (delta 27), reused 10 (delta 10), pack-reused 114 (from 1)
+Receiving objects: 100% (156/156), 27.40 KiB | 9.13 MiB/s, done.
+Resolving deltas: 100% (35/35), done.
+
+Build the image::
+============
+
+root@ip-172-31-36-154:~# ls
+docker-Java-kubernetes-project 
+root@ip-172-31-36-154:~# cd docker-Java-kubernetes-project/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# ls
+README.md  kubernetes  productcatalogue  shopfront  stockmanager
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# cd kubernetes/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# ls
+productcatalogue-service.yaml  shopfront-service.yaml  stockmanager-service.yaml
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# cd ..
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# ls
+README.md  kubernetes  productcatalogue  shopfront  stockmanager
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# cd shopfront/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# ls
+Dockerfile  pom.xml  src
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront#
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker image build -t shopfront .
+
+installed maven::
+===============
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# mvn -v
+Apache Maven 3.8.7
+
+So need to build the source code first it will generate target folder
+>mvn clean install
+
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.598 s
+[INFO] Finished at: 2025-04-08T05:52:09Z
+[INFO] ------------------------------------------------------------------------
+
+
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# ls
+Dockerfile  pom.xml  src  target
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# cd  target/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront/target# ls
+classes  generated-sources  maven-archiver  maven-status  shopfront-0.0.1-SNAPSHOT.jar  shopfront-0.0.1-SNAPSHOT.jar.original
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront/target# ls
+classes  generated-sources  maven-archiver  maven-status  shopfront-0.0.1-SNAPSHOT.jar  shopfront-0.0.1-SNAPSHOT.jar.original
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront/target# cd ..
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker build -t shopfront .
+[+] Building 8.8s (7/7) FINISHED                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                              0.0s
+ => => transferring dockerfile: 198B                                                                                              0.0s
+ => [internal] load metadata for docker.io/library/openjdk:8-jre                                                                  0.1s
+ => [internal] load .dockerignore                                                                                                 0.0s
+ => => transferring context: 2B                                                                                                   0.0s
+ => [internal] load build context                                                                                                 0.5s
+ => => transferring context: 46.10MB                                                                                              0.5s
+ => [1/2] FROM docker.io/library/openjdk:8-jre@sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33            6.1s
+ => => resolve docker.io/library/openjdk:8-jre@sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33            0.0s
+ => => sha256:2068746827ec1b043b571e4788693eab7e9b2a95301176512791f8c317a2816a 10.88MB / 10.88MB                                  0.3s
+ => => sha256:a6a74c7b774e00fd2ec5664e257d344f1b7e69e2a618b1c0678f69719863c5ad 1.58kB / 1.58kB                                    0.0s
+ => => sha256:0c14a0e20aa3a19448f6227265c6642571112e9cd9a69b5e7a323df46d1aa835 7.43kB / 7.43kB                                    0.0s
+ => => sha256:d9d4b9b6e964657da49910b495173d6c4f0d9bc47b3b44273cf82fd32723d165 5.16MB / 5.16MB                                    0.2s
+ => => sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33 1.04kB / 1.04kB                                    0.0s
+ => => sha256:001c52e26ad57e3b25b439ee0052f6692e5c0f2d5d982a00a8819ace5e521452 55.00MB / 55.00MB                                  1.3s
+ => => sha256:8510da692cda60e4746c14dd90905695eade5888e2ad640706a2be9dc42a0224 5.66MB / 5.66MB                                    0.5s
+ => => sha256:c34215579d03c1311f4e8cd3525bc03dbbb53d79d8b58e63cce8cdd355356347 211B / 211B                                        0.4s
+ => => sha256:73d77b4774a96dfa09076212d5170e977d153ceab60c1ec4312a8f436b91371c 41.42MB / 41.42MB                                  1.2s
+ => => extracting sha256:001c52e26ad57e3b25b439ee0052f6692e5c0f2d5d982a00a8819ace5e521452                                         2.7s
+ => => extracting sha256:d9d4b9b6e964657da49910b495173d6c4f0d9bc47b3b44273cf82fd32723d165                                         0.2s
+ => => extracting sha256:2068746827ec1b043b571e4788693eab7e9b2a95301176512791f8c317a2816a                                         0.3s
+ => => extracting sha256:8510da692cda60e4746c14dd90905695eade5888e2ad640706a2be9dc42a0224                                         0.2s
+ => => extracting sha256:c34215579d03c1311f4e8cd3525bc03dbbb53d79d8b58e63cce8cdd355356347                                         0.0s
+ => => extracting sha256:73d77b4774a96dfa09076212d5170e977d153ceab60c1ec4312a8f436b91371c                                         1.0s
+ => [2/2] ADD target/shopfront-0.0.1-SNAPSHOT.jar app.jar                                                                         2.1s
+ => exporting to image                                                                                                            0.3s
+ => => exporting layers                                                                                                           0.3s
+ => => writing image sha256:3ccf19de392942c193c580caabe914257071f0c0b1cb8c8b371d369d5e0630fd                                      0.0s
+ => => naming to docker.io/library/shopfront                                                                                      0.0s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+shopfront                     latest    3ccf19de3929   14 seconds ago   320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago     1.31GB
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker run -d -p 80:80 shopfront
+836d8e23016935ac3cd74067bbdb4998dba147ce425d17edafced967b1884233
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                                                                                                  NAMES
+836d8e230169   shopfront                             "java -Djava.securit…"   6 seconds ago    Up 5 seconds    0.0.0.0:80->80/tcp, [::]:80->80/tcp, 8010/tcp                                                                                          epic_leavitt
+ad8f297fbeca   gcr.io/k8s-minikube/kicbase:v0.0.46   "/usr/local/bin/entr…"   27 minutes ago   Up 27 minutes   127.0.0.1:32768->22/tcp, 127.0.0.1:32769->2376/tcp, 127.0.0.1:32770->5000/tcp, 127.0.0.1:32771->8443/tcp, 127.0.0.1:32772->32443/tcp   minikube
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront#
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+shopfront                     latest    3ccf19de3929   3 minutes ago   320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago    1.31GB
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED              STATUS              PORTS                                                                                                                                  NAMES
+836d8e230169   shopfront                             "java -Djava.securit…"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp, [::]:80->80/tcp, 8010/tcp                                                                                          epic_leavitt
+ad8f297fbeca   gcr.io/k8s-minikube/kicbase:v0.0.46   "/usr/local/bin/entr…"   28 minutes ago       Up 28 minutes       127.0.0.1:32768->22/tcp, 127.0.0.1:32769->2376/tcp, 127.0.0.1:32770->5000/tcp, 127.0.0.1:32771->8443/tcp, 127.0.0.1:32772->32443/tcp   minikube
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker rm 836d8e230169
+Error response from daemon: cannot remove container "/epic_leavitt": container is running: stop the container before removing or force remove
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker rm -f 836d8e230169
+836d8e230169
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                                                                                                  NAMES
+ad8f297fbeca   gcr.io/k8s-minikube/kicbase:v0.0.46   "/usr/local/bin/entr…"   29 minutes ago   Up 29 minutes   127.0.0.1:32768->22/tcp, 127.0.0.1:32769->2376/tcp, 127.0.0.1:32770->5000/tcp, 127.0.0.1:32771->8443/tcp, 127.0.0.1:32772->32443/tcp   minikube
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+shopfront                     latest    3ccf19de3929   4 minutes ago   320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago    1.31GB
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker image tag shopfront srinu7358/shopfront-myapp
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+shopfront                     latest    3ccf19de3929   6 minutes ago   320MB
+srinu7358/shopfront-myapp     latest    3ccf19de3929   6 minutes ago   320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago    1.31GB
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker login -u srinu7358
+
+i Info → A Personal Access Token (PAT) can be used instead.
+         To create a PAT, visit https://app.docker.com/settings
+
+
+Password:
+
+WARNING! Your credentials are stored unencrypted in '/root/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker push srinnfotech7358/shopfrontnewapp
+Using default tag: latest
+The push refers to repository [docker.io/srinu7358/shopfront-myapp]
+c54136e18c64: Pushed
+1aaddf64804f: Mounted from library/openjdk
+990c5138f5d1: Mounted from library/openjdk
+5c384ea5f752: Mounted from library/openjdk
+293d5db30c9f: Mounted from library/openjdk
+03127cdb479b: Mounted from library/openjdk
+9c742cd6c7a5: Mounted from library/openjdk
+latest: digest: sha256:e027803e479a98c9d1fdcc6d983a6b778b62c2a91dee9bcccfffcb921848b42e size: 1794
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker pull srinu7358/shopfront-myapp:latest
+latest: Pulling from srinu7358/shopfront-myapp
+Digest: sha256:e027803e479a98c9d1fdcc6d983a6b778b62c2a91dee9bcccfffcb921848b42e
+Status: Image is up to date for srinu7358/shopfront-myapp:latest
+docker.io/srinu7358/shopfront-myapp:latest
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+shopfront                     latest    3ccf19de3929   12 minutes ago   320MB
+srinnfotech7358/shopfrontnewapp     latest    3ccf19de3929   12 minutes ago   320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago     1.31GB
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/shopfront# cd ..
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# ls
+README.md  kubernetes  productcatalogue  shopfront  stockmanager
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# Read from remote host ec2-54-174-108-84.compute-1.amazonaws.com: Connection reset by peer
+Connection to ec2-54-174-108-84.compute-1.amazonaws.com closed.
+client_loop: send disconnect: Connection reset by peer
+
+
+pushed image to docker hub::
+----------------------
+
+![image](https://github.com/user-attachments/assets/4223faf9-b478-4d75-8f4e-7c7017d52e7b)
+
+
+Please build the stockmanager project and it will generated target/ after build success
+
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.152 s
+[INFO] Finished at: 2025-04-10T04:54:00Z
+[INFO] ------------------------------------------------------------------------
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# ls
+Dockerfile  build  pom.xml  src  target
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# cd target/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager/target# ls
+classes  generated-sources  maven-archiver  maven-status  stockmanager-0.0.1-SNAPSHOT.jar  stockmanager-0.0.1-SNAPSHOT.jar.original
+
+
+Build the Image::
+=================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker image build -t stockmanager .
+
+[+] Building 1.1s (8/8) FINISHED                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                              0.0s
+ => => transferring dockerfile: 201B                                                                                              0.0s
+ => [internal] load metadata for docker.io/library/openjdk:8-jre                                                                  0.1s
+ => [auth] library/openjdk:pull token for registry-1.docker.io                                                                    0.0s
+ => [internal] load .dockerignore                                                                                                 0.0s
+ => => transferring context: 2B                                                                                                   0.0s
+ => [internal] load build context                                                                                                 0.4s
+ => => transferring context: 43.32MB                                                                                              0.4s
+ => CACHED [1/2] FROM docker.io/library/openjdk:8-jre@sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33     0.0s
+ => [2/2] ADD target/stockmanager-0.0.1-SNAPSHOT.jar app.jar                                                                      0.2s
+ => exporting to image                                                                                                            0.3s
+ => => exporting layers                                                                                                           0.3s
+ => => writing image sha256:3de0cce0b9d4173e0ab799d4a59b986a841c5e08244b25d0887f1d0a9d496662                                      0.0s
+ => => naming to docker.io/library/stockmanager 
+
+Verify the docker images::
+=================
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker images
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+stockmanager                  latest    3de0cce0b9d4   10 seconds ago   317MB
+shopfront                     latest    3ccf19de3929   47 hours ago     320MB
+srinu7358/shopfront-myapp     latest    3ccf19de3929   47 hours ago     320MB
+gcr.io/k8s-minikube/kicbase   v0.0.46   e72c4cbe9b29   2 months ago     1.31GB
+
+
+ Tag the Image:;
+==============
+
+ root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker image tag stockmanager srinu7358/stockmanager-myapp
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker images
+REPOSITORY                     TAG       IMAGE ID       CREATED              SIZE
+stockmanager                   latest    3de0cce0b9d4   About a minute ago   317MB
+srinu7358/stockmanager-myapp   latest    3de0cce0b9d4   About a minute ago   317MB
+shopfront                      latest    3ccf19de3929   47 hours ago         320MB
+srinu7358/shopfront-myapp      latest    3ccf19de3929   47 hours ago         320MB
+gcr.io/k8s-minikube/kicbase    v0.0.46   e72c4cbe9b29   2 months ago         1.31GB
+
+
+Login to DockerHub::
+-------------------
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker login -u srinu7358
+
+i Info → A Personal Access Token (PAT) can be used instead.
+         To create a PAT, visit https://app.docker.com/settings
+
+
+Password:
+Login Succeeded
+
+Pushed image to docker hub::
+============================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/stockmanager# docker push srinu7358/stockmanager-myapp
+Using default tag: latest
+The push refers to repository [docker.io/srinu7358/stockmanager-myapp]
+03b73450f8a0: Pushed
+1aaddf64804f: Mounted from srinu7358/shopfront-myapp
+990c5138f5d1: Mounted from srinu7358/shopfront-myapp
+5c384ea5f752: Mounted from srinu7358/shopfront-myapp
+293d5db30c9f: Mounted from srinu7358/shopfront-myapp
+03127cdb479b: Mounted from srinu7358/shopfront-myapp
+9c742cd6c7a5: Mounted from srinu7358/shopfront-myapp
+latest: digest: sha256:1104a4cb9737fc33cae8cfb60b7b0093942da0c201322e4e001ddb9fb417f23b size: 1794
+
+build the productcatalogue micro service::
+================================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# ls
+Dockerfile  pom.xml  product-catalogue.yml  src
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# cd src/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue/src# ls
+main
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue/src# cd ..
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# mvn clean install
+[INFO] Scanning for projects...
+
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.130 s
+[INFO] Finished at: 2025-04-10T04:58:34Z
+[INFO] ------------------------------------------------------------------------
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# ls
+Dockerfile  pom.xml  product-catalogue.yml  src  target
+
+
+build the docker image::
+=========================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# docker image build -t productcatalogue .
+
+[+] Building 0.6s (8/8) FINISHED                                                                                        docker:default
+ => [internal] load build definition from Dockerfile                                                                              0.0s
+ => => transferring dockerfile: 273B                                                                                              0.0s
+ => [internal] load metadata for docker.io/library/openjdk:8-jre                                                                  0.1s
+ => [internal] load .dockerignore                                                                                                 0.0s
+ => => transferring context: 2B                                                                                                   0.0s
+ => CACHED [1/3] FROM docker.io/library/openjdk:8-jre@sha256:667a15e7bc533a90fb39ddb7e5bed63162ac3c13a97e6c698bf4f139f51b7d33     0.0s
+ => [internal] load build context                                                                                                 0.2s
+ => => transferring context: 17.63MB                                                                                              0.2s
+ => [2/3] ADD target/productcatalogue-0.0.1-SNAPSHOT.jar app.jar                                                                  0.1s
+ => [3/3] ADD product-catalogue.yml app-config.yml                                                                                0.0s
+ => exporting to image                                                                                                            0.1s
+ => => exporting layers                                                                                                           0.1s
+ => => writing image sha256:6c0847459aa3acde4375bfed34e3f04d029bf02a6ceedff1503657d3fc4e75e4                                      0.0s
+ => => naming to docker.io/library/productcatalogue 
+
+ verify the images::
+ ==================
+
+ root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# docker images
+REPOSITORY                     TAG       IMAGE ID       CREATED         SIZE
+productcatalogue               latest    6c0847459aa3   9 seconds ago   291MB
+stockmanager                   latest    3de0cce0b9d4   4 minutes ago   317MB
+srinu7358/stockmanager-myapp   latest    3de0cce0b9d4   4 minutes ago   317MB
+shopfront                      latest    3ccf19de3929   47 hours ago    320MB
+srinu7358/shopfront-myapp      latest    3ccf19de3929   47 hours ago    320MB
+gcr.io/k8s-minikube/kicbase    v0.0.46   e72c4cbe9b29   2 months ago    1.31GB
+
+Tag the image:::
+=====
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# docker image tag productcatalogue srinu7358/productcatalogue-myapp
+
+verify the tag image::
+=====================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# docker images
+REPOSITORY                         TAG       IMAGE ID       CREATED              SIZE
+productcatalogue                   latest    6c0847459aa3   About a minute ago   291MB
+srinu7358/productcatalogue-myapp   latest    6c0847459aa3   About a minute ago   291MB
+stockmanager                       latest    3de0cce0b9d4   5 minutes ago        317MB
+srinu7358/stockmanager-myapp       latest    3de0cce0b9d4   5 minutes ago        317MB
+srinu7358/shopfront-myapp          latest    3ccf19de3929   47 hours ago         320MB
+shopfront                          latest    3ccf19de3929   47 hours ago         320MB
+gcr.io/k8s-minikube/kicbase        v0.0.46   e72c4cbe9b29   2 months ago         1.31GB
+
+
+pushed the image to docker hub::
+======================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/productcatalogue# docker push srinu7358/productcatalogue-myapp
+Using default tag: latest
+The push refers to repository [docker.io/srinu7358/productcatalogue-myapp]
+c445b4f83c8c: Pushed
+24772609f9a3: Pushed
+1aaddf64804f: Mounted from srinu7358/stockmanager-myapp
+990c5138f5d1: Mounted from srinu7358/stockmanager-myapp
+5c384ea5f752: Mounted from srinu7358/stockmanager-myapp
+293d5db30c9f: Mounted from srinu7358/stockmanager-myapp
+03127cdb479b: Mounted from srinu7358/stockmanager-myapp
+9c742cd6c7a5: Mounted from srinu7358/stockmanager-myapp
+latest: digest: sha256:5254cff2f0ce313265acee48dc8a8bd7a502ff0a6f08e3bb0dfa3ec7738676c8 size: 2001
+
+all 3 projects images are pushed to docker hub::
+==========================
+
+![image](https://github.com/user-attachments/assets/55d1a8e2-e9ae-4a69-81dc-2b447368efa6)
+
+
+edit the yaml file
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# ls
+README.md  kubernetes  productcatalogue  shopfront  stockmanager
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# cd kubernetes/
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# ls
+productcatalogue-service.yaml  shopfront-service.yaml  stockmanager-service.yaml
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi shopfront-service.yaml
+
+in yaml file please use your docker hub image------->srinu7358/shopfront-myapp
+
+verify the pods,deployments,services::
+=========================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get pods
+No resources found in default namespace.
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+No resources found in default namespace.
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get service
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        47h
+
+apply the yaml file::
+========
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f shopfront-service.yaml
+service/shopfront created
+deployment.apps/shopfront created
+ above command is used to created pods,deployments,servcies
+
+ root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+shopfront-69467555f6-nzsxw   1/1     Running   0          22s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+shopfront      1/1     1            1           7m2s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get service
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP          2d
+shopfront      NodePort    10.109.12.218   <none>        8010:32451/TCP   7m14s
+
+we need to do other 2 micro services as well
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi productcatalogue-service.yaml
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f productcatalogue-service.yaml
+service/productcatalogue created
+deployment.apps/productcatalogue created
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                               READY   STATUS         RESTARTS     AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ErrImagePull   0            15s
+shopfront-69467555f6-nzsxw         1/1     Running        0            9m4s
+stockmanager-6c4454c6cb-2hhfd      1/1     Running        3 (2s ago)   2m43s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   0/1     1            0           42s
+shopfront          1/1     1            1           9m31s
+stockmanager       1/1     1            1           3m10s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get svc
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d
+productcatalogue   NodePort    10.105.165.177   <none>        8020:32215/TCP   56s
+shopfront          NodePort    10.109.12.218    <none>        8010:32451/TCP   9m45s
+stockmanager       NodePort    10.96.92.240     <none>        8030:31767/TCP   3m24s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   0/1     1            0           71s
+shopfront          1/1     1            1           10m
+stockmanager       1/1     1            1           3m39s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                               READY   STATUS             RESTARTS      AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ImagePullBackOff   0             77s
+shopfront-69467555f6-nzsxw         1/1     Running            0             10m
+stockmanager-6c4454c6cb-2hhfd      1/1     Running            4 (14s ago)   3m45s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                               READY   STATUS             RESTARTS      AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ImagePullBackOff   0             2m8s
+shopfront-69467555f6-nzsxw         1/1     Running            0             10m
+stockmanager-6c4454c6cb-2hhfd      1/1     Running            5 (15s ago)   4m36s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi productcatalogue-service.yaml
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f productcatalogue-service.yaml
+service/productcatalogue unchanged
+deployment.apps/productcatalogue configured
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             16s
+shopfront-69467555f6-nzsxw          1/1     Running            0             14m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (44s ago)   8m25s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             28s
+shopfront-69467555f6-nzsxw          1/1     Running            0             14m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (56s ago)   8m37s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f stockmanager-service.yaml
+service/stockmanager unchanged
+deployment.apps/stockmanager configured
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             47s
+shopfront-69467555f6-nzsxw          1/1     Running            0             15m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (75s ago)   8m56s
+
+
+if any pod is CrashLoopBackOff , please delete or update new image
+
+delete the pod::
+==================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             47s
+shopfront-69467555f6-nzsxw          1/1     Running            0             15m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (75s ago)   8m56s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl delete po stockmanager-6c4454c6cb-2hhfd
+
+verify the after deleted::
+====================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS    RESTARTS   AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running   0          91s
+shopfront-69467555f6-nzsxw          1/1     Running   0          16m
+stockmanager-6c4454c6cb-8wkxv       1/1     Running   0          5s
+
+all 3 micro service projects ,running pods,deploy,services::
+===========================================================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+NAME                                READY   STATUS    RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running   0             2m54s
+shopfront-69467555f6-wwfbv          1/1     Running   0             5s
+stockmanager-6c4454c6cb-8wkxv       1/1     Running   1 (28s ago)   88s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   1/1     1            1           10m
+shopfront          1/1     1            1           19m
+stockmanager       1/1     1            1           12m
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get svc
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d
+productcatalogue   NodePort    10.105.165.177   <none>        8020:32215/TCP   10m
+shopfront          NodePort    10.109.12.218    <none>        8010:32451/TCP   19m
+stockmanager       NodePort    10.96.92.240     <none>        8030:31767/TCP   13m
+
+
+>kubectl describe svc shopfront
+
+use above command to ge the details of service 
+
+in kubernetes we have multiple key components or objects::
+======================
+
+ YAML::
+
+apiversion  --v1 or v2 --standadard syntax
+ kind  ----deployment/service
+ metadata  ----we can define name of the service
+   name: shopfront
+ labels ---->laben are very important in kubernetes and match with pod and matcgh with service
+
+ spec
+   type: clusterIP/NodePort
+
+   ClusterIP::
+   ==============
+
+   ClusterIP is the default service type in Kubernetes. It creates a virtual IP (VIP) inside the cluster that other internal components (pods/services) can access — but it's not accessible from outside the cluster.
+
+   apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: ClusterIP  # This is the default, so it can be omitted
+  selector:
+    app: my-backend
+  ports:
+    - protocol: TCP
+      port: 80           # Port exposed by the service
+      targetPort: 8080   # Port the container is listening on
+
+
+ NodePort:
+ =====
+   NodePort is a type of Kubernetes Service that exposes your app outside the cluster, by opening a specific port on each worker node's IP address.
+
+   apiVersion: v1
+kind: Service
+metadata:
+  name: my-nodeport-service
+spec:
+  type: NodePort
+  selector:
+    app: my-app
+  ports:
+    - port: 80          # Service port (used internally by ClusterIP)
+      targetPort: 8080  # Port on the pod
+      nodePort: 30080   # Optional: if not set, Kubernetes picks one
+
+
+root@k8smaster:~# kubectl get svc
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d10h
+productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
+
+root@k8smaster:~# kubectl get deploy
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-app          2/2     2            2           2d11h
+productcatalogue   1/1     1            1           2d10h
+shopfront          1/1     1            1           2d10h
+stockmanager       1/6     6            1           2d10h
+
+root@k8smaster:~# kubectl get pods
+NAME                                READY   STATUS             RESTARTS          AGE
+nginx-app-5777b5f95-fcx8r           1/1     Running            0                 2d11h
+nginx-app-5777b5f95-v5ghx           1/1     Running            0                 2d11h
+productcatalogue-869f894bc7-66f86   1/1     Running            0                 2d10h
+shopfront-66555cc947-hkg9v          1/1     Running            0                 2d10h
+stockmanager-7657c6dfc5-4rntl       0/1     CrashLoopBackOff   995 (4m31s ago)   2d10h
+stockmanager-7657c6dfc5-4skjh       0/1     CrashLoopBackOff   1016 (112s ago)   2d10h
+stockmanager-7657c6dfc5-657z6       0/1     CrashLoopBackOff   997 (2m11s ago)   2d10h
+stockmanager-7657c6dfc5-7nrdc       0/1     CrashLoopBackOff   995 (3m11s ago)   2d10h
+stockmanager-7657c6dfc5-f46vf       1/1     Running            996 (5m41s ago)   2d10h
+stockmanager-7657c6dfc5-qznfs       0/1     CrashLoopBackOff   999 (118s ago)    2d10h
+
+
+root@k8smaster:~# kubectl get svc
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d11h
+productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
+
+PORTS for all 3 micro services::
+=================================
+shopfront                  8010:31499/TCP 
+productcatalogue           8020:32208/TCP    
+stockmanager               8030:32579/TCP 
+
+Navigate to browser url shopfront with port
+
+http://35.94.221.231:31499/
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5e7be549-ebd1-4bd5-b7e2-615f329b5a62" />
+
+Navigate to browser url productcatalogue with port
+
+http://35.94.221.231:32208/products
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a5dadfab-9d61-4cc4-9306-f49f910bb03b" />
+
+Navigate to browser url stockmanager with port
+
+http://35.94.221.231:32579/stocks
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b313bbf1-b052-4595-9426-4b1a33b8156f" />
+
+
+<img width="1625" height="644" alt="image" src="https://github.com/user-attachments/assets/754f87cc-0356-4ac7-917e-597a29c1fc8c" />
+
+
