@@ -7772,7 +7772,9 @@ stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2
 PORTS for all 3 micro services::
 =================================
 shopfront                  8010:31499/TCP 
+
 productcatalogue           8020:32208/TCP    
+
 stockmanager               8030:32579/TCP 
 
 Navigate to browser url shopfront with port
