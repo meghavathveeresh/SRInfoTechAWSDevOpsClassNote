@@ -7160,7 +7160,7 @@ k8sworker2   Ready    <none>          11h   v1.28.15
 
 
 
-12/07/2025::
+10/07/2025::
 =============
 
 Docker Install link::
@@ -7821,41 +7821,66 @@ spec:
 root@k8smaster:~# kubectl get svc
 
 NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+
 kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+
 nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d10h
+
 productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+
 shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+
 stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
 
 root@k8smaster:~# kubectl get deploy
 
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+
 nginx-app          2/2     2            2           2d11h
+
 productcatalogue   1/1     1            1           2d10h
+
 shopfront          1/1     1            1           2d10h
+
 stockmanager       1/6     6            1           2d10h
 
 root@k8smaster:~# kubectl get pods
 
 NAME                                READY   STATUS             RESTARTS          AGE
+
 nginx-app-5777b5f95-fcx8r           1/1     Running            0                 2d11h
+
 nginx-app-5777b5f95-v5ghx           1/1     Running            0                 2d11h
+
 productcatalogue-869f894bc7-66f86   1/1     Running            0                 2d10h
+
 shopfront-66555cc947-hkg9v          1/1     Running            0                 2d10h
+
 stockmanager-7657c6dfc5-4rntl       0/1     CrashLoopBackOff   995 (4m31s ago)   2d10h
+
 stockmanager-7657c6dfc5-4skjh       0/1     CrashLoopBackOff   1016 (112s ago)   2d10h
+
 stockmanager-7657c6dfc5-657z6       0/1     CrashLoopBackOff   997 (2m11s ago)   2d10h
+
 stockmanager-7657c6dfc5-7nrdc       0/1     CrashLoopBackOff   995 (3m11s ago)   2d10h
+
 stockmanager-7657c6dfc5-f46vf       1/1     Running            996 (5m41s ago)   2d10h
+
 stockmanager-7657c6dfc5-qznfs       0/1     CrashLoopBackOff   999 (118s ago)    2d10h
 
 
 root@k8smaster:~# kubectl get svc
+
 NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+
 kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+
 nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d11h
+
 productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+
 shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+
 stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
 
 PORTS for all 3 micro services::
