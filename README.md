@@ -8453,3 +8453,25 @@ https://github.com/srinfotech7358/spring-ms.git
 https://spring-ms-git-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/008c0718-ec49-4ddf-bb50-1bbcf82557fa" />
+
+
+C:\Users\HP\docker-Java-kubernetes-project\kubernetes>oc get svc
+NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP                                                  PORT(S)                                              AGE
+example                       ClusterIP      172.30.120.21    <none>                                                       80/TCP                                               7d6h
+jenkins                       ClusterIP      172.30.2.244     <none>                                                       80/TCP                                               7d7h
+jenkins-jnlp                  ClusterIP      172.30.35.46     <none>                                                       50000/TCP                                            7d7h
+modelmesh-serving             ClusterIP      None             <none>                                                       8033/TCP,8008/TCP,8443/TCP,2112/TCP                  7d7h
+my-app-service                ClusterIP      172.30.167.153   <none>                                                       8080/TCP                                             9h
+nginx                         ClusterIP      172.30.43.7      <none>                                                       8080/TCP                                             7h30m
+petclinic-00001               ClusterIP      172.30.121.230   <none>                                                       80/TCP,443/TCP                                       7h41m
+petclinic-00001-private       ClusterIP      172.30.127.53    <none>                                                       80/TCP,443/TCP,9090/TCP,9091/TCP,8022/TCP,8012/TCP   7h41m
+productcatalogue              NodePort       172.30.36.130    <none>                                                       8020:30170/TCP                                       8h
+shopfront                     NodePort       172.30.246.166   <none>                                                       8010:31109/TCP                                       8h
+sonarqube                     ClusterIP      172.30.197.221   <none>                                                       9000/TCP                                             7h13m
+spring-ms-git                 ExternalName   <none>           kourier-internal.knative-serving-ingress.svc.cluster.local   80/TCP                                               7d6h
+spring-ms-git-00001           ClusterIP      172.30.134.127   <none>                                                       80/TCP,443/TCP                                       7d6h
+spring-ms-git-00001-private   ClusterIP      172.30.131.234   <none>                                                       80/TCP,443/TCP,9090/TCP,9091/TCP,8022/TCP,8012/TCP   7d6h
+stockmanager                  NodePort       172.30.158.37    <none>                                                       8030:31782/TCP                                       7h53m
+
+
+![Uploading image.png…]()
