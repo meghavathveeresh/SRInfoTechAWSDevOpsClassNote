@@ -8475,3 +8475,313 @@ stockmanager                  NodePort       172.30.158.37    <none>            
 
 
 ![Uploading image.png…]()
+
+
+
+
+
+22/07/2025::
+============
+
+Splunk::
+============
+
+Splunk is a powerful platform for searching, monitoring, and analyzing machine-generated big data via a web-style interface. It’s widely used for:
+
+1.Log aggregation
+
+2.Monitoring and observability
+
+3.Security (SIEM/SOAR)
+
+4.Dashboards and alerting
+
+Splunk Integrate With Jenkins::
+===========================
+
+Jenkins install link
+
+https://www.cherryservers.com/blog/install-jenkins-ubuntu
+
+Splunk install link
+
+https://www.splunk.com/en_us/download/splunk-enterprise.html
+
+Create Account
+
+![image](https://github.com/user-attachments/assets/4275dc32-37e7-41a4-8634-89bff7f6ce38)
+
+Click Create your account
+
+
+Verify the email
+
+![image](https://github.com/user-attachments/assets/65095d9c-4f93-4d44-9f0c-50d11c752093)
+
+![image](https://github.com/user-attachments/assets/9479e5ef-2f2f-481a-9ff2-796971238eb7)
+
+Copy Wget URL
+
+wget -O splunk-9.4.1-e3bdab203ac8-linux-amd64.deb https://download.splunk.com/products/splunk/releases/9.4.1/linux/splunk-9.4.1-e3bdab203ac8-linux-amd64.deb
+
+![image](https://github.com/user-attachments/assets/91dcd374-23b5-4951-ba91-2031f3df5e7a)
+
+Create one AWS Ubuntu Machine and past the Wget url and enter
+
+![image](https://github.com/user-attachments/assets/da0d2f58-6893-41a3-87dc-9cfde5abdb54)
+
+![image](https://github.com/user-attachments/assets/6ca6e5cc-e93e-4fc2-ad07-321d2b546b6d)
+
+Download successfully using that wget url
+
+![image](https://github.com/user-attachments/assets/9ab0f410-654b-41bf-aeaf-0ddd9cb8f9bf)
+
+Go to splunk tutorial
+https://docs.splunk.com/Documentation/Splunk/9.4.1/SearchTutorial/WelcometotheSearchTutorial
+
+go to below link
+
+https://docs.splunk.com/Documentation
+
+click Splunk enterprise
+![image](https://github.com/user-attachments/assets/e29a16ac-e8c0-4001-b9e7-0a38083a143c)
+
+Search tutorial
+![image](https://github.com/user-attachments/assets/a4c67579-d4a8-433f-b5f8-b7e8c03a6440)
+
+Part 1: Getting started
+
+•	Install Splunk Enterprise
+
+![image](https://github.com/user-attachments/assets/8cd7631b-f021-4e17-8c17-c745719cd89e)
+
+Install the Splunk Enterprise DEB package
+![image](https://github.com/user-attachments/assets/9d25b1f5-610b-424c-a382-ada36c84def9)
+
+dpkg -i splunk_package_name.deb.
+
+>sudo dpkg -i
+
+![image](https://github.com/user-attachments/assets/eab015f9-658c-40a4-a0a9-f3d4a5fe9c2e)
+
+Run below command in ubuntu
+
+>sudo dpkg -i splunk-9.4.1-e3bdab203ac8-linux-amd64.deb
+
+![image](https://github.com/user-attachments/assets/b927efe6-7bf2-47f1-bc5c-08362cd95812)
+
+
+![image](https://github.com/user-attachments/assets/a071e14d-4dda-415c-8bdb-ed610ce66b56)
+
+To start the splunk please run below command
+
+>sudo /opt/splunk/bin/splunk enable boot-start
+
+
+![image](https://github.com/user-attachments/assets/322f83e9-90a3-4e9e-b4d4-09e08d19ff7f)
+
+
+Click enter
+
+![image](https://github.com/user-attachments/assets/b932045c-f586-439d-9c13-f2afd9035922)
+
+
+![image](https://github.com/user-attachments/assets/790d67c5-cc65-4a8a-a2ed-1f52f878cfea)
+
+
+![image](https://github.com/user-attachments/assets/d65bda8a-2255-4231-9d9b-e2914798a31f)
+
+
+Username:: 
+
+![image](https://github.com/user-attachments/assets/a1a5f381-3ded-4291-b779-561b2373e4e1)
+
+
+Password:
+
+![image](https://github.com/user-attachments/assets/a95d259e-b0b6-4299-98e4-c690b057bbf5)
+
+
+![image](https://github.com/user-attachments/assets/2ffcc310-04f3-4e41-b09d-63087230510d)
+
+
+For enabled boost start right for that we need to run below command
+
+>sudo ufw allow openSSH
+
+![image](https://github.com/user-attachments/assets/857857f0-9262-4d83-af93-53097331bfcd)
+
+
+![image](https://github.com/user-attachments/assets/cc881e9c-94c1-454f-a8cc-4a375778c1e8)
+
+
+openSSH means open por 22
+
+enabled port for splunk
+
+>sudo ufw allow 8000
+
+
+![image](https://github.com/user-attachments/assets/0112d03f-4f19-43cc-b27a-0b5d5248fa4c)
+
+
+Check the splunk status
+>sudo ufw status
+
+Inactive, so we need to enabled
+
+
+![image](https://github.com/user-attachments/assets/ab0950ca-af19-439f-bf79-401d208c175d)
+
+
+Enabled splunk
+
+>sudo ufw enable
+
+
+![image](https://github.com/user-attachments/assets/4740cb2b-3ff0-4f2f-a1c9-af5e2bd8af6b)
+
+
+![image](https://github.com/user-attachments/assets/f8ef0cda-91bb-499f-be3b-257c106657f2)
+
+
+Now see openSSH port -22 allowed
+8000 port enabled allowed 
+
+Now we need to start splunk
+>sudo /opt/splunk/bin/splunk start
+
+
+![image](https://github.com/user-attachments/assets/d0593020-69ba-4212-9046-ff69e665593f)
+
+
+![image](https://github.com/user-attachments/assets/37cf9f5e-85b2-442b-9e28-3dcac692605e)
+
+
+Enter user/pwd
+Srinu/Srinu@7358
+
+![image](https://github.com/user-attachments/assets/e0313ff9-9ddc-42e6-9e46-6152e40c0a51)
+
+
+![image](https://github.com/user-attachments/assets/12a6cc79-6efa-42eb-a0ea-70d1084d84da)
+
+
+Go Apps----- Find More Apps
+
+![image](https://github.com/user-attachments/assets/e0123b5d-c8eb-42d8-9eff-099b55046509)
+
+
+Splunk App for Jenkins  ----we need to install this app in splunk to integrate with Jenkins
+
+![image](https://github.com/user-attachments/assets/00be0b2e-ba7c-4660-aa40-4ae7e54b8e87)
+
+
+Click install
+Asking UN/PWD
+
+NOTE:: make sure you should provide the UN/PWD is splunk enterprise at the time of create the splunk account right
+
+![image](https://github.com/user-attachments/assets/91c02e5a-9b89-4cdd-8807-34084482a48e)
+
+Click agree & install
+
+![image](https://github.com/user-attachments/assets/fdaaaa1b-a921-40a1-a1d4-195e62da4cc1)
+
+
+![image](https://github.com/user-attachments/assets/ff25f0de-c433-42ae-b6dd-47de03da9a22)
+
+
+![image](https://github.com/user-attachments/assets/9664e7c6-53af-42f2-ada4-4c4d893d128e)
+
+
+Click splunk enterprise
+
+We can see splunk for Jenkins
+
+
+![image](https://github.com/user-attachments/assets/690e9a3f-b577-4f7d-86fc-3c5585d0cc22)
+
+
+Go to settings
+
+![image](https://github.com/user-attachments/assets/ebc01f35-ef98-40a6-ae30-ceb03d7a7e79)
+
+
+Click data inputs
+
+![image](https://github.com/user-attachments/assets/70250ace-d56a-4429-af88-7773f67919c5)
+
+
+![image](https://github.com/user-attachments/assets/f97f0d52-0141-4b1c-bb27-08bf8ccc414b)
+
+
+Click HTTP Event Collector
+
+![image](https://github.com/user-attachments/assets/9250ef52-d8d2-4591-b0ad-4df3b387053b)
+
+
+Click Global settings
+
+![image](https://github.com/user-attachments/assets/5be60128-7a12-4ea7-bb97-fe0915dd95c7)
+
+
+Uncheck
+
+Enable SSL
+
+
+![image](https://github.com/user-attachments/assets/97643fac-bde5-42fc-952b-9dda35662bfe)
+
+
+For integrate with Jenkins we required New token
+
+Click New Token
+
+
+![image](https://github.com/user-attachments/assets/8af2c367-bd84-4f37-af82-b6f2ef917912)
+
+
+Provided name
+
+![image](https://github.com/user-attachments/assets/e900004d-8aa3-426c-b44a-8f86fd472a13)
+
+
+Next
+
+![image](https://github.com/user-attachments/assets/c16959b5-c0cf-4fa9-81b0-d13e5abf8223)
+
+
+Click submit
+
+![image](https://github.com/user-attachments/assets/b045b901-267b-430f-86ba-3fa9e9d5b626)
+
+
+Click start searching
+
+![image](https://github.com/user-attachments/assets/3a51da53-920b-4057-8fde-9183fa0a71b7)
+
+
+Go to setting - Data Inputs –
+
+Get the token value
+
+![image](https://github.com/user-attachments/assets/4b03dc1a-5c78-4796-9865-57c765b7be9f)
+
+
+To integrate with Jenkins, we need to install Splunk plugin in Jenkins
+
+![image](https://github.com/user-attachments/assets/555c1b5c-ba85-4bae-b97e-5ba90118851b)
+
+
+Go to System
+Splunk for Jenkins Configuration
+
+
+![image](https://github.com/user-attachments/assets/72e57b42-64ab-4c2a-9d9b-19bd8dfa8387)
+
+
+![image](https://github.com/user-attachments/assets/3f1e30e1-f3a8-48fc-b818-1bb5c6a9db68)
+
+
+
