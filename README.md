@@ -8394,3 +8394,62 @@ http://stockmanager-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/stocks
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5f4eed44-9f10-4549-84bb-6506d65911fa" />
 
 
+Deploy Nginx Application To Openshift Platform::CLI
+=====================================================
+
+>oc create deployment nginx --image=bitnami/nginx:latest
+
+>oc expose deployment nginx --port=8080 --target-port=8080 --name=nginx
+
+
+http://route-unfortunate-smelt-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7b164789-3b24-4212-8d53-989011144a96" />
+
+
+Deploy Spring-ms Application To Openshift Platform::Manually
+=========================================================
+
+https://github.com/srinfotech7358/spring-ms.git
+
+Go to Openshift Developer page
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/91a57b60-4e62-4166-92bf-b86266427b69" />
+
+Click Add
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d48386bd-9f19-4765-b783-a1e310af59b2" />
+
+
+Git Repository
+
+Import From Git
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c8b803b5-6203-43ef-b2f1-fcdf195c5e8a" />
+
+
+Copy Git Repo URL * From Github 
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/989f5013-211c-46dd-990f-210b4e9ea51a" />
+
+
+Click Create
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1db49867-ed7f-44eb-9632-a117b3c48d2f" />
+
+
+github project url for spring-ms
+
+https://github.com/srinfotech7358/spring-ms.git
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/55c5a788-80a8-4ba0-9853-3fd7b0a2960c" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/250e2cfb-ccfb-4b68-8f76-b3fab4f514d2" />
+
+
+https://spring-ms-git-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/008c0718-ec49-4ddf-bb50-1bbcf82557fa" />
